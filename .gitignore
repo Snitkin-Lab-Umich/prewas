@@ -5,3 +5,4 @@
 *.gff
 *.fna
 *.tree
+*outgroup.txt

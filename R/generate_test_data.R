@@ -35,6 +35,9 @@ generate_test_trees <- function(num_samples, seed){
   diverse_tree <- tree_no_og_rooted
   diverse_tree$edge.length <- rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
 
+  write(x = "t1", file = "data/outgroup.txt")
+  write(x = "A", file = "data/bad_outgroup.txt")
+
 
   return(list("tree_with_og_unrooted" = tree_with_og_unrooted,
               "tree_with_og_rooted" = tree_with_og_rooted,
@@ -128,6 +131,7 @@ save_gff3 <- function(gff, file_prefix){
   write(first_row, file = file_name)
 
   write.table(x = gff,
+              sep = "\t",
               file_name,
               row.names = FALSE,
               col.names = FALSE,
@@ -140,6 +144,16 @@ append_fasta_to_gff <- function(gff_path) {
   write(fake_fasta, file = gff_path, append = TRUE)
 }
 
+#' Generate all of the data necessary to test functionality of prewas package.
+#'
+#' @param num_samples
+#' @param seq_length
+#' @param seed
+#'
+#' @return
+#' @export
+#'
+#' @examples generate_test_data(15, 1000, 1)
 generate_test_data <- function(num_samples, seq_length, seed){
   # Generate & save trees
   trees <- generate_test_trees(num_samples, seed)
@@ -168,6 +182,4 @@ generate_test_data <- function(num_samples, seq_length, seed){
   save_gff3(gff, "fasta_appended")
   append_fasta_to_gff("data/fasta_appended.gff")
 }
-
-# generate_test_data(15, 1000, 1)
 
