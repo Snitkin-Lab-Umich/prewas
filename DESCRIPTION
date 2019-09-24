@@ -12,6 +12,8 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
     ape, 
-    future.apply
+    future.apply, 
+    phangorn, 
+    phytools
 Suggests: 
     testthat
