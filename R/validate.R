@@ -9,7 +9,6 @@ is_file <- function(obj){
   if (class(obj) == "character" & file.exists(obj)) {
       is_file <- TRUE
     }
-  }
   return(is_file)
 }
 
