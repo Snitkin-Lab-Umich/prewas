@@ -14,6 +14,7 @@ Imports:
     ape, 
     future.apply, 
     phangorn, 
-    phytools
+    phytools, 
+    magrittr
 Suggests: 
     testthat
