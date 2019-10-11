@@ -15,6 +15,7 @@ Imports:
     future.apply, 
     phangorn, 
     phytools, 
-    magrittr
+    magrittr,
+    vcfR
 Suggests: 
     testthat
