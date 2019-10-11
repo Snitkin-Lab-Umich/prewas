@@ -1,3 +1,16 @@
+#' Title
+#'
+#' @param dna
+#' @param tree
+#' @param outgroup
+#' @param gff
+#' @param out_prefix
+#' @param anc
+#'
+#' @return
+#' @export
+#'
+#' @examples
 prewas <- function(dna,
                    tree,
                    outgroup = NULL,
