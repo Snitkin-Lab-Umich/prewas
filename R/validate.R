@@ -6,9 +6,11 @@ check_is_number <- function(num){
 
 is_file <- function(obj){
   is_file <- FALSE
-  if (class(obj) == "character" & file.exists(obj)) {
+  if (class(obj) == "character"){
+    if(file.exists(obj)){
       is_file <- TRUE
     }
+  }
   return(is_file)
 }
 
@@ -18,6 +20,25 @@ is_this_class <- function(obj, current_class){
     is_this_class <- TRUE
   }
   return(is_this_class)
+}
+
+check_is_this_class <- function(obj, current_class){
+  if (class(obj) != current_class) {
+    stop(paste('Input must be a',current_class))
+  }
+
+}
+
+check_is_tree = function(tree){
+  if(!is_this_class(tree,'phylo')){
+    stop('Input requires either a path to a tree file or an ape phylo object')
+  }
+}
+
+check_tree_is_rooted = function(tree){
+  if(!ape::is.rooted(tree)){
+    stop('Tree must be rooted.')
+  }
 }
 
 check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
@@ -79,6 +100,12 @@ check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
     if (sum(c(".", "+", "-") %in% unique(gff[, 7, drop = TRUE])) == 0) {
       stop("GFF file must only have strand information in column 7")
     }
+
+    #subset gff on CDS
+    gff <- subset_gff(gff)
+
+    #get gene name from column 9
+    gff <- clean_up_cds_name_from_gff(gff)
   }
 
 
@@ -100,6 +127,22 @@ read_gff <- function(gff_path){
   return(gff)
 }
 
+subset_gff <- function(gff){
+  gff <- gff[gff[,3] == 'CDS',] # subset gff on CDS
+  return(gff)
+}
+
+clean_up_cds_name_from_gff <- function(gff){
+  cds_name <- apply(gff, 1, function(row){
+    gsub('^ID=','',row[9]) %>% gsub(';.*$','',.)
+  })
+
+  gff[,9] = cds_name
+
+  return(gff)
+
+}
+
 read_dna <- function(fasta_path){
   dna <- ape::read.dna(file = fasta_path, as.character = TRUE, format = "fasta")
   colnames(dna) <- 1:ncol(dna)
@@ -117,4 +160,33 @@ convert_dnabin_to_matrix <- function(dnabin){
   colnames(dna_mat) <- 1:ncol(dna_mat)
   dna_mat <- t(dna_mat)
   return(dna_mat)
+}
+
+load_vcf_file <- function(vcf_path) {
+  vcf <- vcfR::read.vcfR(file = vcf_path)
+  vcf_geno_mat <- vcf@gt[, 2:ncol(vcf@gt), drop = FALSE]
+  row.names(vcf_geno_mat) <- vcf@fix[, colnames(vcf@fix) == "POS", drop = TRUE]
+  vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
+
+  vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
+
+  orig <- vcf_geno_mat[1:6, ]
+
+  for (i in 1:nrow(vcf_geno_mat)) {
+    alt_alleles <- strsplit(vcf_alt_allele[i], split = ",")
+    vcf_alt_allele_1 <- alt_alleles[[1]][1]
+    vcf_alt_allele_2 <- alt_alleles[[1]][2]
+    vcf_alt_allele_3 <- alt_alleles[[1]][3]
+
+    vcf_geno_mat[i, vcf_geno_mat[i, ] == "0"] <- vcf_ref_allele[i]
+    vcf_geno_mat[i, vcf_geno_mat[i, ] == "1"] <- vcf_alt_allele_1
+    vcf_geno_mat[i, vcf_geno_mat[i, ] == "2"] <- vcf_alt_allele_2
+    vcf_geno_mat[i, vcf_geno_mat[i, ] == "3"] <- vcf_alt_allele_3
+  }
+
+  return(vcf_geno_mat)
+}
+
+convert_vcf_to_allele_matrix <- function(vcf){
+
 }
