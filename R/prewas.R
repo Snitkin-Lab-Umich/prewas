@@ -65,7 +65,7 @@ prewas <- function(dna,
   }
 
   # reference to ancestral state ------------------------------------------------
-  bin_mat = make_binary_matrix(allele_mat_split,alleles)
+  bin_mat = make_binary_matrix(allele_mat_split, alleles)
 
   # overlapping genes ----------------------------------------------------------
   bin_mat = dup_snps_in_overlapping_genes(bin_mat, gff_mat)
