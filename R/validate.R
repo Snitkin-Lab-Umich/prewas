@@ -6,8 +6,8 @@ check_is_number <- function(num){
 
 is_file <- function(obj){
   is_file <- FALSE
-  if (class(obj) == "character"){
-    if(file.exists(obj)){
+  if (class(obj) == "character") {
+    if (file.exists(obj)) {
       is_file <- TRUE
     }
   }
@@ -30,31 +30,28 @@ check_is_this_class <- function(obj, current_class){
 }
 
 check_is_tree = function(tree){
-  if(!is_this_class(tree,'phylo')){
+  if (!is_this_class(tree,'phylo')) {
     stop('Input requires either a path to a tree file or an ape phylo object')
   }
 }
 
 check_tree_is_rooted = function(tree){
-  if(!ape::is.rooted(tree)){
+  if (!ape::is.rooted(tree)) {
     stop('Tree must be rooted.')
   }
 }
 
 check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
-
   # DNA
   if (is.null(dna)) {
-    stop("Must include a fasta file")
+    stop("Must include a VCF file")
   } else {
     if (is_file(dna)) {
-      # If DNA stored in FASTA file, read in and convert to matrix
-      dna <- read_dna(dna)
-    } else if (is_this_class(dna, 'DNAbin')) {
-      dna <- convert_dnabin_to_matrix(dna)
+      # If DNA stored in VCF file, read in and convert to allele matrix
+      dna <- load_vcf_file(dna)
     } else {
-      stop("DNA input should be a path to a fasta file or a DNAbin object")
+      stop("DNA input should be a path to a VCF 4.1 file")
     }
   }
 
@@ -110,9 +107,9 @@ check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
 
   results <- list("dna" = dna,
-                    "tree" = tree,
-                    "outgroup" = outgroup,
-                    "gff" = gff)
+                  "tree" = tree,
+                  "outgroup" = outgroup,
+                  "gff" = gff)
   return(results)
 }
 
@@ -136,11 +133,8 @@ clean_up_cds_name_from_gff <- function(gff){
   cds_name <- apply(gff, 1, function(row){
     gsub('^ID=','',row[9]) %>% gsub(';.*$','',.)
   })
-
   gff[,9] = cds_name
-
   return(gff)
-
 }
 
 read_dna <- function(fasta_path){
@@ -167,10 +161,7 @@ load_vcf_file <- function(vcf_path) {
   vcf_geno_mat <- vcf@gt[, 2:ncol(vcf@gt), drop = FALSE]
   row.names(vcf_geno_mat) <- vcf@fix[, colnames(vcf@fix) == "POS", drop = TRUE]
   vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
-
   vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
-
-  orig <- vcf_geno_mat[1:6, ]
 
   for (i in 1:nrow(vcf_geno_mat)) {
     alt_alleles <- strsplit(vcf_alt_allele[i], split = ",")
@@ -183,7 +174,6 @@ load_vcf_file <- function(vcf_path) {
     vcf_geno_mat[i, vcf_geno_mat[i, ] == "2"] <- vcf_alt_allele_2
     vcf_geno_mat[i, vcf_geno_mat[i, ] == "3"] <- vcf_alt_allele_3
   }
-
   return(vcf_geno_mat)
 }
 
