@@ -17,11 +17,9 @@ prewas <- function(dna,
 
   # preprocess tree and dna_mat ------------------------------------------------
   tree = root_tree(tree, outgroup_char)
-  # generate allele matrix -----------------------------------------------------
-  allele_mat_only_var <- generate_allele_matrix(dna_mat)
-  subsetted_data = subset_tree_and_matrix(tree, allele_mat_only_var)
+  subsetted_data = subset_tree_and_matrix(tree, dna_mat)
   tree = subsetted_data$tree
-  allele_mat_only_var = subsetted_data$mat
+  allele_mat_only_var <- keep_only_variant_sites(subsetted_data$mat)
 
   # ancestral reconstruction ---------------------------------------------------
   if (anc) {

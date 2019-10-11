@@ -19,7 +19,7 @@ remove_invariant_sites <- function(mat, rows_to_keep){
   return(mat)
 }
 
-generate_allele_matrix <- function(dna_mat){
+keep_only_variant_sites <- function(dna_mat){
   dna_mat <- replace_non_ATGC_with_N(dna_mat)
   variant_site_log <- identify_variant_sites(dna_mat)
   variant_only_dna_mat <- remove_invariant_sites(dna_mat, variant_site_log)
