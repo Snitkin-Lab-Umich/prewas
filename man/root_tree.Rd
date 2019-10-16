@@ -18,8 +18,8 @@ rooted tree without outgroup
 Root tree based on outgroup. If outgroup is provided, root based on outgroup. If outgroup is null and the tree isn't rooted, midpoint root tree. If tree is rooted and no outgroup is provided, return tree as is.
 }
 \examples{
-tree = rcoal(100)
-is.rooted(tree)
-root_tree_og(tree)
-is.rooted(tree)
+tree = ape::rcoal(100)
+ape::is.rooted(tree)
+root_tree(tree)
+ape::is.rooted(tree)
 }

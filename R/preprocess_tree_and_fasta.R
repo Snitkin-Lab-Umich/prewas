@@ -28,21 +28,21 @@ read_in_tree = function(tree){
 #' @export
 #'
 #' @examples
-#' tree = rcoal(100)
-#' is.rooted(tree)
-#' root_tree_og(tree)
-#' is.rooted(tree)
-root_tree = function(tree,outgroup=NULL){
+#' tree = ape::rcoal(100)
+#' ape::is.rooted(tree)
+#' root_tree(tree)
+#' ape::is.rooted(tree)
+root_tree = function(tree, outgroup=NULL){
   # READ IN TREE
   tree = read_in_tree(tree)
   # IF OUTGROUP SUPPLIED
-  if(!is.null(outgroup)){
+  if (!is.null(outgroup)) {
     # ROOT TREE ON OUTGROUP
-    tree = ape::root(tree,outgroup)
-    tree = ape::drop.tip(tree,outgroup)
+    tree = ape::root(tree, outgroup)
+    tree = ape::drop.tip(tree, outgroup)
     return(tree)
   # IF NO OUTGROUP AND TREE IS UNROOTED
-  }else if(is.null(outgroup) & !ape::is.rooted(tree)){
+  } else if (is.null(outgroup) & !ape::is.rooted(tree)) {
     # MIDPOINT ROOT TREE
     tree = phytools::midpoint.root(tree)
     return(tree)
