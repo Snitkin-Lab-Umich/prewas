@@ -75,12 +75,12 @@ subset_tree_and_matrix = function(tree,mat){
   drop_from_tree = setdiff(tree$tip.label,in_both)
   if(length(drop_from_tree) > 0){
     tree = ape::drop.tip(tree,drop_from_tree)
-    warning(paste('These samples were dropped from the tree:',drop_from_tree))
+    warning(paste('These samples were dropped from the tree:',paste(drop_from_tree,collapse=', ')))
   }
   drop_from_mat = setdiff(colnames(mat),in_both)
   if(length(drop_from_mat) > 0){
     mat = mat[,in_both]
-    warning(paste('These samples were dropped from the matrix:',drop_from_mat))
+    warning(paste('These samples were dropped from the matrix:',paste(drop_from_mat,collapse=', ')))
   }
   mat = mat[,tree$tip.label]
   return(list(tree=tree,mat=mat))

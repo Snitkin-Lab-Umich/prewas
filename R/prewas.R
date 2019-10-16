@@ -39,7 +39,7 @@ prewas <- function(dna,
     anc_alleles = get_ancestral_alleles(tree, allele_mat_only_var)
     allele_results = anc_alleles$ar_results
     tree = anc_alleles$tree
-    remove_unknown_anc_results = remove_unknown_anc_state(allele_mat_only_var,allele_results)
+    remove_unknown_anc_results = remove_unknown_alleles(allele_mat_only_var,allele_results$ancestral_allele,allele_results)
     allele_mat_only_var = remove_unknown_anc_results$allele_mat
     allele_results = remove_unknown_anc_results$ar_results
   }else{
@@ -47,6 +47,9 @@ prewas <- function(dna,
     tree = NULL
     allele_results = data.frame(major_allele = alleles)
     rownames(allele_results) = rownames(allele_mat_only_var)
+    remove_unknown_anc_results = remove_unknown_alleles(allele_mat_only_var,allele_results$major_allele,allele_results)
+    allele_mat_only_var = remove_unknown_anc_results$allele_mat
+    allele_results = remove_unknown_anc_results$ar_results
   }
 
   # split multiallelic snps ----------------------------------------------------
@@ -67,11 +70,15 @@ prewas <- function(dna,
   # reference to ancestral state ------------------------------------------------
   bin_mat = make_binary_matrix(allele_mat_split, alleles)
 
-  # overlapping genes ----------------------------------------------------------
-  bin_mat = dup_snps_in_overlapping_genes(bin_mat, gff_mat)
-  # collapse snps by gene ------------------------------------------------------
-  gene_names <- get_gene_names(bin_mat)
-  gene_mat <- collapse_snps_into_genes(bin_mat, gene_names)
+  if(!is.null(NULL)){
+    # overlapping genes ----------------------------------------------------------
+    bin_mat = dup_snps_in_overlapping_genes(bin_mat, gff_mat)
+    # collapse snps by gene ------------------------------------------------------
+    gene_names <- get_gene_names(bin_mat)
+    gene_mat <- collapse_snps_into_genes(bin_mat, gene_names)
+  }else{
+    gene_mat = NULL
+  }
 
   return(list(allele_mat = allele_mat_split,
               bin_mat = bin_mat,
