@@ -8,11 +8,11 @@
 #'
 #' @examples
 read_in_tree = function(tree){
-  if(is_file(tree)){
+  if (is_file(tree)) {
     # LOAD IN TREE
-    tree = read.tree(tree)
+    tree = ape::read.tree(tree)
     return(tree)
-  }else{
+  } else {
     check_is_tree(tree)
   }
   return(tree)

@@ -10,7 +10,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 prewas <- function(dna,
                    tree,
                    outgroup = NULL,

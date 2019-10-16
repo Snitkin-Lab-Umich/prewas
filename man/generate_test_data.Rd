@@ -7,11 +7,8 @@
 generate_test_data(num_samples, seq_length, seed)
 }
 \arguments{
-\item{seed}{}
+\item{seed}{Numeric}
 }
 \description{
 Generate all of the data necessary to test functionality of prewas package.
-}
-\examples{
-generate_test_data(15, 1000, 1)
 }

@@ -1,6 +1,6 @@
 #' Title
 #'
-#' @param binary_mat
+#' @param bin_mat
 #' @param gff_mat
 #'
 #' @return
@@ -28,13 +28,10 @@ dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
   # there will be a .num. if its a multiallelic site
   pos_dup_gene = paste(rep(row.names(bin_mat), num_of_genes_at_pos), unlist(genes_at_pos), sep = '|')
 
-  print(head(indices))
-  print(head(num_of_genes_at_pos))
   # duplicate overlapping genes
-  bin_mat_dup = bin_mat[rep(indices, num_of_genes_at_pos),]
+  bin_mat_dup = bin_mat[rep(indices, num_of_genes_at_pos), ]
   row.names(bin_mat_dup) = pos_dup_gene
 
   return(bin_mat_dup)
-
 }
 

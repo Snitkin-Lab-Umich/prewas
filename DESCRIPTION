@@ -12,10 +12,13 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
     ape, 
+    future,
     future.apply, 
     phangorn, 
     phytools, 
     magrittr,
-    vcfR
+    stats,
+    vcfR, 
+    utils
 Suggests: 
     testthat

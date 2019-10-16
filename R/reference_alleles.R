@@ -74,8 +74,9 @@ get_ancestral_alleles = function(tree,mat){
 #' Remove unknown ancestral states
 #' @description Remove rows from variant matrix where the ancestral state is unknown (- or N)
 #'
-#' @param mat
-#' @param anc
+#' @param allele_mat
+#' @param alleles
+#' @param ar_results
 #'
 #' @return
 #' @export
@@ -84,12 +85,12 @@ get_ancestral_alleles = function(tree,mat){
 remove_unknown_alleles = function(allele_mat, alleles, ar_results){
   unknown = alleles %in% c('-','N')
   removed = rownames(allele_mat)[unknown]
-  if(length(removed) > 0){
+  if (length(removed) > 0) {
     warning(paste(length(removed),'positions removed because ancestral allele is unknown'))
   }
-  return(list(allele_mat=allele_mat[!unknown,],
-              ar_results=ar_results[!unknown, , drop=F],
-              removed=removed))
+  return(list(allele_mat = allele_mat[!unknown, ],
+              ar_results = ar_results[!unknown, , drop = FALSE],
+              removed = removed))
 }
 
 

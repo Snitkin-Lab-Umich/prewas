@@ -114,12 +114,12 @@ check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 }
 
 read_gff <- function(gff_path){
-  gff <- read.table(gff_path,
-                    sep = '\t',
-                    header = FALSE,
-                    stringsAsFactors = FALSE,
-                    quote = "",
-                    comment.char = '#'
+  gff <- utils::read.table(gff_path,
+                           sep = '\t',
+                           header = FALSE,
+                           stringsAsFactors = FALSE,
+                           quote = "",
+                           comment.char = '#'
   )
   return(gff)
 }
@@ -131,9 +131,9 @@ subset_gff <- function(gff){
 
 clean_up_cds_name_from_gff <- function(gff){
   cds_name <- apply(gff, 1, function(row){
-    gsub('^ID=','',row[9]) %>% gsub(';.*$','',.)
+    gsub('^ID=', '', row[9]) %>% gsub(';.*$', '', .)
   })
-  gff[,9] = cds_name
+  gff[, 9] = cds_name
   return(gff)
 }
 

@@ -29,11 +29,11 @@ generate_test_trees <- function(num_samples, seed){
 
   # Highly clonal
   clonal_tree <- tree_no_og_rooted
-  clonal_tree$edge.length <- rnorm(ape::Nedge(clonal_tree), mean = 0.005, sd = 0.001)
+  clonal_tree$edge.length <- stats::rnorm(ape::Nedge(clonal_tree), mean = 0.005, sd = 0.001)
 
   # Very diverse
   diverse_tree <- tree_no_og_rooted
-  diverse_tree$edge.length <- rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
+  diverse_tree$edge.length <- stats::rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
 
   write(x = "t1", file = "data/outgroup.txt")
   write(x = "A", file = "data/bad_outgroup.txt")
@@ -130,13 +130,13 @@ save_gff3 <- function(gff, file_prefix){
 
   write(first_row, file = file_name)
 
-  write.table(x = gff,
-              sep = "\t",
-              file_name,
-              row.names = FALSE,
-              col.names = FALSE,
-              quote = FALSE,
-              append = TRUE)
+  utils::write.table(x = gff,
+                     sep = "\t",
+                     file_name,
+                     row.names = FALSE,
+                     col.names = FALSE,
+                     quote = FALSE,
+                     append = TRUE)
 }
 
 append_fasta_to_gff <- function(gff_path) {
@@ -148,12 +148,11 @@ append_fasta_to_gff <- function(gff_path) {
 #'
 #' @param num_samples
 #' @param seq_length
-#' @param seed
+#' @param seed Numeric
 #'
 #' @return
 #' @export
 #'
-#' @examples generate_test_data(15, 1000, 1)
 generate_test_data <- function(num_samples, seq_length, seed){
   # Generate & save trees
   trees <- generate_test_trees(num_samples, seed)
