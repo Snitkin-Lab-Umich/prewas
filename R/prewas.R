@@ -11,14 +11,14 @@
 #' @export
 #'
 prewas <- function(dna,
-                   tree,
+                   tree = NULL,
                    outgroup = NULL,
                    gff = NULL,
                    out_prefix = "prewas",
                    anc = TRUE){
 
   # Check inputs ---------------------------------------------------------------
-  inputs <- check_inputs(dna, tree, outgroup, gff)
+  inputs <- format_inputs(dna, tree, outgroup, gff)
 
   # dna_mat: rows == variants & columns == isolates
   dna_mat <- inputs$dna

@@ -26,7 +26,6 @@ check_is_this_class <- function(obj, current_class){
   if (class(obj) != current_class) {
     stop(paste('Input must be a',current_class))
   }
-
 }
 
 check_is_tree = function(tree){
@@ -41,7 +40,7 @@ check_tree_is_rooted = function(tree){
   }
 }
 
-check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
+format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
   # DNA
   if (is.null(dna)) {
@@ -57,7 +56,7 @@ check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
   # Tree
   if (is.null(tree)) {
-    stop("Must include a tree")
+    tree = build_tree(dna)
   } else {
       if (is_file(tree)) {
         # If tree stored as .tree file, read in
@@ -114,6 +113,8 @@ check_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 }
 
 read_gff <- function(gff_path){
+
+
   gff <- utils::read.table(gff_path,
                            sep = '\t',
                            header = FALSE,
@@ -175,8 +176,4 @@ load_vcf_file <- function(vcf_path) {
     vcf_geno_mat[i, vcf_geno_mat[i, ] == "3"] <- vcf_alt_allele_3
   }
   return(vcf_geno_mat)
-}
-
-convert_vcf_to_allele_matrix <- function(vcf){
-
 }

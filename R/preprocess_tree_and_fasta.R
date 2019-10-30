@@ -18,6 +18,22 @@ read_in_tree = function(tree){
   return(tree)
 }
 
+#' Build tree
+#'
+#' @param mat
+#'
+#' @return parsimony tree
+#' @export
+#'
+#' @examples
+build_tree = function(mat){
+  phydat = phangorn::phyDat(t(mat))
+  distmat = phangorn::dist.ml(phydat)
+  nj_tree = phangorn::NJ(distmat)
+  pars_tree = phangorn::optim.parsimony(nj_tree,phydat)
+  return(pars_tree)
+}
+
 #' Root tree on outgroup
 #' @description Root tree based on outgroup. If outgroup is provided, root based on outgroup. If outgroup is null and the tree isn't rooted, midpoint root tree. If tree is rooted and no outgroup is provided, return tree as is.
 #'

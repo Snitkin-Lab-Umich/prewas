@@ -1,0 +1,22 @@
+---
+title: "Getting Started With Prewas"
+date: "`r Sys.Date()`"
+author: "Stephanie Thiede, Zena Lapp, Katie Saund"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{a primer on prewas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{prewas}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(prewas)
+```
