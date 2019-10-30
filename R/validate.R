@@ -1,5 +1,5 @@
 check_is_number <- function(num){
-  if (class(num) %in% c("numeric")) {
+  if (!class(num) %in% c("numeric")) {
     stop("Input must be a numeric")
   }
 }
@@ -90,12 +90,6 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
   # GFF
   if (!is.null(gff)) {
     gff <- read_gff(gff)
-    if (ncol(gff) != 9) {
-      stop("GFF file must have 9 columns")
-    }
-    if (sum(c(".", "+", "-") %in% unique(gff[, 7, drop = TRUE])) == 0) {
-      stop("GFF file must only have strand information in column 7")
-    }
 
     #subset gff on CDS
     gff <- subset_gff(gff)
@@ -113,8 +107,7 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 }
 
 read_gff <- function(gff_path){
-
-
+  # TODO add ability to load in a gff object, not just take in a path
   gff <- utils::read.table(gff_path,
                            sep = '\t',
                            header = FALSE,
@@ -122,15 +115,32 @@ read_gff <- function(gff_path){
                            quote = "",
                            comment.char = '#'
   )
+
+  if (ncol(gff) != 9) {
+    stop("GFF file must have 9 columns")
+  }
+  if (sum(c(".", "+", "-") %in% unique(gff[, 7, drop = TRUE])) == 0) {
+    stop("GFF file must only have strand information in column 7")
+  }
+
   return(gff)
 }
 
 subset_gff <- function(gff){
-  gff <- gff[gff[,3] == 'CDS',] # subset gff on CDS
+  check_is_this_class(gff, "data.frame")
+  # TODO add a check_dimenions() call and write the check_dimensions function
+
+  gff <- gff[gff[, 3] == 'CDS', ] # subset gff on CDS
+  if (nrow(gff) == 0) {
+    stop("GFF has no CDS regions. Remove the gff from prewas inputs and rerun or use a different GFF with CDS regions.")
+  }
   return(gff)
 }
 
 clean_up_cds_name_from_gff <- function(gff){
+  check_is_this_class(gff, "data.frame")
+  # TODO add a check_dimenions() call and write the check_dimensions function
+
   cds_name <- apply(gff, 1, function(row){
     gsub('^ID=', '', row[9]) %>% gsub(';.*$', '', .)
   })
@@ -139,6 +149,7 @@ clean_up_cds_name_from_gff <- function(gff){
 }
 
 read_dna <- function(fasta_path){
+  # TODO -- do we still need this function?
   dna <- ape::read.dna(file = fasta_path, as.character = TRUE, format = "fasta")
   colnames(dna) <- 1:ncol(dna)
   dna <- t(dna)
@@ -146,6 +157,7 @@ read_dna <- function(fasta_path){
 }
 
 convert_dnabin_to_matrix <- function(dnabin){
+  # TODO -- do we still need this function?
   dna <- ape::as.alignment(dnabin)
   dna_mat <- matrix(NA, nrow = nrow(dnabin), ncol = nchar(dna$seq[1]))
   for (i in 1:nrow(dna_mat)) {
