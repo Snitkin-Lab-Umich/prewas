@@ -5,6 +5,19 @@ check_setequal_tree_mat = function(tip_labels, colnames_mat){
   }
 }
 
+#' Make tree edges positive
+#'
+#' If tree edges are zero or negative, makes them a very small positive number
+#' (1/1000th of the smallest edge length). This is to prevent
+#' \code{\link[ape]{ace}} from breaking. A warning is thrown. Returns a tree
+#' with all positive edge lengths.
+#'
+#' @param tree (\code{ape phylo}) object
+#'
+#' @return tree (\code{ape phylo}) object with all positive edge lengths
+#' @export
+#'
+#' @examples
 make_all_tree_edges_positive = function(tree){
   if(sum(tree$edge.length <= 0) > 0){
     warning('All non-positive branch lengths changed to small positive number to be able to perform ancestral reconstruction.')
@@ -14,7 +27,9 @@ make_all_tree_edges_positive = function(tree){
   return(tree)
 }
 
-#' Get_major_alleles
+#' Get major alleles
+#'
+#' Finds the major allele (most common allele) for each variant position in an allele matrix.
 #'
 #' @param allele_mat allele matrix
 #'
@@ -31,12 +46,18 @@ get_major_alleles = function(allele_mat){
 }
 
 #' Get ancestral state of alleles
-#' @description Rereference alleles based on rooted tree
 #'
-#' @param tree rooted tree
+#' Finds the most likely ancestral allele for each variant position in an allele
+#' matrix using \code{\link[ape]{ace}}, given a rooted tree. Returns the most
+#' likely ancestral allele, its probability, and the tree used to perform
+#' ancestral reconstruction.
+#'
+#' @param tree rooted tree (\code{ape phylo} object)
 #' @param mat allele matrix (rows are variants, columns are samples)
 #'
-#' @return list of (1) ar_results: matrix of most likely ancestral allele for each row in allele matrix and probability that that is the ancestral state and (2) tree: tree used for ancestral state reconstruction
+#' @return list of (1) ar_results: matrix of most likely ancestral allele for
+#'   each row in allele matrix and probability that that is the ancestral state
+#'   and (2) tree: tree used for ancestral state reconstruction
 #' @export
 #'
 #' @examples
@@ -72,11 +93,12 @@ get_ancestral_alleles = function(tree,mat){
 }
 
 #' Remove unknown ancestral states
-#' @description Remove rows from variant matrix where the ancestral state is unknown (- or N)
 #'
-#' @param allele_mat
-#' @param alleles
-#' @param ar_results
+#' Removes rows from variant matrix where the reference allele (ancestral allele or major allele) is unknown (- or N)
+#'
+#' @param allele_mat  allele matrix (rows are variants, columns are samples)
+#' @param alleles reference alleles (ancestral alleles or major alleles)
+#' @param ar_results results from ancestral reconstruction
 #'
 #' @return
 #' @export
@@ -97,25 +119,39 @@ remove_unknown_alleles = function(allele_mat, alleles, ar_results){
 
 #' Make binary matrix from allele matrix
 #'
-#' @param allele_mat allele matrix (split by multi-allelic site)
-#' @param reference_allele vector of alleles that are 0 in binary matrix (ancestral allele or major allele)
+#' Returns a binary matrix of variant presence/absence created from an allele
+#' matrix and a reference allele (ancestral allele or major allele) vector that
+#' can be used in bGWAS. The reference allele is 0 and the non-reference allele
+#' is 1.
 #'
-#' @return
+#' @param allele_mat allele matrix (split by multi-allelic site)
+#' @param reference_allele vector of alleles that are 0 in binary matrix
+#'   (ancestral allele or major allele)
+#'
+#' @return binary matrix of variant presence/absence
 #' @export
 #'
 #' @examples
 make_binary_matrix = function(allele_mat,reference_allele){
+  # make matrix of reference allele that's the same size as the allele matrix
   ref_allele_mat = replicate(ncol(allele_mat),reference_allele)
+  # initialize binary matrix
   bin_mat = allele_mat
+  # if allele is the reference allele, code it as 0
   bin_mat[bin_mat == ref_allele_mat] = 0
+  # get variant positions
   sites = unique(gsub('\\..*','',rownames(bin_mat)))
-  #rownames(bin_mat) = gsub('\\..*','',rownames(bin_mat))
+  # iterate over each site (to handle multiallelic sites)
   bin_mat = sapply(sites, function(x){
     site = bin_mat[rownames(bin_mat) == x,] # get 1st site
+    # get all bases at that position
     bases = unique(site)
+    # remove reference (0) and unknown (N) bases
     bases = bases[bases != "0" & bases != "N"]
+    # create mini-matrix for this variant position where rows are bases and columns are samples
     binsplit = matrix(NA,nrow=length(bases),ncol=ncol(bin_mat))
     rownames(binsplit) = bases
+    # for each base, code that base as 1 and all others as 0
     for(b in bases){
       binsite = site
       binsite[binsite != b] = 0
@@ -123,42 +159,15 @@ make_binary_matrix = function(allele_mat,reference_allele){
       binsite = as.numeric(binsite)
       binsplit[b,] = binsite
     }
-    binsplit
+    return(binsplit)
   })
+  # change from list to matrix
   bin_mat = do.call(rbind,bin_mat)
+  # update rownames and colnames of  binary matrix
   rownames(bin_mat) = rownames(allele_mat)
   colnames(bin_mat) = colnames(allele_mat)
-
-
+  # make binary matrix numeric
   class(bin_mat) = 'numeric'
   return(bin_mat)
 }
-
-#' Reference to ancestral state
-#'
-#' @param allele_mat allele matrix
-#' @param anc_alleles ancestral alleles
-#'
-#' @return binary matrix referenced to ancestral state
-#' @export
-#'
-#' @examples
-# reference_alleles = function(allele_mat,alleles){
-#     # reference to ancestral state
-#     alleles = ar_results$ancestral_allele
-#     names(alleles) = rownames(ar_results)
-#     # check that columns in allele_mat match with rows in alleles
-#     allele_mat = allele_mat[rownames(allele_mat),]
-#     alleles = alleles[rownames(allele_mat)]
-#     if(!all(rownames(allele_mat) == names(alleles))){
-#       stop('Allele matrix columns and ancestral allele state names must match.')
-#     }
-#
-#   # MAKE BINARY MATRIX
-#   make_binary_matrix(allele_mat,alleles)
-#
-#   return(bin_mat)
-# }
-
-
 
