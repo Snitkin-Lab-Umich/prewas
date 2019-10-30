@@ -1,9 +1,21 @@
+#' Check that function input is a numeric.
+#'
+#' Doesn't return anything. Gives an error message if input is not a number.
+#'
+#' @param num Number
+#'
 check_is_number <- function(num){
   if (!class(num) %in% c("numeric")) {
     stop("Input must be a numeric")
   }
 }
 
+
+#' Tests if input object is a file.
+#'
+#' @param obj Any R object.
+#'
+#' @return is_file Logical
 is_file <- function(obj){
   is_file <- FALSE
   if (class(obj) == "character") {
@@ -14,7 +26,27 @@ is_file <- function(obj){
   return(is_file)
 }
 
+#' Tests if an input object has the specified class.
+#'
+#' @param obj Any R object.
+#' @param current_class String. Name of the expected class of the R object.
+#'
+#' @return is_this_class Logical
 is_this_class <- function(obj, current_class){
+  if (class(current_class) != "character") {
+    stop("Current_class is expected to be a string describing a class")
+  }
+  r_classes <- c("character",
+                 "numeric",
+                 "integer",
+                 "logical",
+                 "complex",
+                 "phylo",
+                 "DNAbin")
+  if (!(current_class %in% r_classes)) {
+    stop("current_class is expected to be a R class")
+  }
+
   is_this_class <- FALSE
   if (class(obj) == current_class) {
     is_this_class <- TRUE
@@ -22,19 +54,51 @@ is_this_class <- function(obj, current_class){
   return(is_this_class)
 }
 
+#' Checks if an object is of the expected R class.
+#'
+#' Doesn't return anything. Gives error if the object is not of the expected R
+#' class.
+#'
+#' @param obj Any R object.
+#' @param current_class Character string. Name of R class
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_is_this_class <- function(obj, current_class){
+  if (class(current_class) != "character") {
+    stop("Current_class is expected to be a string describing a class")
+  }
+  r_classes <- c("character",
+                 "numeric",
+                 "integer",
+                 "logical",
+                 "complex",
+                 "phylo",
+                 "DNAbin")
+  if (!(current_class %in% r_classes)) {
+    stop("current_class is expected to be a R class")
+  }
+
   if (class(obj) != current_class) {
-    stop(paste('Input must be a',current_class))
+    stop(paste('Input must be a', current_class))
   }
 }
 
+#' Check that the input tree is actually a 'phylo' object.
+#'
+#' Doesn't return anything. Gives an error message if the object is not a
+#' 'phylo' object.
+#' @param tree Phylogenetic tree.
 check_is_tree = function(tree){
-  if (!is_this_class(tree,'phylo')) {
+  if (!is_this_class(tree, 'phylo')) {
     stop('Input requires either a path to a tree file or an ape phylo object')
   }
 }
 
 check_tree_is_rooted = function(tree){
+  check_is_tree(tree)
   if (!ape::is.rooted(tree)) {
     stop('Tree must be rooted.')
   }
