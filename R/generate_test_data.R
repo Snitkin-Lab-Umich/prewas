@@ -35,10 +35,6 @@ generate_test_trees <- function(num_samples, seed){
   diverse_tree <- tree_no_og_rooted
   diverse_tree$edge.length <- stats::rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
 
-  write(x = "t1", file = "data/outgroup.txt")
-  write(x = "A", file = "data/bad_outgroup.txt")
-
-
   return(list("tree_with_og_unrooted" = tree_with_og_unrooted,
               "tree_with_og_rooted" = tree_with_og_rooted,
               "tree_no_og_rooted" = tree_no_og_rooted,
@@ -196,7 +192,17 @@ generate_test_data <- function(num_samples = 14, seq_length = 1000, seed = 1){
   append_fasta_to_gff("data/fasta_appended.gff")
 
   # Load in vcf and save .rda
-  vcf_file = vcfR::read.vcfR('../data/clonal.vcf')
-  save(vcf_file, file = '../data/vcf.rda')
+  vcf_file = vcfR::read.vcfR('data/clonal.vcf')
+  save(vcf_file, file = 'data/vcf.rda')
+
+  # Save all other .rda
+  save(gff, file = 'data/gff.rda')
+  write(x = "t1", file = "data/outgroup.txt")
+  write(x = "A", file = "data/bad_outgroup.txt")
+  og = "t1"
+  save(og, file = 'data/outgroup.rda')
+  tree = trees$clonal_tree
+  save(tree, file = 'data/tree.rda')
+  save(clonal_dna, file = 'data/fasta.rda')
 }
 
