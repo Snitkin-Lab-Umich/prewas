@@ -115,8 +115,6 @@ remove_unknown_alleles = function(allele_mat, alleles, ar_results){
               removed = removed))
 }
 
-
-
 #' Make binary matrix from allele matrix
 #'
 #' Returns a binary matrix of variant presence/absence created from an allele
