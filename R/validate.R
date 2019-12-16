@@ -91,13 +91,13 @@ check_is_this_class <- function(obj, current_class){
 #' Doesn't return anything. Gives an error message if the object is not a
 #' 'phylo' object.
 #' @param tree Phylogenetic tree.
-check_is_tree = function(tree){
+check_is_tree <- function(tree){
   if (!is_this_class(tree, 'phylo')) {
     stop('Input requires either a path to a tree file or an ape phylo object')
   }
 }
 
-check_tree_is_rooted = function(tree){
+check_tree_is_rooted <- function(tree){
   check_is_tree(tree)
   if (!ape::is.rooted(tree)) {
     stop('Tree must be rooted.')
@@ -105,7 +105,6 @@ check_tree_is_rooted = function(tree){
 }
 
 format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
-
   # DNA
   if (is.null(dna)) {
     stop("Must include a VCF file")
@@ -120,7 +119,7 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
   # Tree
   if (is.null(tree)) {
-    tree = build_tree(dna)
+    tree <- build_tree(dna)
   } else {
       if (is_file(tree)) {
         # If tree stored as .tree file, read in
@@ -214,7 +213,7 @@ clean_up_cds_name_from_gff <- function(gff){
   cds_name <- apply(gff, 1, function(row){
     gsub('^ID=', '', row[9]) %>% gsub(';.*$', '', .)
   })
-  gff[, 9] = cds_name
+  gff[, 9] <- cds_name
   return(gff)
 }
 

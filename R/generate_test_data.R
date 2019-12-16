@@ -29,11 +29,13 @@ generate_test_trees <- function(num_samples, seed){
 
   # Highly clonal
   clonal_tree <- tree_no_og_rooted
-  clonal_tree$edge.length <- stats::rnorm(ape::Nedge(clonal_tree), mean = 0.005, sd = 0.001)
+  clonal_tree$edge.length <-
+    stats::rnorm(ape::Nedge(clonal_tree), mean = 0.005, sd = 0.001)
 
   # Very diverse
   diverse_tree <- tree_no_og_rooted
-  diverse_tree$edge.length <- stats::rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
+  diverse_tree$edge.length <-
+    stats::rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
 
   return(list("tree_with_og_unrooted" = tree_with_og_unrooted,
               "tree_with_og_rooted" = tree_with_og_rooted,
@@ -89,7 +91,7 @@ save_tree <- function(tree, file_prefix){
 generate_test_gff <- function(phydat_obj, seq_length){
   num_cds_rows <- 100
   num_noncds_rows <- 10
-  avg_gene_length <- seq_length/num_cds_rows
+  avg_gene_length <- seq_length / num_cds_rows
 
   gff <- matrix(".", ncol = 9, nrow = num_cds_rows + num_noncds_rows)
   # seqid
@@ -106,30 +108,35 @@ generate_test_gff <- function(phydat_obj, seq_length){
   gff[seq(2, nrow(gff), 2), 7] <- "-"
 
   # start
-  gff[1:num_cds_rows, 4:5] <- seq(from = 1, to = seq_length, by = avg_gene_length)
+  gff[1:num_cds_rows, 4:5] <-
+    seq(from = 1, to = seq_length, by = avg_gene_length)
 
   # end
-  gff[1:num_cds_rows, 5] <- as.numeric(gff[1:num_cds_rows, 5]) + (avg_gene_length - 1)
+  gff[1:num_cds_rows, 5] <-
+    as.numeric(gff[1:num_cds_rows, 5]) + (avg_gene_length - 1)
 
   # ID
   gff[1:num_cds_rows, 9] <- paste0("ID=gene_", 1:num_cds_rows)
 
   # Now make some overlapping genes:
   gff[1:3, 4] <- 1
-  gff[1:3, 5] <- 5*avg_gene_length
+  gff[1:3, 5] <- 5 * avg_gene_length
 
 
   # Add non-CDS labels
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 3] <- 'tRNA'
+  gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 3] <- 'tRNA'
 
   # non-CDS start
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 4] <- sample(1:(seq_length - 11), 10)
+  gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 4] <-
+    sample(1:(seq_length - 11), 10)
 
   # non-CDS end
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 5] <- as.numeric(gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 4]) + 10
+  gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 5] <-
+    as.numeric(gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 4]) + 10
 
   # non-CDS ID
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 9] <- paste0("ID=tRNA_", ((num_cds_rows+1):(num_cds_rows+num_noncds_rows)))
+  gff[((num_cds_rows+1):(num_cds_rows + num_noncds_rows)), 9] <-
+    paste0("ID=tRNA_", ((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)))
 
   return(gff)
 }
@@ -192,17 +199,16 @@ generate_test_data <- function(num_samples = 14, seq_length = 1000, seed = 1){
   append_fasta_to_gff("data/fasta_appended.gff")
 
   # Load in vcf and save .rda
-  vcf_file = vcfR::read.vcfR('data/clonal.vcf')
+  vcf_file <- vcfR::read.vcfR('data/clonal.vcf')
   save(vcf_file, file = 'data/vcf.rda')
 
   # Save all other .rda
   save(gff, file = 'data/gff.rda')
   write(x = "t1", file = "data/outgroup.txt")
   write(x = "A", file = "data/bad_outgroup.txt")
-  og = "t1"
-  save(og, file = 'data/outgroup.rda')
+  outgroup <- "t1"
+  save(outgroup, file = 'data/outgroup.rda')
   tree = trees$clonal_tree
   save(tree, file = 'data/tree.rda')
   save(clonal_dna, file = 'data/fasta.rda')
 }
-

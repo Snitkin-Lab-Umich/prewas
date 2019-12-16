@@ -24,5 +24,3 @@ collapse_snps_into_genes <- function(bin_mat, gene_vec){
 
   return(gene_mat)
 }
-
-

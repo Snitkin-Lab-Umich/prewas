@@ -177,4 +177,3 @@ test_that("Check that clean_up_cds_name_from_gff() gives error for non-GFF input
   expect_error(clean_up_cds_name_from_gff(1))
   expect_error(clean_up_cds_name_from_gff("foo"))
 })
-

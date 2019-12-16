@@ -8,7 +8,7 @@ replace_non_ATGC_with_N <- function(mat){
 
 identify_variant_sites <- function(mat){
   check_is_this_class(mat, "mat")
-  rows_to_keep <- apply(mat, 1, function(row){
+  rows_to_keep <- apply(mat, 1, function(row) {
     sum(unique(row) %in% c("A", "T", "G", "C"))
   })
   rows_to_keep <- rows_to_keep > 1
