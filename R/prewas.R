@@ -5,7 +5,7 @@
 #' @param outgroup
 #' @param gff
 #' @param out_prefix
-#' @param anc
+#' @param anc Logical. Default to TRUE. When TRUE prewas performs ancestral reconstruction. When FALSE prewas calculates the major allele.
 #'
 #' @return
 #' @export
@@ -14,7 +14,6 @@ prewas <- function(dna,
                    tree = NULL,
                    outgroup = NULL,
                    gff = NULL,
-                   out_prefix = "prewas",
                    anc = TRUE){
 
   # Check inputs ---------------------------------------------------------------
