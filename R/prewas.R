@@ -15,7 +15,7 @@ prewas <- function(dna,
                    outgroup = NULL,
                    gff = NULL,
                    out_prefix = "prewas",
-                   anc = TRUE)
+                   anc = TRUE){
 
   # Check inputs ---------------------------------------------------------------
   inputs <- format_inputs(dna, tree, outgroup, gff)
