@@ -15,8 +15,7 @@ prewas <- function(dna,
                    outgroup = NULL,
                    gff = NULL,
                    out_prefix = "prewas",
-                   anc = TRUE,
-                   intergenic_own_gene = TRUE){ ## LET'S THINK OF A BETTER NAME FOR THIS ARGUMENT
+                   anc = TRUE)
 
   # Check inputs ---------------------------------------------------------------
   inputs <- format_inputs(dna, tree, outgroup, gff)
@@ -73,11 +72,6 @@ prewas <- function(dna,
   if(!is.null(gff_mat)){
     # overlapping genes ----------------------------------------------------------
     bin_mat = dup_snps_in_overlapping_genes(bin_mat, gff_mat)
-    if(!intergenic_own_gene){
-    # assign intergenic variants to upstream genes -------------------------------
-
-    }
-
 
     # collapse snps by gene ------------------------------------------------------
     gene_names <- get_gene_names(bin_mat)
