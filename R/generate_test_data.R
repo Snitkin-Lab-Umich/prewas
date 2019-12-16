@@ -1,5 +1,6 @@
 #' Generate multiple phylogenetic trees to use as test data for package.
 #'
+#' @param num_samples Number. The number of tree tips for each generated tree.
 #' @param seed Integer to act as seed for random tree generation process.
 #'
 #' @return
@@ -167,9 +168,11 @@ append_fasta_to_gff <- function(gff_path) {
 
 #' Generate all of the data necessary to test functionality of prewas package.
 #'
-#' @param num_samples
-#' @param seq_length
-#' @param seed Numeric
+#' @param num_samples Number. The number of samples to generate. Defaults to 14.
+#' @param seq_length Number. Length of the generated example sequence. Defauls
+#'   to 1000.
+#' @param seed Number. Number used to seed the random tree generator. Defaults
+#'   to 1.
 #'
 #' @return
 #' @export
