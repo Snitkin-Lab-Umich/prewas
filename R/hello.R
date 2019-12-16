@@ -1,4 +1,4 @@
-
+# Added a dummy line
 # Hello, world!
 #
 # This is an example function named 'hello'
