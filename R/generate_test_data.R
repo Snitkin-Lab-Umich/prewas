@@ -85,10 +85,14 @@ save_tree <- function(tree, file_prefix){
 #' Given a dna sequence, generate a dummy GFF3 formatted file.
 #'
 #' @param phydat_obj phyDat object. DNA alignment.
+#' @param seq_length Number. Length of the sequence to be generated.
 #'
 #' @return
 #' @export
 generate_test_gff <- function(phydat_obj, seq_length){
+  check_is_number(seq_length)
+  check_is_this_class(phydat_obj, "phyDat")
+
   num_cds_rows <- 100
   num_noncds_rows <- 10
   avg_gene_length <- seq_length / num_cds_rows
