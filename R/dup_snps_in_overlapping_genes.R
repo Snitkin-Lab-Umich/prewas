@@ -1,16 +1,16 @@
-#' Title
+#' Duplicate SNPs found in overlapping gene pairs.
 #'
-#' @param bin_mat
-#' @param gff_mat
+#' @param bin_mat Matrix. Binary matrix.
+#' @param gff_mat Matrix. GFF information.
 #'
-#' @return
+#' @return bin_mat_dup: Matrix.
 #' @export
 #'
-#' @examples
-
 dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
+  check_is_this_class(bin_mat, "matrix")
+  check_is_this_class(gff_mat, "matrix")
 
-  # pos of SNP
+  # position of SNP
   pos <- gsub('[.].*$', '', row.names(bin_mat))
 
   # what genes are present at the pos?

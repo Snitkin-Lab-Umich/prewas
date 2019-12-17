@@ -1,16 +1,15 @@
-
 #' Read in tree
 #'
 #' If \code{tree} is a string, \code{read_in_tree} reads in the tree as an `ape
 #' phylo` object. Otherwise, \code{read_in_tree} checks to see if the object is
 #' an `ape phylo` object.
 #'
-#' @param tree tree path or `ape phylo` object
+#' @param tree Character or or `ape phylo`. If character: path to a tree file.
+#'   file.
 #'
-#' @return `ape phylo` object
+#' @return tree: `ape phylo`
 #' @export
 #'
-#' @examples
 read_in_tree <- function(tree){
   if (is_file(tree)) {
     # LOAD IN TREE
@@ -56,11 +55,11 @@ build_tree = function(mat){
 #' roots the tree. If the tree is rooted and no outgroup is provided, returns
 #' the tree as is.
 #'
-#' @param tree phylogenetic tree or file path of tree
-#' @param outgroup tip name of outgroup in phylogeny. If NULL, midpoint root if
-#'   not rooted
+#' @param tree Character or phylo. If character: path to a tree file.
+#' @param outgroup Character. Tip name of outgroup in phylogeny. If NULL,
+#'   midpoint root if not rooted
 #'
-#' @return rooted tree without outgroup
+#' @return tree: phylo. Rooted tree without outgroup.
 #' @export
 #'
 #' @examples
@@ -94,15 +93,16 @@ root_tree <- function(tree, outgroup = NULL){
 #' @param tree path to tree file or ape phylo object
 #' @param mat variant matrix (columns are samples, rows are variants)
 #'
-#' @return subsetted tree (\code{ape phylo} object) and matrix
+#' @return List with two objects:
+#'   tree: \code{ape phylo}.
+#'   mat: Matrix.
 #' @export
 #'
-#' @examples
-subset_tree_and_matrix = function(tree,mat){
+subset_tree_and_matrix = function(tree, mat){
   tree <- read_in_tree(tree)
-  check_is_this_class(mat,'matrix')
+  check_is_this_class(mat, 'matrix')
   # return if tree tip labels and variant matrix column names match
-  if(setequal(tree$tip.label,colnames(mat))){
+  if(setequal(tree$tip.label, colnames(mat))){
     # order matrix same as tree tip labels
     mat <- mat[, tree$tip.label]
     return(list(tree = tree, mat = mat))
