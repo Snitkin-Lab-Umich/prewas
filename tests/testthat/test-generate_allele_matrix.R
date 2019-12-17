@@ -28,3 +28,8 @@ test_that("Check that replace_non_ATGC_with_N() returns matrix when given valid 
 })
 
 # identify_variant_sites ------------------------------------------------------#
+test_that("Check that identify_variant_sites() returns correct rows when given valid input", {
+  allele_mat <- matrix(c("A", "A", "A", "C", "C", "T"), nrow = 3, ncol = 4)
+ # TODO write this when I remember the correct orientation of the allele mat
+})
+
