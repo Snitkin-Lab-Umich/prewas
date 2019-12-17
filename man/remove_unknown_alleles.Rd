@@ -7,8 +7,23 @@
 remove_unknown_alleles(allele_mat, alleles, ar_results)
 }
 \arguments{
-\item{ar_results}{}
+\item{allele_mat}{Matrix. Allele matrix. Rows are variants, columns are
+samples.}
+
+\item{alleles}{TODO: OBJECT TYPE? reference alleles (ancestral alleles or
+major alleles)}
+
+\item{ar_results}{Data.frame. Results from ancestral reconstruction}
+}
+\value{
+A list of three objects:
+  \describe{
+    \item{allele_mat}{Matrix.}
+    \item{ar_results}{Data.frame.}
+    \item{removed}{Character. Names of removed samples.}
+  }
 }
 \description{
-Remove rows from variant matrix where the ancestral state is unknown (- or N)
+Removes rows from variant matrix where the reference allele (ancestral allele
+or major allele) is unknown (- or N).
 }

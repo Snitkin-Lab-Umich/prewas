@@ -7,15 +7,19 @@
 root_tree(tree, outgroup = NULL)
 }
 \arguments{
-\item{tree}{phylogenetic tree or file path of tree}
+\item{tree}{Character or phylo. If character: path to a tree file.}
 
-\item{outgroup}{tip name of outgroup in phylogeny. If NULL, midpoint root if not rooted}
+\item{outgroup}{Character. Tip name of outgroup in phylogeny. If NULL,
+midpoint root if not rooted}
 }
 \value{
-rooted tree without outgroup
+tree: phylo. Rooted tree without outgroup.
 }
 \description{
-Root tree based on outgroup. If outgroup is provided, root based on outgroup. If outgroup is null and the tree isn't rooted, midpoint root tree. If tree is rooted and no outgroup is provided, return tree as is.
+Roots tree based on an outgroup. If the outgroup is provided, roots based on
+the outgroup. If the outgroup is null and the tree isn't rooted, midpoint
+roots the tree. If the tree is rooted and no outgroup is provided, returns
+the tree as is.
 }
 \examples{
 tree = ape::rcoal(100)

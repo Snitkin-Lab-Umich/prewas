@@ -7,7 +7,7 @@
 #' @param tree Character or or `ape phylo`. If character: path to a tree file.
 #'   file.
 #'
-#' @return tree: `ape phylo`
+#' @return tree: `ape phylo`.
 #' @export
 #'
 read_in_tree <- function(tree){
@@ -94,8 +94,10 @@ root_tree <- function(tree, outgroup = NULL){
 #' @param mat variant matrix (columns are samples, rows are variants)
 #'
 #' @return List with two objects:
-#'   tree: \code{ape phylo}.
-#'   mat: Matrix.
+#'   \describe{
+#'     \item{tree}{\code{ape phylo}.}
+#'     \item{mat}{Matrix.}
+#'   }
 #' @export
 #'
 subset_tree_and_matrix = function(tree, mat){

@@ -7,8 +7,25 @@
 generate_test_trees(num_samples, seed)
 }
 \arguments{
+\item{num_samples}{Number. The number of tree tips for each generated tree.}
+
 \item{seed}{Integer to act as seed for random tree generation process.}
+}
+\value{
+List with six elements:
+  \describe{
+    \item{tree_with_og_unrooted}{Phylo.}
+    \item{tree_with_og_rooted}{Phylo.}
+    \item{tree_no_og_rooted}{Phylo.}
+    \item{tree_no_og_unrooted}{Phylo.}
+    \item{tree_bad_labels}{Phylo.}
+    \item{clonal_tree}{Phylo.}
+    \item{diverse_tree}{Phylo.}
+ }
 }
 \description{
 Generate multiple phylogenetic trees to use as test data for package.
+}
+\examples{
+generate_test_trees(5, 1)
 }

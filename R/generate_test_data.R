@@ -4,13 +4,15 @@
 #' @param seed Integer to act as seed for random tree generation process.
 #'
 #' @return List with six elements:
-#'   tree_with_og_unrooted: Phylo
-#'   tree_with_og_rooted: Phylo
-#'   tree_no_og_rooted: Phylo
-#'   tree_no_og_unrooted: Phylo
-#'   tree_bad_labels: Phylo
-#'   clonal_tree: Phylo
-#'   diverse_tree: Phylo
+#'   \describe{
+#'     \item{tree_with_og_unrooted}{Phylo.}
+#'     \item{tree_with_og_rooted}{Phylo.}
+#'     \item{tree_no_og_rooted}{Phylo.}
+#'     \item{tree_no_og_unrooted}{Phylo.}
+#'     \item{tree_bad_labels}{Phylo.}
+#'     \item{clonal_tree}{Phylo.}
+#'     \item{diverse_tree}{Phylo.}
+#'  }
 #' @export
 #'
 #' @examples
@@ -61,7 +63,7 @@ generate_test_trees <- function(num_samples, seed){
 #' @param seed Number. Seed for set.seed() function.
 #' @param seq_length Number. Length of the generated DNA sequence.
 #'
-#' @return dna_seq phyDat.
+#' @return dna_seq: phyDat.
 #' @export
 generate_test_dna <- function(tree, seq_length, seed){
   set.seed(seed)
@@ -104,7 +106,7 @@ save_tree <- function(tree, file_prefix){
 #' @param phydat_obj phyDat object. DNA alignment.
 #' @param seq_length Number. Length of the sequence to be generated.
 #'
-#' @return gff: Matrix
+#' @return gff: Matrix.
 #' @export
 generate_test_gff <- function(phydat_obj, seq_length){
   check_is_number(seq_length)

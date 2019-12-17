@@ -2,13 +2,21 @@
 % Please edit documentation in R/generate_test_data.R
 \name{generate_test_data}
 \alias{generate_test_data}
-\title{Generate all of the data necessary to test functionality of prewas package.}
+\title{Generate and save all of the data necessary to test functionality of prewas
+package.}
 \usage{
-generate_test_data(num_samples, seq_length, seed)
+generate_test_data(num_samples = 14, seq_length = 1000, seed = 1)
 }
 \arguments{
-\item{seed}{Numeric}
+\item{num_samples}{Number. The number of samples to generate. Defaults to 14.}
+
+\item{seq_length}{Number. Length of the generated example sequence. Defauls
+to 1000.}
+
+\item{seed}{Number. Number used to seed the random tree generator. Defaults
+to 1.}
 }
 \description{
-Generate all of the data necessary to test functionality of prewas package.
+Generate and save all of the data necessary to test functionality of prewas
+package.
 }

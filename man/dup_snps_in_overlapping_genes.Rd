@@ -2,13 +2,18 @@
 % Please edit documentation in R/dup_snps_in_overlapping_genes.R
 \name{dup_snps_in_overlapping_genes}
 \alias{dup_snps_in_overlapping_genes}
-\title{Title}
+\title{Duplicate SNPs found in overlapping gene pairs.}
 \usage{
 dup_snps_in_overlapping_genes(bin_mat, gff_mat)
 }
 \arguments{
-\item{gff_mat}{}
+\item{bin_mat}{Matrix. Binary matrix.}
+
+\item{gff_mat}{Matrix. GFF information.}
+}
+\value{
+bin_mat_dup: Matrix.
 }
 \description{
-Title
+Duplicate SNPs found in overlapping gene pairs.
 }

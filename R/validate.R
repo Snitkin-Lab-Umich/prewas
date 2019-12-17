@@ -3,15 +3,13 @@
 #' Doesn't return anything. Gives an error message if input is not a number.
 #'
 #' @param num Number
-#' @example
+#' @examples
 #' check_is_number(100)
-#'
 check_is_number <- function(num){
   if (!class(num) %in% c("numeric")) {
     stop("Input must be a numeric")
   }
 }
-
 
 #' Tests if input object is a file.
 #'
@@ -33,10 +31,10 @@ is_file <- function(obj){
 #' @param obj Any R object.
 #' @param current_class String. Name of the expected class of the R object.
 #'
-#' @return is_this_class Logical
-#' @example
+#' @return is_this_class: Logical.
+#' @examples
 #' object <- "example"
-#' is_this_class(object, "character)
+#' is_this_class(object, "character")
 is_this_class <- function(obj, current_class){
   if (class(current_class) != "character") {
     stop("Current_class is expected to be a string describing a class")
@@ -71,7 +69,7 @@ is_this_class <- function(obj, current_class){
 #'
 #' @examples
 #' object <- "example"
-#' check_is_this_class(object, "character)
+#' check_is_this_class(object, "character")
 check_is_this_class <- function(obj, current_class){
   if (class(current_class) != "character") {
     stop("Current_class is expected to be a string describing a class")
@@ -82,7 +80,8 @@ check_is_this_class <- function(obj, current_class){
                  "logical",
                  "complex",
                  "phylo",
-                 "DNAbin")
+                 "DNAbin",
+                 "phyDat")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }
@@ -99,7 +98,7 @@ check_is_this_class <- function(obj, current_class){
 #'
 #' @param tree Phylogenetic tree.
 #'
-#' @example
+#' @examples
 #' tree <- ape::rtree(10)
 #' check_is_tree(tree)
 check_is_tree <- function(tree){
@@ -137,12 +136,13 @@ check_tree_is_rooted <- function(tree){
 #' @param gff NULL or character. If character it should be a path to the GFF
 #'   file.
 #'
-#' @return A list of 4 elements:
-#'   dna: vcfR
-#'   tree: phylo
-#'   outgroup: character
-#'   gff: data.frame
-#'
+#' @return A list with the following four elements:
+#'   \describe{
+#'     \item{dna}{vcfR}
+#'     \item{tree}{phylo}
+#'     \item{outgroup}{character}
+#'     \item{gff}{data.frame}
+#'   }
 format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
   # DNA
   if (is.null(dna)) {
@@ -218,7 +218,7 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 #'
 #' @param gff_path Character. Path to GFF file.
 #'
-#' @return gff. data.frame
+#' @return gff: Data.frame.
 #' @export
 #'
 read_gff <- function(gff_path){
@@ -245,7 +245,7 @@ read_gff <- function(gff_path){
 #'
 #' @param gff Data.frame. Rows = genomic features.
 #'
-#' @return gff Data.frame.
+#' @return gff: Data.frame.
 #' @export
 #'
 subset_gff <- function(gff){
@@ -263,7 +263,7 @@ subset_gff <- function(gff){
 #'
 #' @param gff Data.frame. Rows = genomic features.
 #'
-#' @return gff Data.frame.
+#' @return gff: Data.frame.
 #' @export
 #'
 clean_up_cds_name_from_gff <- function(gff){
@@ -281,7 +281,7 @@ clean_up_cds_name_from_gff <- function(gff){
 #'
 #' @param vcf_path Character. Path to VCF file.
 #'
-#' @return vcf_geno_mat. Matrix.
+#' @return vcf_geno_mat: Matrix.
 #' @export
 #'
 load_vcf_file <- function(vcf_path) {

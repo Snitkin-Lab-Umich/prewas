@@ -7,10 +7,10 @@
 save_tree(tree, file_prefix)
 }
 \arguments{
-\item{tree}{Phylogenetic tree.}
+\item{tree}{Phylo.}
 
-\item{file_prefix}{String. File name (without .fna).}
+\item{file_prefix}{Character. File name (without .tree).}
 }
 \description{
-Save a tree to a .tree file.
+Does not return anything in R console.
 }

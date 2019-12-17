@@ -5,16 +5,17 @@
 #' \code{\link[ape]{ace}} from breaking. A warning is thrown. Returns a tree
 #' with all positive edge lengths.
 #'
-#' @param tree (\code{ape phylo}) object
+#' @param tree (\code{ape phylo}).
 #'
-#' @return tree (\code{ape phylo}) object with all positive edge lengths
+#' @return tree: (\code{ape phylo}). Tree now has only positive edge lengths.
 #' @export
 #'
 make_all_tree_edges_positive <- function(tree){
   check_is_tree(tree)
   if (sum(tree$edge.length <= 0) > 0) {
     warning('All non-positive branch lengths changed to small positive number to be able to perform ancestral reconstruction.')
-    # Change any edge lengths that are zero to a very small number (so ancestral reconstruction doesn't break)
+    # Change any edge lengths that are zero to a very small number (so ancestral
+    # reconstruction doesn't break)
     tree$edge.length[tree$edge.length <= 0] =
       min(tree$edge.length[tree$edge.length > 0]) / 1000
   }
@@ -23,14 +24,14 @@ make_all_tree_edges_positive <- function(tree){
 
 #' Get major alleles
 #'
-#' Finds the major allele (most common allele) for each variant position in an allele matrix.
+#' Finds the major allele (most common allele) for each variant position in an
+#' allele matrix.
 #'
 #' @param allele_mat Matrix. Allele matrix.
 #'
-#' @return major_allele: major allele for each position
+#' @return major_allele: major allele for each position.
 #' @export
 #'
-#' @examples
 get_major_alleles <- function(allele_mat){
   check_is_this_class(allele_mat, "matrix")
   major_allele <- apply(allele_mat, 1, function(x) {
@@ -51,9 +52,12 @@ get_major_alleles <- function(allele_mat){
 #' @param mat Matrix. Allele matrix. Rows are variants, columns are samples.
 #'
 #' @return list of two elements:
-#'   ar_results: Data.frame. Data.frame of most likely ancestral allele for each
-#'   row in allele matrix and probability that that is the ancestral state.
-#'   tree: phylo. Tree used for ancestral state reconstruction.
+#'   \describe{
+#'     \item{ar_results}{Data.frame. Data.frame of most likely ancestral allele
+#'     for each row in allele matrix and probability that that is the ancestral
+#'     state.}
+#'     \item{tree}{phylo. Tree used for ancestral state reconstruction.}
+#'   }
 #' @export
 #'
 get_ancestral_alleles <- function(tree, mat){
@@ -100,9 +104,11 @@ get_ancestral_alleles <- function(tree, mat){
 #' @param ar_results Data.frame. Results from ancestral reconstruction
 #'
 #' @return A list of three objects:
-#'   allele_mat: Matrix.
-#'   ar_results: Data.frame.
-#'   removed: Character. Names of removed samples.
+#'   \describe{
+#'     \item{allele_mat}{Matrix.}
+#'     \item{ar_results}{Data.frame.}
+#'     \item{removed}{Character. Names of removed samples.}
+#'   }
 #' @export
 #'
 remove_unknown_alleles <- function(allele_mat, alleles, ar_results){

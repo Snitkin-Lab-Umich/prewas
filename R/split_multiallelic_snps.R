@@ -8,9 +8,11 @@
 #' @param ar_results Data.frame.
 #'
 #' @return A list with three elements:
-#'   mat_split: Matrix.
-#'   ar_results_split: Data.frame.
-#'   split_rows_flag: Numeric.
+#'   \describe{
+#'     \item{mat_split}{Matrix.}
+#'     \item{ar_results_split}{Data.frame.}
+#'     \item{split_rows_flag}{Numeric.}
+#'   }
 #' @export
 #'
 split_multi_to_biallelic_snps = function(mat, ar_results){

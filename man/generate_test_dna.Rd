@@ -13,6 +13,9 @@ generate_test_dna(tree, seq_length, seed)
 
 \item{seed}{Number. Seed for set.seed() function.}
 }
+\value{
+dna_seq: phyDat.
+}
 \description{
 Given a phylogenetic tree generate plausible DNA sequences for each tip.
 }

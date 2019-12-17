@@ -2,13 +2,18 @@
 % Please edit documentation in R/generate_test_data.R
 \name{generate_test_gff}
 \alias{generate_test_gff}
-\title{Given a dna sequence, generate a dummy GFF3 formatted file.}
+\title{Given a dna sequence, generate a GFF3 formatted file.}
 \usage{
 generate_test_gff(phydat_obj, seq_length)
 }
 \arguments{
 \item{phydat_obj}{phyDat object. DNA alignment.}
+
+\item{seq_length}{Number. Length of the sequence to be generated.}
+}
+\value{
+gff: Matrix.
 }
 \description{
-Given a dna sequence, generate a dummy GFF3 formatted file.
+Given a dna sequence, generate a GFF3 formatted file.
 }

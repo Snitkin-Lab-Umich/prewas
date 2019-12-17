@@ -7,10 +7,10 @@
 save_fasta(phydat_obj, file_prefix)
 }
 \arguments{
-\item{phydat_obj}{DNA sequence. phyDat object.}
+\item{phydat_obj}{phyDat. DNA sequence.}
 
-\item{file_prefix}{String. File name (without .fna).}
+\item{file_prefix}{Character. File name (without .fna).}
 }
 \description{
-Save a fasta file given a phyDat sequence object.
+Does not return anything in R console.
 }

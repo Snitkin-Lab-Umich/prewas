@@ -3,7 +3,7 @@
 #' @description Prepocess multiallelic sites, variants in overlapping genes, and
 #'   reference all variants to either the ancestral or major allele.
 #'
-#' @param dna Charactter. Required input. A path to to a VCF4.1 file.
+#' @param dna Character. Required input. A path to to a VCF4.1 file.
 #' @param tree Phylo or Character. Optional input. Either a phylogenetic tree or
 #'   a path to a file containing a phylogenetic tree. Defaults to NULL.
 #' @param outgroup Character. Optional input. Either a path to a file containing
@@ -16,14 +16,15 @@
 #'   TRUE.
 #'
 #' @return An list with the following items:
-#'   allele_mat: Allele matrix.
-#'   bin_mat: Binary matrix.
-#'   ar_results: TODO
-#'   dup: TODO
-#'   gene_mat: Gene matrix.
+#'   \describe{
+#'     \item{allele_mat}{Allele matrix.}
+#'     \item{bin_mat}{Binary matrix.}
+#'     \item{ar_results}{TODO}
+#'     \item{dup}{TODO}
+#'     \item{gene_mat}{Gene matrix.}
+#'   }
+
 #' @export
-#'
-#' @example TODO
 #'
 prewas <- function(dna,
                    tree = NULL,

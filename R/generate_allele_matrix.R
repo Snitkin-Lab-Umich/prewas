@@ -17,7 +17,7 @@ replace_non_ATGC_with_N <- function(mat){
 #'
 #' @param mat Matrix.
 #'
-#' @return rows_to_keep: vector.
+#' @return rows_to_keep: Vector.
 #' @export
 #'
 identify_variant_sites <- function(mat){

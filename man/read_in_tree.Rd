@@ -7,11 +7,14 @@
 read_in_tree(tree)
 }
 \arguments{
-\item{tree}{tree path or ape phylo object}
+\item{tree}{Character or or `ape phylo`. If character: path to a tree file.
+file.}
 }
 \value{
-ape phylo object
+tree: `ape phylo`.
 }
 \description{
-Read in tree
+If \code{tree} is a string, \code{read_in_tree} reads in the tree as an `ape
+phylo` object. Otherwise, \code{read_in_tree} checks to see if the object is
+an `ape phylo` object.
 }
