@@ -1,18 +1,21 @@
-#' Single line to multi line representation of multiallelic sites
+#' Single line to multiline representation of multiallelic sites
 #'
 #' @description Changes the single line representation of multiallelic sites to
-#'   a multi line representation. That is, rows that have N alleles are
+#'   a multiline representation. That is, rows that have N alleles are
 #'   replicated N-1 times.
 #'
-#' @param mat - matrix
-#' @param ar_results - data.frame
+#' @param mat Matrix.
+#' @param ar_results Data.frame.
 #'
-#' @return mat_split, ar_results_split, split_rows_flag
+#' @return A list with three elements:
+#'   mat_split: Matrix.
+#'   ar_results_split: Data.frame.
+#'   split_rows_flag: Numeric.
 #' @export
 #'
-#' @examples
-
 split_multi_to_biallelic_snps = function(mat, ar_results){
+  check_is_this_class(mat, "matrix")
+  check_is_this_class(ar_results, "data.frame")
 
   # GET NUMBER OF UNIQUE ALLELES (A, C, T, or G) AT A POSITION
   num_alleles <- apply(mat, 1, function(row) {

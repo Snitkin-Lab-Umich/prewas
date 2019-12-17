@@ -1,10 +1,3 @@
-
-check_setequal_tree_mat <- function(tip_labels, colnames_mat){
-  if (!setequal(tip_labels, colnames_mat)) {
-    stop('Tree and variant matrix sample names do not match.')
-  }
-}
-
 #' Make tree edges positive
 #'
 #' If tree edges are zero or negative, makes them a very small positive number
@@ -17,8 +10,8 @@ check_setequal_tree_mat <- function(tip_labels, colnames_mat){
 #' @return tree (\code{ape phylo}) object with all positive edge lengths
 #' @export
 #'
-#' @examples
 make_all_tree_edges_positive <- function(tree){
+  check_is_tree(tree)
   if (sum(tree$edge.length <= 0) > 0) {
     warning('All non-positive branch lengths changed to small positive number to be able to perform ancestral reconstruction.')
     # Change any edge lengths that are zero to a very small number (so ancestral reconstruction doesn't break)
@@ -32,13 +25,14 @@ make_all_tree_edges_positive <- function(tree){
 #'
 #' Finds the major allele (most common allele) for each variant position in an allele matrix.
 #'
-#' @param allele_mat allele matrix
+#' @param allele_mat Matrix. Allele matrix.
 #'
-#' @return major allele for each position
+#' @return major_allele: major allele for each position
 #' @export
 #'
 #' @examples
 get_major_alleles <- function(allele_mat){
+  check_is_this_class(allele_mat, "matrix")
   major_allele <- apply(allele_mat, 1, function(x) {
     names(which.max(table(x)))
   })
@@ -53,20 +47,22 @@ get_major_alleles <- function(allele_mat){
 #' likely ancestral allele, its probability, and the tree used to perform
 #' ancestral reconstruction.
 #'
-#' @param tree rooted tree (\code{ape phylo} object)
-#' @param mat allele matrix (rows are variants, columns are samples)
+#' @param tree (\code{ape phylo}). Rooted tree.
+#' @param mat Matrix. Allele matrix. Rows are variants, columns are samples.
 #'
-#' @return list of (1) ar_results: matrix of most likely ancestral allele for
-#'   each row in allele matrix and probability that that is the ancestral state
-#'   and (2) tree: tree used for ancestral state reconstruction
+#' @return list of two elements:
+#'   ar_results: Data.frame. Data.frame of most likely ancestral allele for each
+#'   row in allele matrix and probability that that is the ancestral state.
+#'   tree: phylo. Tree used for ancestral state reconstruction.
 #' @export
 #'
-#' @examples
-get_ancestral_alleles <- function(tree,mat){
-  future::plan(future::multiprocess)
-
+get_ancestral_alleles <- function(tree, mat){
+  check_is_tree(tree)
+  check_is_this_class(mat, "matrix")
   check_setequal_tree_mat(tree$tip.label, colnames(mat))
   check_tree_is_rooted(tree)
+
+  future::plan(future::multiprocess)
 
   # ORDER MATRIX TO MATCH TREE TIP LABELS
   mat <- mat[, tree$tip.label]
@@ -94,17 +90,26 @@ get_ancestral_alleles <- function(tree,mat){
 
 #' Remove unknown ancestral states
 #'
-#' Removes rows from variant matrix where the reference allele (ancestral allele or major allele) is unknown (- or N)
+#' Removes rows from variant matrix where the reference allele (ancestral allele
+#' or major allele) is unknown (- or N).
 #'
-#' @param allele_mat  allele matrix (rows are variants, columns are samples)
-#' @param alleles reference alleles (ancestral alleles or major alleles)
-#' @param ar_results results from ancestral reconstruction
+#' @param allele_mat Matrix. Allele matrix. Rows are variants, columns are
+#'   samples.
+#' @param alleles TODO: OBJECT TYPE? reference alleles (ancestral alleles or
+#'   major alleles)
+#' @param ar_results Data.frame. Results from ancestral reconstruction
 #'
-#' @return
+#' @return A list of three objects:
+#'   allele_mat: Matrix.
+#'   ar_results: Data.frame.
+#'   removed: Character. Names of removed samples.
 #' @export
 #'
-#' @examples
 remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
+  check_is_this_class(allele_mat, "matrix")
+  check_is_this_class(ar_results, "data.frame")
+  # TODO Add check here and add class to @param for alleles check_is_this_class(alleles, "")
+
   unknown <- alleles %in% c('-','N')
   removed <- rownames(allele_mat)[unknown]
   if (length(removed) > 0) {
@@ -123,15 +128,17 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
 #' can be used in bGWAS. The reference allele is 0 and the non-reference allele
 #' is 1.
 #'
-#' @param allele_mat allele matrix (split by multi-allelic site)
+#' @param allele_mat Matrix. Allele matrix (split by multi-allelic site)
 #' @param reference_allele vector of alleles that are 0 in binary matrix
 #'   (ancestral allele or major allele)
 #'
-#' @return binary matrix of variant presence/absence
+#' @return bin_mat. Matrix. Binary matrix of variant presence/absence.
 #' @export
 #'
-#' @examples
 make_binary_matrix <- function(allele_mat, reference_allele){
+  # TODO add check_is_this_class() for reference_allele and add object type to @param
+  check_is_this_class(allele_mat, "matrix")
+
   # make matrix of reference allele that's the same size as the allele matrix
   ref_allele_mat <- replicate(ncol(allele_mat), reference_allele)
   # initialize binary matrix
@@ -169,4 +176,3 @@ make_binary_matrix <- function(allele_mat, reference_allele){
   class(bin_mat) <- 'numeric'
   return(bin_mat)
 }
-

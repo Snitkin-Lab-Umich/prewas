@@ -277,6 +277,13 @@ clean_up_cds_name_from_gff <- function(gff){
   return(gff)
 }
 
+#' Read in variant data from a VCF file
+#'
+#' @param vcf_path Character. Path to VCF file.
+#'
+#' @return vcf_geno_mat. Matrix.
+#' @export
+#'
 load_vcf_file <- function(vcf_path) {
   vcf <- vcfR::read.vcfR(file = vcf_path)
   vcf_geno_mat <- vcf@gt[, 2:ncol(vcf@gt), drop = FALSE]
@@ -296,4 +303,19 @@ load_vcf_file <- function(vcf_path) {
     vcf_geno_mat[i, vcf_geno_mat[i, ] == "3"] <- vcf_alt_allele_3
   }
   return(vcf_geno_mat)
+}
+
+#' Confirm that the tree and variant matrix contain exactly the same samples
+#'
+#' Doesn't return anything. Gives error if the two inputs do not match.
+#'
+#' @param tip_labels Character. Vector of tree$tip.labels.
+#' @param colnames_mat Character. Vector of column names from variant matrix.
+#'
+#' @export
+#'
+check_setequal_tree_mat <- function(tip_labels, colnames_mat){
+  if (!setequal(tip_labels, colnames_mat)) {
+    stop('Tree and variant matrix sample names do not match.')
+  }
 }

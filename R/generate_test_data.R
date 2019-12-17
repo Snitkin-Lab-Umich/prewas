@@ -3,10 +3,18 @@
 #' @param num_samples Number. The number of tree tips for each generated tree.
 #' @param seed Integer to act as seed for random tree generation process.
 #'
-#' @return
+#' @return List with six elements:
+#'   tree_with_og_unrooted: Phylo
+#'   tree_with_og_rooted: Phylo
+#'   tree_no_og_rooted: Phylo
+#'   tree_no_og_unrooted: Phylo
+#'   tree_bad_labels: Phylo
+#'   clonal_tree: Phylo
+#'   diverse_tree: Phylo
 #' @export
 #'
 #' @examples
+#' generate_test_trees(5, 1)
 generate_test_trees <- function(num_samples, seed){
   # Make tree
   set.seed(seed)
@@ -53,7 +61,7 @@ generate_test_trees <- function(num_samples, seed){
 #' @param seed Number. Seed for set.seed() function.
 #' @param seq_length Number. Length of the generated DNA sequence.
 #'
-#' @return
+#' @return dna_seq phyDat.
 #' @export
 generate_test_dna <- function(tree, seq_length, seed){
   set.seed(seed)
@@ -63,32 +71,40 @@ generate_test_dna <- function(tree, seq_length, seed){
 
 #' Save a fasta file given a phyDat sequence object.
 #'
-#' @param phydat_obj DNA sequence. phyDat object.
-#' @param file_prefix String. File name (without .fna).
+#' Does not return anything in R console.
+#'
+#' @param phydat_obj phyDat. DNA sequence.
+#' @param file_prefix Character. File name (without .fna).
 #'
 #' @export
 save_fasta <- function(phydat_obj, file_prefix){
+  check_is_this_class(phydat_obj, "phyDat")
+  check_is_this_class(file_prefix, "character")
   file_name <- paste0("data/", file_prefix, ".fna")
   phangorn::write.phyDat(x = phydat_obj, file = file_name, format = "fasta")
 }
 
 #' Save a tree to a .tree file.
 #'
-#' @param tree Phylogenetic tree.
-#' @param file_prefix String. File name (without .fna).
+#' Does not return anything in R console.
+#'
+#' @param tree Phylo.
+#' @param file_prefix Character. File name (without .tree).
 #'
 #' @export
 save_tree <- function(tree, file_prefix){
+  check_is_tree(tree)
+  check_is_this_class(file_prefix, "character")
   file_name <- paste0("data/", file_prefix, ".tree")
   ape::write.tree(phy = tree, file = file_name)
 }
 
-#' Given a dna sequence, generate a dummy GFF3 formatted file.
+#' Given a dna sequence, generate a GFF3 formatted file.
 #'
 #' @param phydat_obj phyDat object. DNA alignment.
 #' @param seq_length Number. Length of the sequence to be generated.
 #'
-#' @return
+#' @return gff: Matrix
 #' @export
 generate_test_gff <- function(phydat_obj, seq_length){
   check_is_number(seq_length)
@@ -146,7 +162,18 @@ generate_test_gff <- function(phydat_obj, seq_length){
   return(gff)
 }
 
+#' Save GFF file
+#'
+#' Doesn't return anything to the R console.
+#'
+#' @param gff Matrix.
+#' @param file_prefix Character. File prefix (without .gff)
+#'
+#' @export
+#'
 save_gff3 <- function(gff, file_prefix){
+  check_is_this_class(gff, "matrix")
+  check_is_this_class(file_prefix, "character")
   first_row <- "##gff-version 3"
   file_name <- paste0("data/", file_prefix, ".gff")
 
@@ -161,12 +188,28 @@ save_gff3 <- function(gff, file_prefix){
                      append = TRUE)
 }
 
+#' Append a fasta entry to a GFF file
+#'
+#' Some incorrectly formatted GFF files have a fasta entry appended to the end.
+#' This file generates and saves such an improper GFF file.
+#'
+#' @param gff_path Character. Path to GFF file.
+#'
+#' @export
+#'
 append_fasta_to_gff <- function(gff_path) {
-  fake_fasta <- ">ATGATGATGATGATGATG"
-  write(fake_fasta, file = gff_path, append = TRUE)
+  check_is_this_class(gff_path, "character")
+  if (is_file(gff_path)) {
+    fake_fasta <- ">ATGATGATGATGATGATG"
+    write(fake_fasta, file = gff_path, append = TRUE)
+  } else {
+    stop("GFF file doesn't not exist")
+  }
+
 }
 
-#' Generate all of the data necessary to test functionality of prewas package.
+#' Generate and save all of the data necessary to test functionality of prewas
+#' package.
 #'
 #' @param num_samples Number. The number of samples to generate. Defaults to 14.
 #' @param seq_length Number. Length of the generated example sequence. Defauls
@@ -174,7 +217,6 @@ append_fasta_to_gff <- function(gff_path) {
 #' @param seed Number. Number used to seed the random tree generator. Defaults
 #'   to 1.
 #'
-#' @return
 #' @export
 #'
 generate_test_data <- function(num_samples = 14, seq_length = 1000, seed = 1){
