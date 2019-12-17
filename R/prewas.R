@@ -15,7 +15,12 @@
 #'   reconstruction. When FALSE prewas calculates the major allele. Defaults to
 #'   TRUE.
 #'
-#' @return
+#' @return An list with the following items:
+#'   allele_mat: Allele matrix.
+#'   bin_mat: Binary matrix.
+#'   ar_results: TODO
+#'   dup: TODO
+#'   gene_mat: Gene matrix.
 #' @export
 #'
 #' @example TODO
