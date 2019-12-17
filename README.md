@@ -16,6 +16,8 @@ install_github("Snitkin-Lab-Umich/prewas")
 library(prewas)
 ```
 
+Note: this package depends on this package depends on R (>= 3.5.0).
+
 ## Documentation
 Documentation (Github wiki + vignette) as well as a publication are forthcoming.
 
