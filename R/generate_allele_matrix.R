@@ -6,7 +6,7 @@
 #' @export
 #'
 replace_non_ATGC_with_N <- function(mat){
-  check_is_this_class(mat, "mat")
+  check_is_this_class(mat, "matrix")
   mat <- apply(mat, 2, toupper)
   mat[is.na(mat)] <- "N"
   mat[!(mat %in% c("A", "T", "G", "C"))] <- "N"
@@ -21,7 +21,7 @@ replace_non_ATGC_with_N <- function(mat){
 #' @export
 #'
 identify_variant_sites <- function(mat){
-  check_is_this_class(mat, "mat")
+  check_is_this_class(mat, "matrix")
   rows_to_keep <- apply(mat, 1, function(row) {
     sum(unique(row) %in% c("A", "T", "G", "C"))
   })
@@ -39,7 +39,7 @@ identify_variant_sites <- function(mat){
 #' @export
 #'
 remove_invariant_sites <- function(mat, rows_to_keep){
-  check_is_this_class(mat, "mat")
+  check_is_this_class(mat, "matrix")
   check_is_this_class(rows_to_keep, "vector")
   mat <- mat[rows_to_keep, , drop = FALSE]
   return(mat)

@@ -45,7 +45,11 @@ is_this_class <- function(obj, current_class){
                  "logical",
                  "complex",
                  "phylo",
-                 "DNAbin")
+                 "DNAbin",
+                 "phyDat",
+                 "matrix",
+                 "data.frame",
+                 "factor")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }
@@ -81,7 +85,10 @@ check_is_this_class <- function(obj, current_class){
                  "complex",
                  "phylo",
                  "DNAbin",
-                 "phyDat")
+                 "phyDat",
+                 "matrix",
+                 "data.frame",
+                 "factor")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }
