@@ -1,11 +1,22 @@
 #' Generate multiple phylogenetic trees to use as test data for package.
 #'
+#' @param num_samples Number. The number of tree tips for each generated tree.
 #' @param seed Integer to act as seed for random tree generation process.
 #'
-#' @return
+#' @return List with six elements:
+#'   \describe{
+#'     \item{tree_with_og_unrooted}{Phylo.}
+#'     \item{tree_with_og_rooted}{Phylo.}
+#'     \item{tree_no_og_rooted}{Phylo.}
+#'     \item{tree_no_og_unrooted}{Phylo.}
+#'     \item{tree_bad_labels}{Phylo.}
+#'     \item{clonal_tree}{Phylo.}
+#'     \item{diverse_tree}{Phylo.}
+#'  }
 #' @export
 #'
 #' @examples
+#' generate_test_trees(5, 1)
 generate_test_trees <- function(num_samples, seed){
   # Make tree
   set.seed(seed)
@@ -29,11 +40,13 @@ generate_test_trees <- function(num_samples, seed){
 
   # Highly clonal
   clonal_tree <- tree_no_og_rooted
-  clonal_tree$edge.length <- stats::rnorm(ape::Nedge(clonal_tree), mean = 0.005, sd = 0.001)
+  clonal_tree$edge.length <-
+    stats::rnorm(ape::Nedge(clonal_tree), mean = 0.005, sd = 0.001)
 
   # Very diverse
   diverse_tree <- tree_no_og_rooted
-  diverse_tree$edge.length <- stats::rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
+  diverse_tree$edge.length <-
+    stats::rnorm(ape::Nedge(diverse_tree), mean = 1.25, sd = 0.25)
 
   return(list("tree_with_og_unrooted" = tree_with_og_unrooted,
               "tree_with_og_rooted" = tree_with_og_rooted,
@@ -50,7 +63,7 @@ generate_test_trees <- function(num_samples, seed){
 #' @param seed Number. Seed for set.seed() function.
 #' @param seq_length Number. Length of the generated DNA sequence.
 #'
-#' @return
+#' @return dna_seq: phyDat.
 #' @export
 generate_test_dna <- function(tree, seq_length, seed){
   set.seed(seed)
@@ -60,36 +73,48 @@ generate_test_dna <- function(tree, seq_length, seed){
 
 #' Save a fasta file given a phyDat sequence object.
 #'
-#' @param phydat_obj DNA sequence. phyDat object.
-#' @param file_prefix String. File name (without .fna).
+#' Does not return anything in R console.
+#'
+#' @param phydat_obj phyDat. DNA sequence.
+#' @param file_prefix Character. File name (without .fna).
 #'
 #' @export
 save_fasta <- function(phydat_obj, file_prefix){
+  check_is_this_class(phydat_obj, "phyDat")
+  check_is_this_class(file_prefix, "character")
   file_name <- paste0("data/", file_prefix, ".fna")
   phangorn::write.phyDat(x = phydat_obj, file = file_name, format = "fasta")
 }
 
 #' Save a tree to a .tree file.
 #'
-#' @param tree Phylogenetic tree.
-#' @param file_prefix String. File name (without .fna).
+#' Does not return anything in R console.
+#'
+#' @param tree Phylo.
+#' @param file_prefix Character. File name (without .tree).
 #'
 #' @export
 save_tree <- function(tree, file_prefix){
+  check_is_tree(tree)
+  check_is_this_class(file_prefix, "character")
   file_name <- paste0("data/", file_prefix, ".tree")
   ape::write.tree(phy = tree, file = file_name)
 }
 
-#' Given a dna sequence, generate a dummy GFF3 formatted file.
+#' Given a dna sequence, generate a GFF3 formatted file.
 #'
 #' @param phydat_obj phyDat object. DNA alignment.
+#' @param seq_length Number. Length of the sequence to be generated.
 #'
-#' @return
+#' @return gff: Matrix.
 #' @export
 generate_test_gff <- function(phydat_obj, seq_length){
+  check_is_number(seq_length)
+  check_is_this_class(phydat_obj, "phyDat")
+
   num_cds_rows <- 100
   num_noncds_rows <- 10
-  avg_gene_length <- seq_length/num_cds_rows
+  avg_gene_length <- seq_length / num_cds_rows
 
   gff <- matrix(".", ncol = 9, nrow = num_cds_rows + num_noncds_rows)
   # seqid
@@ -106,35 +131,51 @@ generate_test_gff <- function(phydat_obj, seq_length){
   gff[seq(2, nrow(gff), 2), 7] <- "-"
 
   # start
-  gff[1:num_cds_rows, 4:5] <- seq(from = 1, to = seq_length, by = avg_gene_length)
+  gff[1:num_cds_rows, 4:5] <-
+    seq(from = 1, to = seq_length, by = avg_gene_length)
 
   # end
-  gff[1:num_cds_rows, 5] <- as.numeric(gff[1:num_cds_rows, 5]) + (avg_gene_length - 1)
+  gff[1:num_cds_rows, 5] <-
+    as.numeric(gff[1:num_cds_rows, 5]) + (avg_gene_length - 1)
 
   # ID
   gff[1:num_cds_rows, 9] <- paste0("ID=gene_", 1:num_cds_rows)
 
   # Now make some overlapping genes:
   gff[1:3, 4] <- 1
-  gff[1:3, 5] <- 5*avg_gene_length
+  gff[1:3, 5] <- 5 * avg_gene_length
 
 
   # Add non-CDS labels
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 3] <- 'tRNA'
+  gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 3] <- 'tRNA'
 
   # non-CDS start
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 4] <- sample(1:(seq_length - 11), 10)
+  gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 4] <-
+    sample(1:(seq_length - 11), 10)
 
   # non-CDS end
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 5] <- as.numeric(gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 4]) + 10
+  gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 5] <-
+    as.numeric(gff[((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)), 4]) + 10
 
   # non-CDS ID
-  gff[((num_cds_rows+1):(num_cds_rows+num_noncds_rows)), 9] <- paste0("ID=tRNA_", ((num_cds_rows+1):(num_cds_rows+num_noncds_rows)))
+  gff[((num_cds_rows+1):(num_cds_rows + num_noncds_rows)), 9] <-
+    paste0("ID=tRNA_", ((num_cds_rows + 1):(num_cds_rows + num_noncds_rows)))
 
   return(gff)
 }
 
+#' Save GFF file
+#'
+#' Doesn't return anything to the R console.
+#'
+#' @param gff Matrix.
+#' @param file_prefix Character. File prefix (without .gff)
+#'
+#' @export
+#'
 save_gff3 <- function(gff, file_prefix){
+  check_is_this_class(gff, "matrix")
+  check_is_this_class(file_prefix, "character")
   first_row <- "##gff-version 3"
   file_name <- paste0("data/", file_prefix, ".gff")
 
@@ -149,18 +190,35 @@ save_gff3 <- function(gff, file_prefix){
                      append = TRUE)
 }
 
+#' Append a fasta entry to a GFF file
+#'
+#' Some incorrectly formatted GFF files have a fasta entry appended to the end.
+#' This file generates and saves such an improper GFF file.
+#'
+#' @param gff_path Character. Path to GFF file.
+#'
+#' @export
+#'
 append_fasta_to_gff <- function(gff_path) {
-  fake_fasta <- ">ATGATGATGATGATGATG"
-  write(fake_fasta, file = gff_path, append = TRUE)
+  check_is_this_class(gff_path, "character")
+  if (is_file(gff_path)) {
+    fake_fasta <- ">ATGATGATGATGATGATG"
+    write(fake_fasta, file = gff_path, append = TRUE)
+  } else {
+    stop("GFF file doesn't not exist")
+  }
+
 }
 
-#' Generate all of the data necessary to test functionality of prewas package.
+#' Generate and save all of the data necessary to test functionality of prewas
+#' package.
 #'
-#' @param num_samples
-#' @param seq_length
-#' @param seed Numeric
+#' @param num_samples Number. The number of samples to generate. Defaults to 14.
+#' @param seq_length Number. Length of the generated example sequence. Defauls
+#'   to 1000.
+#' @param seed Number. Number used to seed the random tree generator. Defaults
+#'   to 1.
 #'
-#' @return
 #' @export
 #'
 generate_test_data <- function(num_samples = 14, seq_length = 1000, seed = 1){
@@ -192,17 +250,16 @@ generate_test_data <- function(num_samples = 14, seq_length = 1000, seed = 1){
   append_fasta_to_gff("data/fasta_appended.gff")
 
   # Load in vcf and save .rda
-  vcf_file = vcfR::read.vcfR('data/clonal.vcf')
+  vcf_file <- vcfR::read.vcfR('data/clonal.vcf')
   save(vcf_file, file = 'data/vcf.rda')
 
   # Save all other .rda
   save(gff, file = 'data/gff.rda')
   write(x = "t1", file = "data/outgroup.txt")
   write(x = "A", file = "data/bad_outgroup.txt")
-  og = "t1"
-  save(og, file = 'data/outgroup.rda')
+  outgroup <- "t1"
+  save(outgroup, file = 'data/outgroup.rda')
   tree = trees$clonal_tree
   save(tree, file = 'data/tree.rda')
   save(clonal_dna, file = 'data/fasta.rda')
 }
-

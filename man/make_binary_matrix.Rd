@@ -7,10 +7,17 @@
 make_binary_matrix(allele_mat, reference_allele)
 }
 \arguments{
-\item{allele_mat}{allele matrix (split by multi-allelic site)}
+\item{allele_mat}{Matrix. Allele matrix (split by multi-allelic site)}
 
-\item{reference_allele}{vector of alleles that are 0 in binary matrix (ancestral allele or major allele)}
+\item{reference_allele}{vector of alleles that are 0 in binary matrix
+(ancestral allele or major allele)}
+}
+\value{
+bin_mat. Matrix. Binary matrix of variant presence/absence.
 }
 \description{
-Make binary matrix from allele matrix
+Returns a binary matrix of variant presence/absence created from an allele
+matrix and a reference allele (ancestral allele or major allele) vector that
+can be used in bGWAS. The reference allele is 0 and the non-reference allele
+is 1.
 }

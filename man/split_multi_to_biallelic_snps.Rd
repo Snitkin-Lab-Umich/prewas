@@ -2,19 +2,25 @@
 % Please edit documentation in R/split_multiallelic_snps.R
 \name{split_multi_to_biallelic_snps}
 \alias{split_multi_to_biallelic_snps}
-\title{Single line to multi line representation of multiallelic sites}
+\title{Single line to multiline representation of multiallelic sites}
 \usage{
 split_multi_to_biallelic_snps(mat, ar_results)
 }
 \arguments{
-\item{mat}{- matrix}
+\item{mat}{Matrix.}
 
-\item{ar_results}{- data.frame}
+\item{ar_results}{Data.frame.}
 }
 \value{
-mat_split, ar_results_split, split_rows_flag
+A list with three elements:
+  \describe{
+    \item{mat_split}{Matrix.}
+    \item{ar_results_split}{Data.frame.}
+    \item{split_rows_flag}{Numeric.}
+  }
 }
 \description{
-Changes the single line representation of multiallelic sites to a multi line
-representation. That is, rows that have N alleles are replicated N-1 times.
+Changes the single line representation of multiallelic sites to
+  a multiline representation. That is, rows that have N alleles are
+  replicated N-1 times.
 }

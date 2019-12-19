@@ -2,14 +2,38 @@
 % Please edit documentation in R/prewas.R
 \name{prewas}
 \alias{prewas}
-\title{Title}
+\title{Preprocess SNPs before GWAS}
 \usage{
-prewas(dna, tree, outgroup = NULL, gff = NULL, out_prefix = "prewas",
-  anc = TRUE)
+prewas(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE)
 }
 \arguments{
-\item{anc}{}
+\item{dna}{Character. Required input. A path to to a VCF4.1 file.}
+
+\item{tree}{Phylo or Character. Optional input. Either a phylogenetic tree or
+a path to a file containing a phylogenetic tree. Defaults to NULL.}
+
+\item{outgroup}{Character. Optional input. Either a path to a file containing
+only the outgroup name or a string of the outgroup name. Must be a tip in
+the phylogenetic tree. Defaults to NULL.}
+
+\item{gff}{Character. Optional input. Path to GFF3 file location. Defaults to
+NULL.}
+
+\item{anc}{Logical. Optional input. When TRUE prewas performs ancestral
+reconstruction. When FALSE prewas calculates the major allele. Defaults to
+TRUE.}
+}
+\value{
+An list with the following items:
+  \describe{
+    \item{allele_mat}{Allele matrix.}
+    \item{bin_mat}{Binary matrix.}
+    \item{ar_results}{TODO}
+    \item{dup}{TODO}
+    \item{gene_mat}{Gene matrix.}
+  }
 }
 \description{
-Title
+Prepocess multiallelic sites, variants in overlapping genes, and
+  reference all variants to either the ancestral or major allele.
 }

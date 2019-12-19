@@ -2,16 +2,17 @@
 % Please edit documentation in R/reference_alleles.R
 \name{get_major_alleles}
 \alias{get_major_alleles}
-\title{Get_major_alleles}
+\title{Get major alleles}
 \usage{
 get_major_alleles(allele_mat)
 }
 \arguments{
-\item{allele_mat}{allele matrix}
+\item{allele_mat}{Matrix. Allele matrix.}
 }
 \value{
-major allele for each position
+major_allele: major allele for each position.
 }
 \description{
-Get_major_alleles
+Finds the major allele (most common allele) for each variant position in an
+allele matrix.
 }

@@ -1,9 +1,24 @@
+#' Get names of genes from a binary allele matrix
+#'
+#' @param bin_mat Matrix.
+#'
+#' @return gene_names: Character. Vector of characters. Length = nrow(bin_mat).
+#' @export
+#'
 get_gene_names <- function(bin_mat){
   variant_names <- row.names(bin_mat)
   gene_names <- gsub(".*[|]", "", variant_names)
   return(gene_names)
 }
 
+#' Collapse SNPs into the gene(s) which they are from
+#'
+#' @param bin_mat Matrix.
+#' @param gene_vec Character. Vector of gene names.
+#'
+#' @return gene_mat: Marix.
+#' @export
+#'
 collapse_snps_into_genes <- function(bin_mat, gene_vec){
   if (length(gene_vec) != nrow(bin_mat)) {
     stop("gene_vec should have same length as rows of bin_mat")
@@ -24,5 +39,3 @@ collapse_snps_into_genes <- function(bin_mat, gene_vec){
 
   return(gene_mat)
 }
-
-

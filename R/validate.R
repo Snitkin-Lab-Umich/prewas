@@ -3,13 +3,13 @@
 #' Doesn't return anything. Gives an error message if input is not a number.
 #'
 #' @param num Number
-#'
+#' @examples
+#' check_is_number(100)
 check_is_number <- function(num){
   if (!class(num) %in% c("numeric")) {
     stop("Input must be a numeric")
   }
 }
-
 
 #' Tests if input object is a file.
 #'
@@ -31,7 +31,10 @@ is_file <- function(obj){
 #' @param obj Any R object.
 #' @param current_class String. Name of the expected class of the R object.
 #'
-#' @return is_this_class Logical
+#' @return is_this_class: Logical.
+#' @examples
+#' object <- "example"
+#' is_this_class(object, "character")
 is_this_class <- function(obj, current_class){
   if (class(current_class) != "character") {
     stop("Current_class is expected to be a string describing a class")
@@ -42,7 +45,11 @@ is_this_class <- function(obj, current_class){
                  "logical",
                  "complex",
                  "phylo",
-                 "DNAbin")
+                 "DNAbin",
+                 "phyDat",
+                 "matrix",
+                 "data.frame",
+                 "factor")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }
@@ -62,10 +69,11 @@ is_this_class <- function(obj, current_class){
 #' @param obj Any R object.
 #' @param current_class Character string. Name of R class
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#' object <- "example"
+#' check_is_this_class(object, "character")
 check_is_this_class <- function(obj, current_class){
   if (class(current_class) != "character") {
     stop("Current_class is expected to be a string describing a class")
@@ -76,7 +84,11 @@ check_is_this_class <- function(obj, current_class){
                  "logical",
                  "complex",
                  "phylo",
-                 "DNAbin")
+                 "DNAbin",
+                 "phyDat",
+                 "matrix",
+                 "data.frame",
+                 "factor")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }
@@ -90,25 +102,58 @@ check_is_this_class <- function(obj, current_class){
 #'
 #' Doesn't return anything. Gives an error message if the object is not a
 #' 'phylo' object.
+#'
 #' @param tree Phylogenetic tree.
-check_is_tree = function(tree){
+#'
+#' @examples
+#' tree <- ape::rtree(10)
+#' check_is_tree(tree)
+check_is_tree <- function(tree){
   if (!is_this_class(tree, 'phylo')) {
     stop('Input requires either a path to a tree file or an ape phylo object')
   }
 }
 
-check_tree_is_rooted = function(tree){
+
+#' Check that the tree has a root.
+#'
+#' Doesn't return anything. Gives an error message if the object is not a
+#' rooted tree.
+#'
+#' @param tree Phylogenetic tree.
+#'
+#' @examples
+#' tree <- ape::rtree(10)
+#' check_tree_is_rooted(tree)
+check_tree_is_rooted <- function(tree){
   check_is_tree(tree)
   if (!ape::is.rooted(tree)) {
     stop('Tree must be rooted.')
   }
 }
 
+#' Format user-provided inputs to prewas().
+#'
+#' @param dna Character. Path to VCF file containing variant information.
+#' @param tree NULL, character, or phylo. If character it should be a path to
+#'   the tree file.
+#' @param outgroup NULL or character. If character it should be either a string
+#'   naming the outgroup in the dataset or a path to a file containing the
+#'   outgroup name.
+#' @param gff NULL or character. If character it should be a path to the GFF
+#'   file.
+#'
+#' @return A list with the following four elements:
+#'   \describe{
+#'     \item{dna}{vcfR}
+#'     \item{tree}{phylo}
+#'     \item{outgroup}{character}
+#'     \item{gff}{data.frame}
+#'   }
 format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
-
   # DNA
   if (is.null(dna)) {
-    stop("Must include a VCF file")
+    stop("User must provide a VCF file")
   } else {
     if (is_file(dna)) {
       # If DNA stored in VCF file, read in and convert to allele matrix
@@ -120,7 +165,7 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
   # Tree
   if (is.null(tree)) {
-    tree = build_tree(dna)
+    tree <- build_tree(dna)
   } else {
       if (is_file(tree)) {
         # If tree stored as .tree file, read in
@@ -153,13 +198,19 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
 
   # GFF
   if (!is.null(gff)) {
-    gff <- read_gff(gff)
+    if (is_file(gff)) {
+      gff <- read_gff(gff)
 
-    #subset gff on CDS
-    gff <- subset_gff(gff)
+      #subset gff on CDS
+      gff <- subset_gff(gff)
 
-    #get gene name from column 9
-    gff <- clean_up_cds_name_from_gff(gff)
+      #get gene name from column 9
+      gff <- clean_up_cds_name_from_gff(gff)
+    } else {
+      gff <- NULL
+      print("Prewas only accepts a gff file path as the GFF input.")
+    }
+
   }
 
 
@@ -170,6 +221,13 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
   return(results)
 }
 
+#' Read in a GFF file given a file path
+#'
+#' @param gff_path Character. Path to GFF file.
+#'
+#' @return gff: Data.frame.
+#' @export
+#'
 read_gff <- function(gff_path){
   # TODO add ability to load in a gff object, not just take in a path
   gff <- utils::read.table(gff_path,
@@ -190,6 +248,13 @@ read_gff <- function(gff_path){
   return(gff)
 }
 
+#' Keep only GFF features that are in CDS regions.
+#'
+#' @param gff Data.frame. Rows = genomic features.
+#'
+#' @return gff: Data.frame.
+#' @export
+#'
 subset_gff <- function(gff){
   check_is_this_class(gff, "data.frame")
   # TODO add a check_dimenions() call and write the check_dimensions function
@@ -201,6 +266,13 @@ subset_gff <- function(gff){
   return(gff)
 }
 
+#' Remove ID prefix from CDS feature descriptions (e.g. gene names).
+#'
+#' @param gff Data.frame. Rows = genomic features.
+#'
+#' @return gff: Data.frame.
+#' @export
+#'
 clean_up_cds_name_from_gff <- function(gff){
   check_is_this_class(gff, "data.frame")
   # TODO add a check_dimenions() call and write the check_dimensions function
@@ -208,31 +280,17 @@ clean_up_cds_name_from_gff <- function(gff){
   cds_name <- apply(gff, 1, function(row){
     gsub('^ID=', '', row[9]) %>% gsub(';.*$', '', .)
   })
-  gff[, 9] = cds_name
+  gff[, 9] <- cds_name
   return(gff)
 }
 
-read_dna <- function(fasta_path){
-  # TODO -- do we still need this function?
-  dna <- ape::read.dna(file = fasta_path, as.character = TRUE, format = "fasta")
-  colnames(dna) <- 1:ncol(dna)
-  dna <- t(dna)
-  return(dna)
-}
-
-convert_dnabin_to_matrix <- function(dnabin){
-  # TODO -- do we still need this function?
-  dna <- ape::as.alignment(dnabin)
-  dna_mat <- matrix(NA, nrow = nrow(dnabin), ncol = nchar(dna$seq[1]))
-  for (i in 1:nrow(dna_mat)) {
-    dna_mat[i, ] <- strsplit(dna$seq[[i]], "")[[1]]
-  }
-  row.names(dna_mat) <- row.names(dnabin)
-  colnames(dna_mat) <- 1:ncol(dna_mat)
-  dna_mat <- t(dna_mat)
-  return(dna_mat)
-}
-
+#' Read in variant data from a VCF file
+#'
+#' @param vcf_path Character. Path to VCF file.
+#'
+#' @return vcf_geno_mat: Matrix.
+#' @export
+#'
 load_vcf_file <- function(vcf_path) {
   vcf <- vcfR::read.vcfR(file = vcf_path)
   vcf_geno_mat <- vcf@gt[, 2:ncol(vcf@gt), drop = FALSE]
@@ -252,4 +310,19 @@ load_vcf_file <- function(vcf_path) {
     vcf_geno_mat[i, vcf_geno_mat[i, ] == "3"] <- vcf_alt_allele_3
   }
   return(vcf_geno_mat)
+}
+
+#' Confirm that the tree and variant matrix contain exactly the same samples
+#'
+#' Doesn't return anything. Gives error if the two inputs do not match.
+#'
+#' @param tip_labels Character. Vector of tree$tip.labels.
+#' @param colnames_mat Character. Vector of column names from variant matrix.
+#'
+#' @export
+#'
+check_setequal_tree_mat <- function(tip_labels, colnames_mat){
+  if (!setequal(tip_labels, colnames_mat)) {
+    stop('Tree and variant matrix sample names do not match.')
+  }
 }

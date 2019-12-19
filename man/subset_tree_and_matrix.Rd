@@ -11,6 +11,14 @@ subset_tree_and_matrix(tree, mat)
 
 \item{mat}{variant matrix (columns are samples, rows are variants)}
 }
+\value{
+List with two objects:
+  \describe{
+    \item{tree}{\code{ape phylo}.}
+    \item{mat}{Matrix.}
+  }
+}
 \description{
-Subset tree and matrix
+Subsets the tree and variant matrix to include only samples in both. Returns
+the subsetted tree and matrix.
 }

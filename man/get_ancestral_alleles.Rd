@@ -7,13 +7,22 @@
 get_ancestral_alleles(tree, mat)
 }
 \arguments{
-\item{tree}{rooted tree}
+\item{tree}{(\code{ape phylo}). Rooted tree.}
 
-\item{mat}{allele matrix (rows are variants, columns are samples)}
+\item{mat}{Matrix. Allele matrix. Rows are variants, columns are samples.}
 }
 \value{
-list of (1) ar_results: matrix of most likely ancestral allele for each row in allele matrix and probability that that is the ancestral state and (2) tree: tree used for ancestral state reconstruction
+list of two elements:
+  \describe{
+    \item{ar_results}{Data.frame. Data.frame of most likely ancestral allele
+    for each row in allele matrix and probability that that is the ancestral
+    state.}
+    \item{tree}{phylo. Tree used for ancestral state reconstruction.}
+  }
 }
 \description{
-Rereference alleles based on rooted tree
+Finds the most likely ancestral allele for each variant position in an allele
+matrix using \code{\link[ape]{ace}}, given a rooted tree. Returns the most
+likely ancestral allele, its probability, and the tree used to perform
+ancestral reconstruction.
 }

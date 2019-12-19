@@ -15,7 +15,7 @@ test_that("Check that check_is_number() gives error when given non-numeric input
   expect_error(check_is_number(as.factor("foo")))
   # matrix
   expect_error(check_is_number(matrix(0, 1, 1)))
-  # dataframe
+  # data.frame
   expect_error(check_is_number(as.data.frame(matrix(0, 1, 1))))
 })
 
@@ -39,7 +39,7 @@ test_that("Check that is_file() returns FALSE for non-character string inputs", 
   expect_false(is_file(as.factor("foo")))
   # matrix
   expect_false(is_file(matrix(0, 1, 1)))
-  # dataframe
+  # data.frame
   expect_false(is_file(as.data.frame(matrix(0, 1, 1))))
 })
 
@@ -60,8 +60,8 @@ test_that("Check that is_this_class() returns FALSE when inputs mismatch", {
   expect_false(is_this_class("5", "numeric"))
   # numeric / character
   expect_false(is_this_class(5, "character"))
-  # matrix / dataframe
-  expect_false(is_this_class(matrix(0, 1, 1), "dataframe"))
+  # matrix / data.frame
+  expect_false(is_this_class(matrix(0, 1, 1), "data.frame"))
   # factor / character
   expect_false(is_this_class(as.factor("foo"), "character"))
 })
@@ -83,8 +83,8 @@ test_that("Check that check_is_this_class() gives error when given mismatching i
   expect_error(check_is_this_class(5, "character"))
   # character / numeric
   expect_error(check_is_this_class("5", "numeric"))
-  # matrix / dataframe
-  expect_error(check_is_this_class(matrix(0, 1, 1), "dataframe"))
+  # matrix / data.frame
+  expect_error(check_is_this_class(matrix(0, 1, 1), "data.frame"))
   # factor / character
   expect_error(check_is_this_class(as.factor("foo"), "character"))
 })
@@ -177,4 +177,3 @@ test_that("Check that clean_up_cds_name_from_gff() gives error for non-GFF input
   expect_error(clean_up_cds_name_from_gff(1))
   expect_error(clean_up_cds_name_from_gff("foo"))
 })
-

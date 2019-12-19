@@ -4,7 +4,6 @@ test_that("Check that prewas() gives expected output when given valid input", {
                                  tree = prewas::tree,
                                  outgroup = prewas::outgroup,
                                  gff = prewas::gff,
-                                 out_prefix = "test_results",
                                  anc = FALSE)
   recorded_results <- prewas::prewas_results
   expect_identical(recorded_results, test_results)
