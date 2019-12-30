@@ -53,7 +53,7 @@ remove_invariant_sites <- function(mat, rows_to_keep){
 #' @export
 #'
 keep_only_variant_sites <- function(dna_mat){
-  check_is_this_class(dna_mat, "mat")
+  check_is_this_class(dna_mat, "matrix")
   dna_mat <- replace_non_ATGC_with_N(dna_mat)
   variant_site_log <- identify_variant_sites(dna_mat)
   variant_only_dna_mat <- remove_invariant_sites(dna_mat, variant_site_log)
