@@ -1,4 +1,4 @@
-# preprocess_tree_and_fasta ---------------------------------------------------#
+# preprocess_tree_and_vcf -----------------------------------------------------#
 # read_in_tree ----------------------------------------------------------------#
 test_that("Check that read_in_tree() works for valid tree input", {
   test_tree <- read_in_tree(prewas::tree)
