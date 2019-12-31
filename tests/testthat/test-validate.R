@@ -133,20 +133,25 @@ test_that("Check that check_tree_is_rooted() gives error when given a non-tree i
 
 # read_gff --------------------------------------------------------------------#
 test_that("Check that read_gff() correctly parses input gff file", {
-  # TODO this test needs to wait until the test data are finalized (correctly load as package data)
-  # TODO as in test_gff <- read_gff(prewas::gff_input)
-  # TODO then once test_gff loaded check that gff file has expected dimenions / cds / etc...
+  test_gff <- read_gff(prewas::gff)
+  expect_equal(ncol(test_gff), 9)
+  expect_equal(class(test_gff[, 1]), "character")
+  expect_equal(class(test_gff), "matrix")
 })
 
-test_that("Check that read_gff() gives error if given a non-gff file", {
-  # TODO this test needs to wait until the test data are finalized (correctly load as package data)
-  # TODO as in test_gff <- read_gff(prewas::gff_input)
-  # TODO then once test_gff loaded check that gff file has expected dimenions / cds / etc...
+test_that("Check that read_gff() gives error if given invalid input", {
+  # Bad file
+  expect_error(read_gff("tests/testthat/test-validate.R"))
+
+  # Not file nor matrix
+  expect_error(read_gff(prewas::tree))
+
+  # Matrix of wrong dimensions
+  expect_error(read_gff(matrix(0, nrow = 5, ncol = 10)))
 })
 
 # subset_gff ------------------------------------------------------------------#
 test_that("Check that subset_gff() correctly subsets gff to only CDS regions", {
-  # TODO check that prewas::gff correctly loads gff file
   subsetted_temp_gff <- subset_gff(prewas::gff)
   seq_types <- unique(subsetted_temp_gff[, 3])
   num_seq_types <- length(seq_types)
@@ -156,11 +161,15 @@ test_that("Check that subset_gff() correctly subsets gff to only CDS regions", {
   expect_equal(ncol(subsetted_temp_gff), ncol(prewas::gff))
 })
 
-test_that("Check that subset_gff() gives error if given non-data.frame input", {
-  temp_gff <- prewas::gff
-  temp_gff[, 3] <- "foo"
+test_that("Check that subset_gff() gives error if given non-matrix input", {
   expect_error(subset_gff(5))
   expect_error(subset_gff("foo"))
+})
+
+test_that("Check that subset_gff() gives error if given no CDS regions in gff", {
+  temp_gff <- prewas::gff
+  temp_gff[, 3] <- "foo"
+  # No CDS regions
   expect_error(subset_gff(temp_gff))
 })
 
@@ -171,9 +180,47 @@ test_that("Check that clean_up_cds_name_from_gff() doesn't change GFF size", {
 })
 
 test_that("Check that clean_up_cds_name_from_gff() gives error for non-GFF input", {
-  # Data.frame with incorrect dimensions
-  expect_error(clean_up_cds_name_from_gff(as.data.frame(matrix(0, 1, 1))))
+  # Matrix with incorrect dimensions
+  expect_error(clean_up_cds_name_from_gff(matrix(0, 1, 1)))
   # Wrong input types
   expect_error(clean_up_cds_name_from_gff(1))
   expect_error(clean_up_cds_name_from_gff("foo"))
+})
+
+# load_vcf_file ---------------------------------------------------------------#
+test_that("Check that load_vcf_file() works when given vcfR object", {
+  vcf_output <- load_vcf_file(prewas::vcf)
+  expect_equal(class(vcf_output), "matrix")
+  expect_equal(ncol(vcf_output), 14)
+  expect_equal(class(vcf_output[1, ]), "character")
+})
+
+test_that("Check that load_vcf_file() gives error when given non-VCF file input", {
+  expect_error(load_vcf_file("data/test-validate.R"))
+})
+
+test_that("Check that load_vcf_file() gives error when given non-file, non-vcfR object input", {
+  expect_error(load_vcf_file(10))
+  expect_error(load_vcf_file(""))
+  expect_error(load_vcf_file(prewas::gff))
+  expect_error(load_vcf_file(data.frame(as.matrix(0, nrow = 10, ncol = 10))))
+})
+
+# check_setequal_tree_mat -----------------------------------------------------#
+test_that("Check that check_setequal_tree_mat gives no results when tree$tip.label equals colnames in VCF matrix", {
+  vcf_output <- load_vcf_file(prewas::vcf)
+  vcf_colnames <- colnames(vcf_output)
+  tree_tip_labels <- prewas::tree$tip.label
+  expect_silent(check_setequal_tree_mat(tree_tip_labels, vcf_colnames))
+})
+
+test_that("Check that check_setequal_tree_mat gives warning when tree$tip.label different than colnames in VCF matrix", {
+  vcf_output <- load_vcf_file(prewas::vcf)
+  vcf_colnames <- colnames(vcf_output)
+  tree_tip_labels <- prewas::tree$tip.label
+
+  expect_error(check_setequal_tree_mat(tree, vcf_colnames))
+  expect_error(check_setequal_tree_mat("", vcf_colnames))
+  expect_error(check_setequal_tree_mat(tree_tip_labels, ""))
+  expect_error(check_setequal_tree_mat(tree_tip_labels, c(1:10)))
 })
