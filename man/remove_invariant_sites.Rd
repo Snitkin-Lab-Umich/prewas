@@ -9,7 +9,9 @@ remove_invariant_sites(mat, rows_to_keep)
 \arguments{
 \item{mat}{Matrix.}
 
-\item{rows_to_keep}{Vector. Row numbers to drop.}
+\item{rows_to_keep}{Logical. Vector of TRUE/FALSE. FALSE corresponds to rows
+that should be dropped (invariant loci). TRUE corresponds to rows to keep
+(variant loci).}
 }
 \value{
 mat: Matrix.

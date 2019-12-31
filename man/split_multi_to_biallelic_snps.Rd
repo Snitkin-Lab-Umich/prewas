@@ -14,13 +14,21 @@ split_multi_to_biallelic_snps(mat, ar_results)
 \value{
 A list with three elements:
   \describe{
-    \item{mat_split}{Matrix.}
-    \item{ar_results_split}{Data.frame.}
-    \item{split_rows_flag}{Numeric.}
+    \item{mat_split}{Matrix. Alleles. Rows refer to genomic loci. Lines
+     generated from splitting multiline to single line have .1 or .2 appended
+     to the rowname. Columns are samples.}
+    \item{ar_results_split}{Data.frame. First column is either the ancestral
+     allele or the major allele. If ancestral reconstruction was performed
+     there is a second column, probability. Rows refer to genomic loci. Lines
+     generated from splitting multiline to single line have .1 or .2 appended
+     to the rowname.}
+    \item{split_rows_flag}{Numeric. The count of times a number appears in
+    the split_rows_flag is one less than the number of alleles at that locus.
+    }
   }
 }
 \description{
 Changes the single line representation of multiallelic sites to
   a multiline representation. That is, rows that have N alleles are
-  replicated N-1 times.
+  replicated N-1 times. The rows are not yet converted to binary.
 }
