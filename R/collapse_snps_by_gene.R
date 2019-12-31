@@ -6,6 +6,9 @@
 #' @export
 #'
 get_gene_names <- function(bin_mat){
+  check_is_this_class(bin_mat, "matrix")
+  check_if_binary_matrix(bin_mat)
+
   variant_names <- row.names(bin_mat)
   gene_names <- gsub(".*[|]", "", variant_names)
   return(gene_names)
@@ -20,6 +23,9 @@ get_gene_names <- function(bin_mat){
 #' @export
 #'
 collapse_snps_into_genes <- function(bin_mat, gene_vec){
+  check_is_this_class(gene_vec, "character")
+  check_if_binary_matrix(bin_mat)
+
   if (length(gene_vec) != nrow(bin_mat)) {
     stop("gene_vec should have same length as rows of bin_mat")
   }
