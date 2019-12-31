@@ -40,7 +40,7 @@ identify_variant_sites <- function(mat){
 #'
 remove_invariant_sites <- function(mat, rows_to_keep){
   check_is_this_class(mat, "matrix")
-  check_is_this_class(rows_to_keep, "vector")
+  # check_is_this_class(rows_to_keep, "vector")
   mat <- mat[rows_to_keep, , drop = FALSE]
   return(mat)
 }
