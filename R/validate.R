@@ -117,7 +117,7 @@ check_tree_is_rooted <- function(tree){
 
 #' Format user-provided inputs to prewas().
 #'
-#' @param dna Character. Path to VCF file containing variant information.
+#' @param dna Character or vcfR. Path to VCF file or vcfR object.
 #' @param tree NULL, character, or phylo. If character it should be a path to
 #'   the tree file.
 #' @param outgroup NULL or character. If character it should be either a string
