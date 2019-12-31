@@ -49,7 +49,8 @@ is_this_class <- function(obj, current_class){
                  "phyDat",
                  "matrix",
                  "data.frame",
-                 "factor")
+                 "factor",
+                 "vcfR")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }
@@ -75,25 +76,8 @@ is_this_class <- function(obj, current_class){
 #' object <- "example"
 #' check_is_this_class(object, "character")
 check_is_this_class <- function(obj, current_class){
-  if (class(current_class) != "character") {
-    stop("Current_class is expected to be a string describing a class")
-  }
-  r_classes <- c("character",
-                 "numeric",
-                 "integer",
-                 "logical",
-                 "complex",
-                 "phylo",
-                 "DNAbin",
-                 "phyDat",
-                 "matrix",
-                 "data.frame",
-                 "factor")
-  if (!(current_class %in% r_classes)) {
-    stop("current_class is expected to be a R class")
-  }
-
-  if (class(obj) != current_class) {
+  class_log <- is_this_class(obj, current_class)
+  if (class_log != TRUE) {
     stop(paste('Input must be a', current_class))
   }
 }
@@ -113,7 +97,6 @@ check_is_tree <- function(tree){
     stop('Input requires either a path to a tree file or an ape phylo object')
   }
 }
-
 
 #' Check that the tree has a root.
 #'
@@ -212,7 +195,6 @@ format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
     }
 
   }
-
 
   results <- list("dna" = dna,
                   "tree" = tree,
