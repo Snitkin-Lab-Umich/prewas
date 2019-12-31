@@ -133,18 +133,14 @@ check_tree_is_rooted <- function(tree){
 #'     \item{outgroup}{character}
 #'     \item{gff}{data.frame}
 #'   }
-format_inputs <- function(dna, tree, outgroup = NULL, gff = NULL){
+format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
   # DNA
   if (is.null(dna)) {
-    stop("User must provide a VCF file")
-  } else {
-    if (is_file(dna)) {
-      # If DNA stored in VCF file, read in and convert to allele matrix
-      dna <- load_vcf_file(dna)
-    } else {
-      stop("DNA input should be a path to a VCF 4.1 file")
-    }
+    stop("User must provide a vcfR object or path to a VCF 4.1 file")
   }
+
+  # Convert vcfR object or VCF file to allele matrix
+  dna <- load_vcf_file(dna)
 
   # Tree
   if (is.null(tree)) {
@@ -266,15 +262,20 @@ clean_up_cds_name_from_gff <- function(gff){
   return(gff)
 }
 
-#' Read in variant data from a VCF file
+#' Read in variant data from a VCF file or vcfR object
 #'
-#' @param vcf_path Character. Path to VCF file.
+#' @param vcf Either character or vcfR. If character, it is a path to a VCF
+#'   file.
 #'
 #' @return vcf_geno_mat: Matrix.
 #' @export
 #'
-load_vcf_file <- function(vcf_path) {
-  vcf <- vcfR::read.vcfR(file = vcf_path)
+load_vcf_file <- function(vcf) {
+  if (is_file(vcf)) {
+    vcf <- vcfR::read.vcfR(file = vcf)
+  }
+  check_is_this_class(vcf, "vcfR")
+
   vcf_geno_mat <- vcf@gt[, 2:ncol(vcf@gt), drop = FALSE]
   row.names(vcf_geno_mat) <- vcf@fix[, colnames(vcf@fix) == "POS", drop = TRUE]
   vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
