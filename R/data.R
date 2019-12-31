@@ -47,6 +47,11 @@
 #' Results from running prewas() on the example data.
 #'
 #' Output from prewas().
+#' results <- prewas::prewas(dna = prewas::vcf,
+#'                           tree = prewas::tree,
+#'                           outgroup = prewas::outgroup,
+#'                           gff = prewas::gff,
+#'                           anc = FALSE)
 #'
 #' @format List of 5 objects.
 #' \describe{
