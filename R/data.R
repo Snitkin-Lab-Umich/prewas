@@ -1,6 +1,6 @@
 #' Nucleotide variants in example genome samples
 #'
-#' An example dataset containing 313 variants from 13 genome samples.
+#' An example dataset containing 313 variants from 14 genome samples.
 #'
 #' @format vcfR class object with three sections:
 #' \describe{
@@ -9,7 +9,7 @@
 #'   \item{fix}{A character matrix with 313 rows and 8 columns. Contains
 #'   information on chromosome (CHROM), genome position (POS), reference genome
 #'   allele (REF), and alternative allele (ALT)}
-#'   \item{gt}{A character matrix with 313 rows and 14 columns. Presence/absence
+#'   \item{gt}{A character matrix with 313 rows and 15 columns. Presence/absence
 #'   for each variant defined in fix. Colnames are sample IDs.}
 #'  }
 "vcf"
@@ -18,7 +18,7 @@
 #'
 #' Example rooted phylogenetic tree.
 #'
-#' @format An ape phylo object with 13 tips.
+#' @format An ape phylo object with 14 tips.
 "tree"
 
 #' Name of outgroup in the phylogenetic tree.
@@ -62,4 +62,4 @@
 # #'   \item{gene_mat}{Gene-based matrix. Genes with any SNP stored as 1, Genes
 # #'   without SNPs stored as 0). TODO: What are rows? What are columns?}
 # #'  }
-# "prewas_results"
+# "results"
