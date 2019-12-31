@@ -68,10 +68,11 @@ root_tree <- function(tree, outgroup = NULL){
   # READ IN TREE
   tree <- read_in_tree(tree)
   check_is_this_class(tree, "phylo")
-  check_is_this_class(outgroup, "character")
 
   # IF OUTGROUP SUPPLIED
   if (!is.null(outgroup)) {
+    check_is_this_class(outgroup, "character")
+
     # ROOT TREE ON OUTGROUP
     tree <- ape::root(tree, outgroup)
     tree <- ape::drop.tip(tree, outgroup)
