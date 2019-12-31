@@ -60,13 +60,16 @@ build_tree <- function(mat){
 #' @export
 #'
 #' @examples
-#' tree = ape::rcoal(100)
+#' tree <- ape::rcoal(100)
 #' ape::is.rooted(tree)
-#' root_tree(tree)
+#' tree <- root_tree(tree)
 #' ape::is.rooted(tree)
 root_tree <- function(tree, outgroup = NULL){
   # READ IN TREE
   tree <- read_in_tree(tree)
+  check_is_this_class(tree, "phylo")
+  check_is_this_class(outgroup, "character")
+
   # IF OUTGROUP SUPPLIED
   if (!is.null(outgroup)) {
     # ROOT TREE ON OUTGROUP
@@ -76,7 +79,7 @@ root_tree <- function(tree, outgroup = NULL){
   # IF NO OUTGROUP AND TREE IS UNROOTED
   } else if (is.null(outgroup) & !ape::is.rooted(tree)) {
     # MIDPOINT ROOT TREE
-    tree = phytools::midpoint.root(tree)
+    tree <- phytools::midpoint.root(tree)
     return(tree)
   }
   return(tree)
@@ -100,6 +103,8 @@ root_tree <- function(tree, outgroup = NULL){
 subset_tree_and_matrix = function(tree, mat){
   tree <- read_in_tree(tree)
   check_is_this_class(mat, 'matrix')
+  check_is_this_class(tree, 'phylo')
+
   # return if tree tip labels and variant matrix column names match
   if(setequal(tree$tip.label, colnames(mat))){
     # order matrix same as tree tip labels
