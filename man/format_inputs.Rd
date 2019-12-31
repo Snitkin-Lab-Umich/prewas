@@ -4,10 +4,10 @@
 \alias{format_inputs}
 \title{Format user-provided inputs to prewas().}
 \usage{
-format_inputs(dna, tree, outgroup = NULL, gff = NULL)
+format_inputs(dna, tree = NULL, outgroup = NULL, gff = NULL)
 }
 \arguments{
-\item{dna}{Character. Path to VCF file containing variant information.}
+\item{dna}{Character or vcfR. Path to VCF file or vcfR object.}
 
 \item{tree}{NULL, character, or phylo. If character it should be a path to
 the tree file.}

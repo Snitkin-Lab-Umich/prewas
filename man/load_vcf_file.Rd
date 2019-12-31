@@ -2,16 +2,17 @@
 % Please edit documentation in R/validate.R
 \name{load_vcf_file}
 \alias{load_vcf_file}
-\title{Read in variant data from a VCF file}
+\title{Read in variant data from a VCF file or vcfR object}
 \usage{
-load_vcf_file(vcf_path)
+load_vcf_file(vcf)
 }
 \arguments{
-\item{vcf_path}{Character. Path to VCF file.}
+\item{vcf}{Either character or vcfR. If character, it is a path to a VCF
+file.}
 }
 \value{
 vcf_geno_mat: Matrix.
 }
 \description{
-Read in variant data from a VCF file
+Read in variant data from a VCF file or vcfR object
 }
