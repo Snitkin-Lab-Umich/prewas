@@ -13,11 +13,13 @@ replace_non_ATGC_with_N <- function(mat){
   return(mat)
 }
 
-#' Find all rows in allele matrix with SNPs
+#' Find all rows in allele matrix with SNPs.
+#'
+#' Give an error if there are no variant sites in the dataset.
 #'
 #' @param mat Matrix.
 #'
-#' @return rows_to_keep: Vector.
+#' @return rows_to_keep: Logical vector.
 #' @export
 #'
 identify_variant_sites <- function(mat){
@@ -27,20 +29,35 @@ identify_variant_sites <- function(mat){
   })
   rows_to_keep <- rows_to_keep > 1
   rows_to_keep <- unname(rows_to_keep)
+
+  if (sum(rows_to_keep) == 0) {
+    stop("There are no valid variant sites in this dataset")
+  }
   return(rows_to_keep)
 }
 
 #' Remove any invariant sites from allele matrix.
 #'
 #' @param mat Matrix.
-#' @param rows_to_keep Vector. Row numbers to drop.
+#' @param rows_to_keep Logical. Vector of TRUE/FALSE. FALSE corresponds to rows
+#'   that should be dropped (invariant loci). TRUE corresponds to rows to keep
+#'   (variant loci).
 #'
 #' @return mat: Matrix.
 #' @export
 #'
 remove_invariant_sites <- function(mat, rows_to_keep){
   check_is_this_class(mat, "matrix")
-  # check_is_this_class(rows_to_keep, "vector")
+  check_is_this_class(rows_to_keep, "logical")
+
+  if (length(rows_to_keep) != nrow(mat)) {
+    stop("Logical must have length == nrow(mat)")
+  }
+
+  if (sum(rows_to_keep) == 0) {
+    stop("There are no valid variant sites in this dataset")
+  }
+
   mat <- mat[rows_to_keep, , drop = FALSE]
   return(mat)
 }
