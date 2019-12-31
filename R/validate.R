@@ -201,20 +201,22 @@ format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
 
 #' Read in a GFF file given a file path
 #'
-#' @param gff_path Character. Path to GFF file.
+#' @param gff Character or data.frame. If character: path to GFF file.
 #'
 #' @return gff: Data.frame.
 #' @export
 #'
-read_gff <- function(gff_path){
-  # TODO add ability to load in a gff object, not just take in a path
-  gff <- utils::read.table(gff_path,
-                           sep = '\t',
-                           header = FALSE,
-                           stringsAsFactors = FALSE,
-                           quote = "",
-                           comment.char = '#'
-  )
+read_gff <- function(gff){
+  if (is_file(gff)) {
+    gff <- utils::read.table(gff_path,
+                             sep = '\t',
+                             header = FALSE,
+                             stringsAsFactors = FALSE,
+                             quote = "",
+                             comment.char = '#')
+  }
+
+  check_is_this_class(gff, "data.frame")
 
   if (ncol(gff) != 9) {
     stop("GFF file must have 9 columns")
