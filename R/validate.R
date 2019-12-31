@@ -177,19 +177,14 @@ format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
 
   # GFF
   if (!is.null(gff)) {
-    if (is_file(gff)) {
-      gff <- read_gff(gff)
+    # Read in file or data.frame and then format GFF data.frame
+    gff <- read_gff(gff)
 
-      #subset gff on CDS
-      gff <- subset_gff(gff)
+    # Subset GFF to only CDS
+    gff <- subset_gff(gff)
 
-      #get gene name from column 9
-      gff <- clean_up_cds_name_from_gff(gff)
-    } else {
-      gff <- NULL
-      print("Prewas only accepts a gff file path as the GFF input.")
-    }
-
+    # Remove ID= prefix from gene name in column 9
+    gff <- clean_up_cds_name_from_gff(gff)
   }
 
   results <- list("dna" = dna,
