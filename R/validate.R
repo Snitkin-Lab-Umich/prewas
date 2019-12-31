@@ -177,7 +177,7 @@ format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
 
   # GFF
   if (!is.null(gff)) {
-    # Read in file or data.frame and then format GFF data.frame
+    # Read in file or load matrix and then format GFF matrix
     gff <- read_gff(gff)
 
     # Subset GFF to only CDS
@@ -196,9 +196,9 @@ format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
 
 #' Read in a GFF file given a file path
 #'
-#' @param gff Character or data.frame. If character: path to GFF file.
+#' @param gff Character or matrix. If character: path to GFF file.
 #'
-#' @return gff: Data.frame.
+#' @return gff: matrix
 #' @export
 #'
 read_gff <- function(gff){
@@ -210,8 +210,11 @@ read_gff <- function(gff){
                              quote = "",
                              comment.char = '#')
   }
+  if (is_this_class(gff, "data.frame")) {
+    gff <- as.matrix(gff)
+  }
 
-  check_is_this_class(gff, "data.frame")
+  check_is_this_class(gff, "matrix")
 
   if (ncol(gff) != 9) {
     stop("GFF file must have 9 columns")
@@ -225,13 +228,13 @@ read_gff <- function(gff){
 
 #' Keep only GFF features that are in CDS regions.
 #'
-#' @param gff Data.frame. Rows = genomic features.
+#' @param gff Matrix. Rows = genomic features.
 #'
-#' @return gff: Data.frame.
+#' @return gff: Matrix.
 #' @export
 #'
 subset_gff <- function(gff){
-  check_is_this_class(gff, "data.frame")
+  check_is_this_class(gff, "matrix")
   # TODO add a check_dimenions() call and write the check_dimensions function
 
   gff <- gff[gff[, 3] == 'CDS', ] # subset gff on CDS
@@ -249,7 +252,7 @@ subset_gff <- function(gff){
 #' @export
 #'
 clean_up_cds_name_from_gff <- function(gff){
-  check_is_this_class(gff, "data.frame")
+  check_is_this_class(gff, "matrix")
   # TODO add a check_dimenions() call and write the check_dimensions function
 
   cds_name <- apply(gff, 1, function(row){
