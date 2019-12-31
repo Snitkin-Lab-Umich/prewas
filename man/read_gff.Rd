@@ -4,13 +4,13 @@
 \alias{read_gff}
 \title{Read in a GFF file given a file path}
 \usage{
-read_gff(gff_path)
+read_gff(gff)
 }
 \arguments{
-\item{gff_path}{Character. Path to GFF file.}
+\item{gff}{Character or matrix. If character: path to GFF file.}
 }
 \value{
-gff: Data.frame.
+gff: matrix
 }
 \description{
 Read in a GFF file given a file path

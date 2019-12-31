@@ -7,10 +7,10 @@
 subset_gff(gff)
 }
 \arguments{
-\item{gff}{Data.frame. Rows = genomic features.}
+\item{gff}{Matrix. Rows = genomic features.}
 }
 \value{
-gff: Data.frame.
+gff: Matrix.
 }
 \description{
 Keep only GFF features that are in CDS regions.

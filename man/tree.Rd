@@ -4,11 +4,11 @@
 \name{tree}
 \alias{tree}
 \title{Phylogenetic tree of example genomes}
-\format{An ape phylo object with 13 tips.}
+\format{An ape phylo object with 14 tips.}
 \usage{
 tree
 }
 \description{
-Example rooted phylogenetic tree.
+Example unrooted phylogenetic tree.
 }
 \keyword{datasets}
