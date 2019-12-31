@@ -230,3 +230,17 @@ check_setequal_tree_mat <- function(tip_labels, colnames_mat){
     stop('Tree and variant matrix sample names do not match.')
   }
 }
+
+#' Check that the matrix contains only 1s and/or 0s.
+#'
+#' Function gives error if matrix is not binary; otherwise, returns nothing.
+#'
+#' @param mat Matrix.
+#'
+check_if_binary_matrix <- function(mat) {
+  check_is_this_class(mat, "matrix")
+
+  if (sum(!(mat %in% c(0, 1))) > 0) {
+    stop("Matrix should be only 1s and 0s")
+  }
+}

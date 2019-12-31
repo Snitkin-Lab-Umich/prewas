@@ -224,3 +224,26 @@ test_that("Check that check_setequal_tree_mat gives warning when tree$tip.label 
   expect_error(check_setequal_tree_mat(tree_tip_labels, ""))
   expect_error(check_setequal_tree_mat(tree_tip_labels, c(1:10)))
 })
+
+# check_if_binary_matrix ------------------------------------------------------#
+test_that("Check that check_if_binary_matrix() returns nothing when given binary matrix", {
+  temp_bin_mat <- matrix(c(0, 1), ncol = 10, nrow = 10)
+  expect_silent(check_if_binary_matrix(temp_bin_mat))
+
+  temp_bin_mat <- matrix(1, ncol = 10, nrow = 10)
+  expect_silent(check_if_binary_matrix(temp_bin_mat))
+
+  temp_bin_mat <- matrix(0, ncol = 10, nrow = 10)
+  expect_silent(check_if_binary_matrix(temp_bin_mat))
+})
+
+test_that("Check that check_if_binary_matrix() returns error when given non-binary matrix", {
+  temp_bin_mat <- matrix(c(0, 5), ncol = 10, nrow = 10)
+  expect_error(check_if_binary_matrix(temp_bin_mat))
+
+  temp_bin_mat <- matrix(LETTERS[1:25], ncol = 5, nrow = 5)
+  expect_error(check_if_binary_matrix(temp_bin_mat))
+
+  temp_bin_mat <- matrix(NA, ncol = 10, nrow = 10)
+  expect_error(check_if_binary_matrix(temp_bin_mat))
+})
