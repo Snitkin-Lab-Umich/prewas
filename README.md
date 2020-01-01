@@ -24,4 +24,4 @@ prewas is described in the preprint: ["prewas: Data pre-processing for more info
 A vignette will be arriving soon. 
 
 ## Contributors
-Katie Saund, Stephanie Theide, and Zena Lapp contributed to this code.
+[Katie Saund](https://github.com/katiesaund), [Stephanie Theide](https://github.com/sthiede), and [Zena Lapp](https://github.com/zenalapp) contributed to this code.
