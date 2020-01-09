@@ -1,5 +1,5 @@
 ---
-title: "Getting Started With Prewas"
+title: "Getting Started With prewas"
 date: "`r Sys.Date()`"
 author: "Stephanie Thiede, Zena Lapp, Katie Saund"
 output: rmarkdown::html_vignette
@@ -16,6 +16,47 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+# Introduction to prewas 
+prewas is a tool to standardize the pre-processing of your genomic data before performing a bacterial genome-wide association study (bGWAS). 
+
+prewas creates a variant matrix (where each row is a variant, each column is a sample, and the entries are presence - 1 - or absence - 0- of the variant) that can be directly inputted to bGWAS tools, such as hogwash or treeWAS.  
+
+When creating the binary variant matrix, prewas can perform 3 pre-processing steps including: 
+
+1. dealing with  multiallelic SNPs
+
+1. (optional) dealing with SNPs in overlapping genes 
+
+1. choosing a reference allele 
+
+# 1. Dealing with multiallelic SNPs
+prewas uses the multi-line format to represent mutliallelic SNPs. Below are examples of how a triallelic site (T, A, and G) can be represented in a single line of a variant matrix compared to multiple lines of a variant matrix. 
+
+## Single-line format: 
+
+1. T -> A, G 
+
+## Multi-line format: 
+
+1. T->A 
+
+1. T->G
+
+# 2. Dealing with SNPs in overlapping genes 
+
+A SNP in an overlapping gene could have a different impact on those two genes. Therefore, when a gff is provided, prewas will output a binary variant matrix where a SNP in `x` overlapping genes will be represented on `x` lines. When a gff is provided, prewas will also output a gene-based variant matrix indicating presence or absence of at least 1 variant in that gene, and thus SNPs in overlapping genes will be assigned to both genes.    
+
+# 3. Choosing a reference allele 
+Choosing a reference allele can be particularly important when doing gene-based analysis and therefore aggregating SNPs by gene. We suggest to reference to the ancestral allele. In cases where ancestral reconstruction is not feasible (e.g. computational intensity) or low confidence, we suggest referencing to the major allele instead of referencing to an arbitrary reference genome. Thus, when ancestral reconstruction is not used (anc = FALSE), prewas will use the major allele as the reference allele. 
+
+# Outputs: 
+prewas can output matrices for use with both SNP-based bGWAS and gene-based bGWAS. 
+
+# Usage 
+At minimum, prewas requires a .vcf, but can also take in a tree, the name of the outgroup in that tree (if any), and a .gff for use with gene-based analysis. 
+
+Below, we'll explore some usage examples. 
 
 ```{r setup}
 library(prewas)
