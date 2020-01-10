@@ -9,3 +9,5 @@ inst/doc
 *.vcf
 *outgroup.txt
 *.txt
+doc
+Meta
