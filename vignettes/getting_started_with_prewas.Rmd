@@ -31,6 +31,10 @@ When creating the binary variant matrix, prewas can perform 3 pre-processing ste
 1. choosing a reference allele 
 
 # 1. Dealing with multiallelic SNPs
+A multiallelic site is a site with more than two alleles present at a locus. Most bGWAS methods require a binary input (variant presence or absence) - so multiallelic sites don't fit into this mold. 
+
+One could consider the reference allele 0 and any alternative allele as 1. However, each alternative allele could confer a differential functional impact on the expressed protein. Thus, lumping the alternative alleles into one category will take away the ability to study these functional differences.  
+
 prewas uses the multi-line format to represent mutliallelic SNPs. Below are examples of how a triallelic site (T, A, and G) can be represented in a single line of a variant matrix compared to multiple lines of a variant matrix. 
 
 ## Single-line format: 
@@ -56,7 +60,7 @@ prewas can output matrices for use with both SNP-based bGWAS and gene-based bGWA
 # Usage 
 At minimum, prewas requires a .vcf, but can also take in a tree, the name of the outgroup in that tree (if any), and a .gff for use with gene-based analysis. 
 
-Below, we'll explore some usage examples. 
+Below, we'll explore some usage examples using toy data built into the package. 
 
 ```{r setup}
 library(prewas)
