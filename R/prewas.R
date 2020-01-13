@@ -108,5 +108,6 @@ prewas <- function(dna,
               bin_mat = bin_mat,
               ar_results = allele_results_split,
               dup = split_rows_flag,
-              gene_mat = gene_mat))
+              gene_mat = gene_mat,
+              tree = tree))
 }
