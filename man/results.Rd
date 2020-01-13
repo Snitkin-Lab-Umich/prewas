@@ -35,5 +35,10 @@ results
 }
 \description{
 Output from prewas().
+results <- prewas::prewas(dna = prewas::vcf,
+                          tree = prewas::tree,
+                          outgroup = prewas::outgroup,
+                          gff = prewas::gff,
+                          anc = FALSE)
 }
 \keyword{datasets}

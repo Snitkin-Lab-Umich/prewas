@@ -9,6 +9,10 @@
 dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
   check_is_this_class(bin_mat, "matrix")
   check_is_this_class(gff_mat, "matrix")
+  check_if_binary_matrix(bin_mat)
+  if (ncol(gff_mat) != 9) {
+    stop("GFF matrix must have exactly 9 columns")
+  }
 
   # position of SNP
   pos <- gsub('[.].*$', '', row.names(bin_mat))
@@ -18,13 +22,13 @@ dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
     gff_mat[gff_mat[, 4] <= p & gff_mat[, 5] >= p, 9]
   })
 
-  # number of genes per pos
+  # number of genes per position
   num_of_genes_at_pos <- sapply(genes_at_pos, length)
 
   # indices of bin_mat (number of rows)
   indices <- 1:nrow(bin_mat)
 
-  # row names: pos.num.gene_name
+  # row names: pos.num|gene_name
   # there will be a .num. if its a multiallelic site
   pos_dup_gene <- paste(rep(row.names(bin_mat), num_of_genes_at_pos),
                         unlist(genes_at_pos),

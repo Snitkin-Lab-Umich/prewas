@@ -27,9 +27,11 @@ make_all_tree_edges_positive <- function(tree){
 #' Finds the major allele (most common allele) for each variant position in an
 #' allele matrix.
 #'
-#' @param allele_mat Matrix. Allele matrix.
+#' @param allele_mat Matrix. Allele matrix. Rows are variants. Columns are
+#'   samples.
 #'
-#' @return major_allele: major allele for each position.
+#' @return major_allele: Character vector. Gives the major allele for each
+#'   position. Names are the genomic loci. Values are the nucleotides.
 #' @export
 #'
 get_major_alleles <- function(allele_mat){
@@ -58,7 +60,8 @@ get_major_alleles <- function(allele_mat){
 #'   \describe{
 #'     \item{ar_results}{Data.frame. Data.frame of most likely ancestral allele
 #'     for each row in allele matrix and probability that that is the ancestral
-#'     state.}
+#'     state. Rows are variants. First column is the allele. Second column is
+#'     the probability.}
 #'     \item{tree}{phylo. Tree used for ancestral state reconstruction.}
 #'   }
 #' @export
@@ -72,7 +75,7 @@ get_ancestral_alleles <- function(tree, mat){
   future::plan(future::multiprocess)
 
   # ORDER MATRIX TO MATCH TREE TIP LABELS
-  mat <- mat[, tree$tip.label]
+  mat <- mat[, tree$tip.label, drop = FALSE]
 
   tree <- make_all_tree_edges_positive(tree)
 
@@ -102,22 +105,25 @@ get_ancestral_alleles <- function(tree, mat){
 #'
 #' @param allele_mat Matrix. Allele matrix. Rows are variants, columns are
 #'   samples.
-#' @param alleles TODO: OBJECT TYPE? reference alleles (ancestral alleles or
+#' @param alleles Factor. Vector of reference alleles (ancestral alleles or
 #'   major alleles)
 #' @param ar_results Data.frame. Results from ancestral reconstruction
 #'
 #' @return A list of three objects:
 #'   \describe{
-#'     \item{allele_mat}{Matrix.}
-#'     \item{ar_results}{Data.frame.}
-#'     \item{removed}{Character. Names of removed samples.}
+#'     \item{allele_mat}{Matrix. Rows are variants. Columns are samples.}
+#'     \item{ar_results}{Data.frame. Variants with unknown ancestral states
+#'     removed. Rows are variants. If ancestral reconstruction was performed:
+#'     first column in ancestral allele & second column is probability. If no
+#'     ancestral reconstruction performed: the only column is the major allele.}
+#'     \item{removed}{Character. Vector with names of removed samples.}
 #'   }
 #' @export
 #'
 remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
   check_is_this_class(allele_mat, "matrix")
+  check_is_this_class(alleles, "factor")
   check_is_this_class(ar_results, "data.frame")
-  # TODO Add check here and add class to @param for alleles check_is_this_class(alleles, "")
 
   unknown <- alleles %in% c('-','N')
   removed <- rownames(allele_mat)[unknown]
@@ -137,15 +143,16 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
 #' can be used in bGWAS. The reference allele is 0 and the non-reference allele
 #' is 1.
 #'
-#' @param allele_mat Matrix. Allele matrix (split by multi-allelic site)
-#' @param reference_allele vector of alleles that are 0 in binary matrix
-#'   (ancestral allele or major allele)
+#' @param allele_mat Matrix. Allele matrix (split by multi-allelic site). Rows
+#'   are variants. Columns are samples.
+#' @param reference_allele Factor. Vector of alleles that are 0 in binary matrix
+#'   (ancestral allele or major allele). Named vector. Names are genetic loci.
 #'
 #' @return bin_mat. Matrix. Binary matrix of variant presence/absence.
 #' @export
 #'
 make_binary_matrix <- function(allele_mat, reference_allele){
-  # TODO add check_is_this_class() for reference_allele and add object type to @param
+  check_is_this_class(reference_allele, "factor")
   check_is_this_class(allele_mat, "matrix")
 
   # make matrix of reference allele that's the same size as the allele matrix

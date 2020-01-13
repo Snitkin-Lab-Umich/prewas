@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_allele_matrix.R
 \name{identify_variant_sites}
 \alias{identify_variant_sites}
-\title{Find all rows in allele matrix with SNPs}
+\title{Find all rows in allele matrix with SNPs.}
 \usage{
 identify_variant_sites(mat)
 }
@@ -10,8 +10,8 @@ identify_variant_sites(mat)
 \item{mat}{Matrix.}
 }
 \value{
-rows_to_keep: Vector.
+rows_to_keep: Logical vector.
 }
 \description{
-Find all rows in allele matrix with SNPs
+Give an error if there are no variant sites in the dataset.
 }
