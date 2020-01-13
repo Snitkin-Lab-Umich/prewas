@@ -30,6 +30,10 @@ When creating the binary variant matrix, prewas can perform 3 pre-processing ste
 
 1. choosing a reference allele 
 
+An visualization of these 3 steps in the prewas workflow is shown below where B shows how prewas multialleleic sites, C shows options for referencing to the ancestral alleles and D shows how prewas can group SNPs into genes. 
+
+![prewas workflow](Figure_1.png){width=70%}
+
 ### 1. Dealing with multiallelic SNPs
 A multiallelic site is a site with more than two alleles present at a locus. Most bGWAS methods require a binary input (variant presence or absence) - so multiallelic sites don't fit into this mold. 
 
@@ -187,5 +191,11 @@ results_maximal_no_tree = prewas(dna = vcf,
                                  gff = gff,
                                  anc = TRUE)
 ```
+
+## Detailed prewas workflow
+
+A detailed visualization of the prewas workflow is shown below. 
+
+![detailed prewas workflow](Figure_S1.png)
 
 
