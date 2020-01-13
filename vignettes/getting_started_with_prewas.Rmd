@@ -30,7 +30,7 @@ When creating the binary variant matrix, prewas can perform 3 pre-processing ste
 
 1. choosing a reference allele 
 
-An visualization of these 3 steps in the prewas workflow is shown below where B shows how prewas multialleleic sites, C shows options for referencing to the ancestral alleles and D shows how prewas can group SNPs into genes. 
+A visualization of these 3 steps in the prewas workflow is shown below where B shows how prewas multialleleic sites, C shows options for choosing a reference allele and D shows how prewas can group SNPs into genes. A detailed workflow indicating required file inputs can be seen below in the "Detailed prewas workflow" section. 
 
 ![prewas workflow](Figure_1.png){width=70%}
 
@@ -196,6 +196,6 @@ results_maximal_no_tree = prewas(dna = vcf,
 
 A detailed visualization of the prewas workflow is shown below. 
 
-![detailed prewas workflow](Figure_S1.png){width=50%}
+![A detailed prewas workflow](Figure_S1.png){width=50%}
 
 
