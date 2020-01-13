@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ## Introduction to prewas 
 prewas is a tool to standardize the pre-processing of your genomic data before performing a bacterial genome-wide association study (bGWAS). 
 
-prewas creates a variant matrix (where each row is a variant, each column is a sample, and the entries are presence - 1 - or absence - 0 - of the variant) that can be used as input for bGWAS tools, such as hogwash or treeWAS.  
+prewas creates a variant matrix (where each row is a variant, each column is a sample, and the entries are presence - 1 - or absence - 0 - of the variant) that can be used as input for bGWAS tools, such as [hogwash](https://github.com/katiesaund/hogwash) or [treeWAS](https://github.com/caitiecollins/treeWAS).  
 
 When creating the binary variant matrix, prewas can perform 3 pre-processing steps including: 
 
