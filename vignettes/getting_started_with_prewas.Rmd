@@ -60,7 +60,7 @@ A reference allele, the allele that will be denoted "0" in a binary matrix could
 
 Choosing a reference allele can be particularly important when doing gene-based analysis and therefore aggregating SNPs by gene. We suggest to reference to the ancestral allele for evolutionary interpretability. In cases where ancestral reconstruction is not feasible (e.g. computational intensity) or low confidence, we suggest referencing to the major allele instead of referencing to an arbitrary reference genome because using the major allele leads to less masking of variation at the gene level. 
 
-![Reference to the major allele to avoid masking variation at the gene level](Figure_S3.png)
+![Reference to the major allele to avoid masking variation at the gene level](Figure_S3.png){width=70%}
 
 Thus, when ancestral reconstruction is not used (anc = FALSE), prewas will use the major allele as the reference allele. 
 
