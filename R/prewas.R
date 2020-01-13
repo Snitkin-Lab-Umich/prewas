@@ -31,10 +31,8 @@ prewas <- function(dna,
                    outgroup = NULL,
                    gff = NULL,
                    anc = TRUE){
-
   # Check inputs ---------------------------------------------------------------
-  inputs <- format_inputs(dna, tree, outgroup, gff)
-
+  inputs <- format_inputs(dna, tree, outgroup, gff, anc)
   # dna_mat: rows == variants & columns == isolates
   dna_mat <- inputs$dna
   tree <- inputs$tree

@@ -16,7 +16,7 @@
 #'     \item{outgroup}{character}
 #'     \item{gff}{data.frame}
 #'   }
-format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
+format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE){
   # DNA
   if (is.null(dna)) {
     stop("User must provide a vcfR object or path to a VCF 4.1 file")
@@ -27,7 +27,7 @@ format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL){
 
   # Tree
   if (is.null(tree)) {
-    tree <- build_tree(dna)
+    if(anc) tree <- build_tree(dna)
   } else {
     if (is_file(tree)) {
       # If tree stored as .tree file, read in
