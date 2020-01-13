@@ -35,7 +35,10 @@ make_all_tree_edges_positive <- function(tree){
 #' @export
 #'
 get_major_alleles <- function(allele_mat){
-  check_is_this_class(allele_mat, "matrix")
+
+  #print(dim(allele_mat))
+  #print(class(allele_mat))
+  #check_is_this_class(allele_mat, "matrix")
   major_allele <- apply(allele_mat, 1, function(x) {
     names(which.max(table(x)))
   })
