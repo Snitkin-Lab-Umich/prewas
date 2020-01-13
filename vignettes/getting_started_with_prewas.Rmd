@@ -196,6 +196,6 @@ results_maximal_no_tree = prewas(dna = vcf,
 
 A detailed visualization of the prewas workflow is shown below. 
 
-![detailed prewas workflow](Figure_S1.png)
+![detailed prewas workflow](Figure_S1.png){width=50%}
 
 
