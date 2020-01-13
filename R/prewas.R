@@ -42,10 +42,15 @@ prewas <- function(dna,
   gff_mat <- inputs$gff
 
   # preprocess tree and dna_mat ------------------------------------------------
-  tree <- root_tree(tree, outgroup_char)
-  subsetted_data <- subset_tree_and_matrix(tree, dna_mat)
-  tree <- subsetted_data$tree
-  allele_mat_only_var <- keep_only_variant_sites(subsetted_data$mat)
+  if(anc){
+    tree <- root_tree(tree, outgroup_char)
+    subsetted_data <- subset_tree_and_matrix(tree, dna_mat)
+    tree <- subsetted_data$tree
+    allele_mat_only_var <- keep_only_variant_sites(subsetted_data$mat)
+  }else{
+    check_is_this_class(dna_mat, 'matrix')
+    allele_mat_only_var <- keep_only_variant_sites(dna_mat)
+  }
 
   # ancestral reconstruction ---------------------------------------------------
   if (anc) {
