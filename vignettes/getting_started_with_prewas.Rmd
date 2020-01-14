@@ -78,7 +78,6 @@ Below, we'll explore some usage examples using toy data built into the package.
 
 ```{r setup}
 library(prewas)
-library(magrittr)
 vcf = prewas::vcf
 gff = prewas::gff
 tree = prewas::tree
