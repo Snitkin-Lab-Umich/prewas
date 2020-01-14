@@ -70,8 +70,6 @@ is_this_class <- function(obj, current_class){
 #' @param obj Any R object.
 #' @param current_class Character string. Name of R class
 #'
-#' @export
-#'
 #' @examples
 #' object <- "example"
 #' check_is_this_class(object, "character")
@@ -120,8 +118,6 @@ check_tree_is_rooted <- function(tree){
 #' @param gff Character or matrix. If character: path to GFF file.
 #'
 #' @return gff: matrix
-#' @export
-#'
 read_gff <- function(gff){
   if (is_file(gff)) {
     gff <- utils::read.table(gff,
@@ -152,8 +148,6 @@ read_gff <- function(gff){
 #' @param gff Matrix. Rows = genomic features.
 #'
 #' @return gff: Matrix.
-#' @export
-#'
 subset_gff <- function(gff){
   check_is_this_class(gff, "matrix")
   # TODO add a check_dimenions() call and write the check_dimensions function
@@ -170,8 +164,6 @@ subset_gff <- function(gff){
 #' @param gff Data.frame. Rows = genomic features.
 #'
 #' @return gff: Data.frame.
-#' @export
-#'
 clean_up_cds_name_from_gff <- function(gff){
   check_is_this_class(gff, "matrix")
   # TODO add a check_dimenions() call and write the check_dimensions function
@@ -189,8 +181,6 @@ clean_up_cds_name_from_gff <- function(gff){
 #'   file.
 #'
 #' @return vcf_geno_mat: Matrix.
-#' @export
-#'
 load_vcf_file <- function(vcf) {
   if (is_file(vcf)) {
     vcf <- vcfR::read.vcfR(file = vcf)
@@ -222,8 +212,6 @@ load_vcf_file <- function(vcf) {
 #'
 #' @param tip_labels Character. Vector of tree$tip.labels.
 #' @param colnames_mat Character. Vector of column names from variant matrix.
-#'
-#' @export
 #'
 check_setequal_tree_mat <- function(tip_labels, colnames_mat){
   if (!setequal(tip_labels, colnames_mat)) {

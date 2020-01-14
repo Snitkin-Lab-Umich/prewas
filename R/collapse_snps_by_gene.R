@@ -3,7 +3,6 @@
 #' @param bin_mat Matrix.
 #'
 #' @return gene_names: Character. Vector of characters. Length = nrow(bin_mat).
-#' @export
 #'
 get_gene_names <- function(bin_mat){
   check_is_this_class(bin_mat, "matrix")
@@ -20,7 +19,6 @@ get_gene_names <- function(bin_mat){
 #' @param gene_vec Character. Vector of gene names.
 #'
 #' @return gene_mat: Marix.
-#' @export
 #'
 collapse_snps_into_genes <- function(bin_mat, gene_vec){
   check_is_this_class(gene_vec, "character")

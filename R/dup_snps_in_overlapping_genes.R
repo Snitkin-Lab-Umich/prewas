@@ -4,8 +4,6 @@
 #' @param gff_mat Matrix. GFF information.
 #'
 #' @return bin_mat_dup: Matrix.
-#' @export
-#'
 dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
   check_is_this_class(bin_mat, "matrix")
   check_is_this_class(gff_mat, "matrix")

@@ -23,7 +23,6 @@
 #'     \item{dup}{TODO}
 #'     \item{gene_mat}{Gene matrix.}
 #'   }
-
 #' @export
 #'
 prewas <- function(dna,

@@ -3,7 +3,6 @@
 #' @param mat Matrix.
 #'
 #' @return mat: Matrix.
-#' @export
 #'
 replace_non_ATGC_with_N <- function(mat){
   check_is_this_class(mat, "matrix")
@@ -20,7 +19,6 @@ replace_non_ATGC_with_N <- function(mat){
 #' @param mat Matrix.
 #'
 #' @return rows_to_keep: Logical vector.
-#' @export
 #'
 identify_variant_sites <- function(mat){
   check_is_this_class(mat, "matrix")
@@ -44,7 +42,6 @@ identify_variant_sites <- function(mat){
 #'   (variant loci).
 #'
 #' @return mat: Matrix.
-#' @export
 #'
 remove_invariant_sites <- function(mat, rows_to_keep){
   check_is_this_class(mat, "matrix")
@@ -67,7 +64,6 @@ remove_invariant_sites <- function(mat, rows_to_keep){
 #' @param dna_mat Matrix.
 #'
 #' @return variant_only_dna_mat: Matrix.
-#' @export
 #'
 keep_only_variant_sites <- function(dna_mat){
   check_is_this_class(dna_mat, "matrix")

@@ -8,7 +8,6 @@
 #' @param tree (\code{ape phylo}).
 #'
 #' @return tree: (\code{ape phylo}). Tree now has only positive edge lengths.
-#' @export
 #'
 make_all_tree_edges_positive <- function(tree){
   check_is_tree(tree)
@@ -32,7 +31,6 @@ make_all_tree_edges_positive <- function(tree){
 #'
 #' @return major_allele: Character vector. Gives the major allele for each
 #'   position. Names are the genomic loci. Values are the nucleotides.
-#' @export
 #'
 get_major_alleles <- function(allele_mat){
 
@@ -64,7 +62,6 @@ get_major_alleles <- function(allele_mat){
 #'     the probability.}
 #'     \item{tree}{phylo. Tree used for ancestral state reconstruction.}
 #'   }
-#' @export
 #'
 get_ancestral_alleles <- function(tree, mat){
   check_is_tree(tree)
@@ -118,7 +115,6 @@ get_ancestral_alleles <- function(tree, mat){
 #'     ancestral reconstruction performed: the only column is the major allele.}
 #'     \item{removed}{Character. Vector with names of removed samples.}
 #'   }
-#' @export
 #'
 remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
   check_is_this_class(allele_mat, "matrix")
@@ -149,7 +145,6 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
 #'   (ancestral allele or major allele). Named vector. Names are genetic loci.
 #'
 #' @return bin_mat. Matrix. Binary matrix of variant presence/absence.
-#' @export
 #'
 make_binary_matrix <- function(allele_mat, reference_allele){
   check_is_this_class(reference_allele, "factor")
