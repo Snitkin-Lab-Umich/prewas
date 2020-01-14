@@ -1,5 +1,5 @@
 ## Test environments
-* local OS X install, R 3.6.1
+* local OS X install, R 3.6.2
 * win, R 3.6.2
 
 ## R CMD check results
