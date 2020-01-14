@@ -2,7 +2,7 @@
 % Please edit documentation in R/prewas.R
 \name{prewas}
 \alias{prewas}
-\title{Preprocess SNPs before GWAS}
+\title{Preprocess SNPs before bGWAS}
 \usage{
 prewas(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE)
 }
@@ -11,8 +11,8 @@ prewas(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE)
 `vcfR` object.}
 
 \item{tree}{`NULL`, `character`, or `phylo`. Optional input. Ignored if
-`NULL`.If `character` it should be a path to a .tree file. Defaults to
-`NULL.`}
+`NULL`. If `character` it should be a path to a .tree file. Defaults to
+`NULL`.}
 
 \item{outgroup}{`NULL` or `character`. Optional input. If `character` it
 should be either a string naming the outgroup in the tree or a path to a
@@ -29,13 +29,13 @@ reconstruction. When `FALSE` prewas calculates the major allele. Defaults
 to `TRUE`.}
 }
 \value{
-An list with the following items:
+A list with the following items:
   \describe{
     \item{allele_mat}{`matrix`. An allele matrix, created from the vcf where
     each multiallelic site will be on its own line. The rowname will be the
     position of the variant in the vcf file. If the position is triallelic,
     there will be two rows containing the same information. The rows will be
-    labeled "pos"" and "pos.1". If the position is quadallelic, there will be
+    labeled "pos" and "pos.1". If the position is quadallelic, there will be
     three rows containing the same information. The rows will be labeled
     "pos", "pos.1", and "pos.2"}
     \item{bin_mat}{`matrix`. A binary matrix, where 0 is the reference allele
@@ -67,8 +67,15 @@ An list with the following items:
   }
 }
 \description{
-Prepocess multiallelic sites, variants in overlapping genes, and
-  reference all variants to either the ancestral or major allele.
+prewas is a tool to standardize the pre-processing of your
+  genomic data before performing a bacterial genome-wide association study
+  (bGWAS). prewas creates a variant matrix (where each row is a variant, each
+  column is a sample, and the entries are presence - 1 - or absence - 0 - of
+  the variant) that can be used as input for bGWAS tools. When creating the
+  binary variant matrix, prewas can perform 3 pre-processing steps including:
+  dealing with  multiallelic SNPs, (optional) dealing with SNPs in
+  overlapping genes, and choosing a reference allele. prewas can output
+  matrices for use with both SNP-based bGWAS and gene-based bGWAS.
 }
 \examples{
 \dontrun{
