@@ -1,11 +1,11 @@
 # prewas ----------------------------------------------------------------------#
 test_that("Check that prewas() gives expected output when given valid input", {
   # Warning given because the outgroup will be dropped from the DNA matrix.
-  expect_warning(test_results <- prewas::prewas(dna = prewas::vcf,
+  test_results <- prewas::prewas(dna = prewas::vcf,
                                  tree = prewas::tree,
                                  outgroup = prewas::outgroup,
                                  gff = prewas::gff,
-                                 anc = FALSE))
+                                 anc = FALSE)
   expect_identical(prewas::results, test_results)
 })
 
