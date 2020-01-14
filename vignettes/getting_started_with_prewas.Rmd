@@ -173,8 +173,7 @@ head(results_maximal$bin_mat, 10)
 head(results_maximal$ar_results)
 ```
 
-* `dup`: same as `results_minimal`. Mutiple indices indicates multiallelic site split, not overlapping genes split. 
-
+* `dup`: Same format as `results_minimal`. Mutiple indices indicates multiallelic site split, but not overlapping genes split. 
 
 * `gene_mat`: Because a gff file was provided, a gene matrix is generated. Each row is a gene, not a SNP. 
 
