@@ -3,25 +3,58 @@
 #' @description Prepocess multiallelic sites, variants in overlapping genes, and
 #'   reference all variants to either the ancestral or major allele.
 #'
-#' @param dna Character. Required input. A path to to a VCF4.1 file.
-#' @param tree Phylo or Character. Optional input. Either a phylogenetic tree or
-#'   a path to a file containing a phylogenetic tree. Defaults to NULL.
-#' @param outgroup Character. Optional input. Either a path to a file containing
-#'   only the outgroup name or a string of the outgroup name. Must be a tip in
-#'   the phylogenetic tree. Defaults to NULL.
-#' @param gff Character. Optional input. Path to GFF3 file location. Defaults to
-#'   NULL.
-#' @param anc Logical. Optional input. When TRUE prewas performs ancestral
-#'   reconstruction. When FALSE prewas calculates the major allele. Defaults to
-#'   TRUE.
+#' @param dna `Character` or `vcfR`. Required input. Path to VCF4.1 file or
+#'   `vcfR` object.
+#' @param tree `NULL`, `character`, or `phylo`. Optional input. Ignored if
+#'   `NULL`.If `character` it should be a path to a .tree file. Defaults to
+#'   `NULL.`
+#' @param outgroup `NULL` or `character`. Optional input. If `character` it
+#'   should be either a string naming the outgroup in the tree or a path to a
+#'   file containing only the outgroup name. Ignored if `NULL`. Defaults to
+#'   `NULL`.
+#' @param gff `NULL`, `character`, `matrix`, or `data.frame`. Optional input. If
+#'  `NULL` it is ignored. If `character` it should be a path to a GFF3 file. If
+#'   a `matrix` or `data.frame` it should be the GFF information stored in 9
+#'   columns with the genes as rows. Defaults to `NULL`.
+#' @param anc `Logical`. Optional input. When `TRUE` prewas performs ancestral
+#'   reconstruction. When `FALSE` prewas calculates the major allele. Defaults
+#'   to `TRUE`.
 #'
 #' @return An list with the following items:
 #'   \describe{
-#'     \item{allele_mat}{Allele matrix.}
-#'     \item{bin_mat}{Binary matrix.}
-#'     \item{ar_results}{TODO}
-#'     \item{dup}{TODO}
-#'     \item{gene_mat}{Gene matrix.}
+#'     \item{allele_mat}{`matrix`. An allele matrix, created from the vcf where
+#'     each multiallelic site will be on its own line. The rowname will be the
+#'     position of the variant in the vcf file. If the position is triallelic,
+#'     there will be two rows containing the same information. The rows will be
+#'     labeled "pos"" and "pos.1". If the position is quadallelic, there will be
+#'     three rows containing the same information. The rows will be labeled
+#'     "pos", "pos.1", and "pos.2"}
+#'     \item{bin_mat}{`matrix`. A binary matrix, where 0 is the reference allele
+#'     and 1 indicates a variant. The dimensions may not match the `allele_mat`
+#'     if the gff file is provided, because SNPs in overlapping genes are
+#'     represented on multiple lines in `bin_mat`; in that case both position
+#'     and locus tag name are provided in the rowname.}
+#'     \item{ar_results}{`data.frame`. This data.frame records the alleles used
+#'     as the reference alleles. Rows correspond to variant loci. If `anc =
+#'     TRUE` the data.frame has two columns which contain the ancestrally
+#'     reconstructed allele and the probability of the reconstruction. If `anc =
+#'     FALSE` there is only one column which contains the major allele.}
+#'     \item{dup}{`integer`. A vector of integers. It's an index that identifies
+#'     duplicated rows. If the index is unique (appears once), that means it is
+#'     not a multiallelic site. If the index appears more than once, that means
+#'     the row was replicated `x` times, where `x` is the number of alternative
+#'     alleles. Note: the mutiple indices indicates multiallelic site splits,
+#'     not overlapping genes splits.}
+#'     \item{gene_mat}{`NULL` or `matrix`. `NULL` if no gene information
+#'     provided (`gff = NULL`). If gene information is provided, a gene matrix
+#'     is generated where each row is a gene and each column is a sample.}
+#'     \item{tree}{`NULL` or `phylo`. If the user provides a tree but no
+#'     outgroup: the function returns the tree after midpoint rooting. If user
+#'     provides both a tree and an outgroup: the function returns a tree rooted
+#'     on the outgroup and the outgroup is removed from the tree. If the user
+#'     does not provide a tree and `anc = TRUE` the function returns the
+#'     midpoint rooted tree generated. If the user does not provide a tree and
+#'     `anc = FALSE` no tree is generated and the function returns `NULL`.}
 #'   }
 #' @export
 #' @examples

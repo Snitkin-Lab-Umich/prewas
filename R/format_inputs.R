@@ -6,8 +6,9 @@
 #' @param outgroup NULL or character. If character it should be either a string
 #'   naming the outgroup in the dataset or a path to a file containing the
 #'   outgroup name.
-#' @param gff NULL or character. If character it should be a path to the GFF
-#'   file.
+#' @param gff NULL, character, or matrix. If character it should be a path to
+#'   the GFF file. If NULL ignored. If a matrix or data.frame it should be the
+#'   GFF information stored in 9 columns with the genes as rows.
 #'
 #' @return A list with the following four elements:
 #'   \describe{
