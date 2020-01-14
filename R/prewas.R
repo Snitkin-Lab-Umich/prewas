@@ -55,13 +55,14 @@
 #'     \item{gene_mat}{`NULL` or `matrix`. `NULL` if no gene information
 #'     provided (`gff = NULL`). If gene information is provided, a gene matrix
 #'     is generated where each row is a gene and each column is a sample.}
-#'     \item{tree}{`NULL` or `phylo`. If the user provides a tree but no
-#'     outgroup: the function returns the tree after midpoint rooting. If user
-#'     provides both a tree and an outgroup: the function returns a tree rooted
-#'     on the outgroup and the outgroup is removed from the tree. If the user
-#'     does not provide a tree and `anc = TRUE` the function returns the
-#'     midpoint rooted tree generated. If the user does not provide a tree and
-#'     `anc = FALSE` no tree is generated and the function returns `NULL`.}
+#'     \item{tree}{`NULL` or `phylo`. If `anc = FALSE` no tree is use or
+#'     generated and the function returns `NULL`. If `anc = TRUE` and the user
+#'     provides a tree but no outgroup: the function returns the tree after
+#'     midpoint rooting. If `anc = TRUE` and the user provides both a tree and
+#'     an outgroup: the function returns a tree rooted on the outgroup and the
+#'     outgroup is removed from the tree. If the user does not provide a tree
+#'     and `anc = TRUE` the function returns the midpoint rooted tree
+#'     generated.}
 #'   }
 #' @export
 #' @examples
