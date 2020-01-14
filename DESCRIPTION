@@ -1,12 +1,12 @@
 Package: prewas
 Type: Package
-Title: Data Pre-processing For Bacterial Genome-Wide Association Studies
+Title: Data Pre-processing for Bacterial Genome-Wide Association Studies
 Version: 1.0.0
 Authors@R: c(
     person("Katie", "Saund", email = "katiephd@umich.edu", role = "cre"),
     person("Zena", "Lapp", email = "zenalapp@umich.edu", role = "aut"), 
     person("Stephanie", "Thiede", email = "thiede@umich.edu", role = "aut"))
-Description: prewas is a tool to standardize the pre-processing of your
+Description: This package is a tool to standardize the pre-processing of your
     genomic data before performing a bacterial genome-wide association study
     (bGWAS). prewas creates a variant matrix (where each row is a variant, each
     column is a sample, and the entries are presence - 1 - or absence - 0 - of
