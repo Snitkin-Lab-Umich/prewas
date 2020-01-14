@@ -106,7 +106,7 @@ results_minimal = prewas(dna = vcf,
 
 * `bin_mat`: A binary matrix, the same dimensions as the allele matrix and with corresponding row names, where 0 is the reference allele and 1 indicates a variant. The reference allele is the major allele (because `anc = FALSE`). 
 
-* `ar_results`: Will indicate the allele used as the reference allele (in this case, the major allele). The vector is the length of the number of rows of `bin_mat`. 
+* `ar_results`: Will indicate the allele used as the reference allele (in this case, the major allele). The number of rows is the length of the number of rows of `bin_mat`. 
 
 * `dup`: An index that identifies duplicated rows. If the index is unique (appears once), that means it is not a multiallelic site. If the index appears more than once, that means the row was replicated `x` times, where `x` is the number of alternative alleles.  
 
@@ -168,7 +168,7 @@ head(results_maximal$allele_mat)
 head(results_maximal$bin_mat, 10)
 ```
 
-* `ar_results`: Will indicate the allele used as the reference allele (in this case, the ancestral allele). Because ancestral reconstruction was used, the probability of the ancestral alleles is also reported. The vector is the length of the number of rows of allele_mat.  
+* `ar_results`: Will indicate the allele used as the reference allele (in this case, the ancestral allele). Because ancestral reconstruction was used, the probability of the ancestral alleles is also reported. The number of rows is the same as the number of rows of allele_mat.  
 
 ```{r}
 head(results_maximal$ar_results)
