@@ -4,7 +4,9 @@
 #'
 #' @param num Number
 #' @examples
+#' \dontrun{
 #' check_is_number(100)
+#' }
 check_is_number <- function(num){
   if (!class(num) %in% c("numeric")) {
     stop("Input must be a numeric")
@@ -33,8 +35,10 @@ is_file <- function(obj){
 #'
 #' @return is_this_class: Logical.
 #' @examples
+#' \dontrun{
 #' object <- "example"
 #' is_this_class(object, "character")
+#' }
 is_this_class <- function(obj, current_class){
   if (class(current_class) != "character") {
     stop("Current_class is expected to be a string describing a class")
@@ -71,8 +75,11 @@ is_this_class <- function(obj, current_class){
 #' @param current_class Character string. Name of R class
 #'
 #' @examples
+#' \dontrun{
 #' object <- "example"
 #' check_is_this_class(object, "character")
+#' }
+
 check_is_this_class <- function(obj, current_class){
   class_log <- is_this_class(obj, current_class)
   if (class_log != TRUE) {
@@ -88,8 +95,11 @@ check_is_this_class <- function(obj, current_class){
 #' @param tree Phylogenetic tree.
 #'
 #' @examples
+#' \dontrun{
 #' tree <- ape::rtree(10)
 #' check_is_tree(tree)
+#' }
+
 check_is_tree <- function(tree){
   if (!is_this_class(tree, 'phylo')) {
     stop('Input requires either a path to a tree file or an ape phylo object')
@@ -104,8 +114,11 @@ check_is_tree <- function(tree){
 #' @param tree Phylogenetic tree.
 #'
 #' @examples
+#' \dontrun{
 #' tree <- ape::rtree(10)
 #' check_tree_is_rooted(tree)
+#' }
+
 check_tree_is_rooted <- function(tree){
   check_is_tree(tree)
   if (!ape::is.rooted(tree)) {
@@ -169,7 +182,8 @@ clean_up_cds_name_from_gff <- function(gff){
   # TODO add a check_dimenions() call and write the check_dimensions function
 
   cds_name <- apply(gff, 1, function(row){
-    gsub('^ID=', '', row[9]) %>% gsub(';.*$', '', .)
+    temp <- gsub('^ID=', '', row[9])
+    temp <- gsub(';.*$', '', temp)
   })
   gff[, 9] <- cds_name
   return(gff)

@@ -14,6 +14,8 @@ Doesn't return anything. Gives an error message if the object is not a
 rooted tree.
 }
 \examples{
+\dontrun{
 tree <- ape::rtree(10)
 check_tree_is_rooted(tree)
+}
 }

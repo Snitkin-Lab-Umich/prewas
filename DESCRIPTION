@@ -16,7 +16,6 @@ Imports:
     future.apply, 
     phangorn, 
     phytools, 
-    magrittr,
     stats,
     vcfR, 
     utils

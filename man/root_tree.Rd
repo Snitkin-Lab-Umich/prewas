@@ -22,8 +22,10 @@ roots the tree. If the tree is rooted and no outgroup is provided, returns
 the tree as is.
 }
 \examples{
+\dontrun{
 tree <- ape::rcoal(100)
 ape::is.rooted(tree)
 tree <- root_tree(tree)
 ape::is.rooted(tree)
+}
 }

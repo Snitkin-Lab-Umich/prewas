@@ -13,5 +13,7 @@ check_is_number(num)
 Doesn't return anything. Gives an error message if input is not a number.
 }
 \examples{
+\dontrun{
 check_is_number(100)
+}
 }

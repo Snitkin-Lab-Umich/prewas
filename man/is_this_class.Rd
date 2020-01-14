@@ -18,6 +18,8 @@ is_this_class: Logical.
 Tests if an input object has the specified class.
 }
 \examples{
+\dontrun{
 object <- "example"
 is_this_class(object, "character")
+}
 }

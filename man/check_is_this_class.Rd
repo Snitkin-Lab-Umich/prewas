@@ -16,6 +16,8 @@ Doesn't return anything. Gives error if the object is not of the expected R
 class.
 }
 \examples{
+\dontrun{
 object <- "example"
 check_is_this_class(object, "character")
+}
 }

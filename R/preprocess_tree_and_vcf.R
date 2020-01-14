@@ -57,10 +57,12 @@ build_tree <- function(mat){
 #' @return tree: phylo. Rooted tree without outgroup.
 #'
 #' @examples
+#' \dontrun{
 #' tree <- ape::rcoal(100)
 #' ape::is.rooted(tree)
 #' tree <- root_tree(tree)
 #' ape::is.rooted(tree)
+#' }
 root_tree <- function(tree, outgroup = NULL){
   # READ IN TREE
   tree <- read_in_tree(tree)
