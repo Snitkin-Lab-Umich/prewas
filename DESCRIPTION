@@ -1,6 +1,6 @@
 Package: prewas
 Type: Package
-Title: Data Pre-processing for Bacterial Genome-Wide Association Studies
+Title: Data Pre-Processing for Bacterial Genome-Wide Association Studies
 Version: 1.0.0
 Authors@R: c(
     person("Katie", "Saund", email = "katiephd@umich.edu", role = "cre"),
