@@ -30,7 +30,7 @@ When creating the binary variant matrix, prewas can perform 3 pre-processing ste
 
 1. choosing a reference allele. 
 
-These 3 steps in the prewas workflow are shown below. (B) shows how prewas multialleleic sites, (C) shows options for choosing a reference allele and (D) shows how prewas can group SNPs into genes. A detailed workflow indicating required file inputs can be seen below in the "Detailed prewas workflow" section. 
+These 3 steps in the prewas workflow are shown below. (B) shows how prewas handles multialleleic sites, (C) shows options for choosing a reference allele and (D) shows how prewas can group SNPs into genes. A detailed workflow indicating required file inputs can be seen below in the "Detailed prewas workflow" section. 
 
 ![prewas workflow](Figure_1.png){width=70%}
 
@@ -53,7 +53,7 @@ prewas uses the multi-line format to represent mutliallelic SNPs. Below are exam
 
 ### 2. Dealing with SNPs in overlapping genes 
 
-A SNP in an overlapping gene could have a different impact on those two genes. Therefore, when a gff is provided, prewas will output a binary variant matrix where a SNP in `x` overlapping genes will be represented on `x` lines. When a gff is provided, prewas will also output a gene-based variant matrix indicating presence or absence of at least 1 variant in that gene, and thus SNPs in overlapping genes will be assigned to both genes.    
+A SNP in an overlapping gene could have a different impact on those two genes. Therefore, when a gff is provided, prewas will output a binary variant matrix where a SNP in `x` overlapping genes will be represented on `x` lines. When a gff is provided, prewas will also output a gene-based variant matrix indicating presence or absence of at least 1 variant in that gene, and  SNPs in overlapping genes will be assigned to both genes.    
 
 ### 3. Choosing a reference allele 
 A reference allele, the allele that will be denoted 0 in a binary matrix could be: 
@@ -72,7 +72,7 @@ When ancestral reconstruction is not used (`anc = FALSE`), prewas will use the m
 prewas can output matrices for use with both SNP-based bGWAS and gene-based bGWAS. 
 
 ## Usage 
-At minimum, prewas requires a .vcf, but can also take in a tree, the name of the outgroup in that tree (if any), and a .gff for use with gene-based analysis. 
+At minimum, prewas requires a .vcf, but can also take in a phylogenetic tree, the name of the outgroup in that tree (if any), and a .gff for use with gene-based analysis. 
 
 Below, we'll explore some usage examples using toy data built into the package. 
 
@@ -168,7 +168,7 @@ head(results_maximal$allele_mat)
 head(results_maximal$bin_mat, 10)
 ```
 
-* `ar_results`: Will indicate the allele used as the reference allele (in this case, the ancestral allele). Because ancestral reconstruction was used, the probability of the ancestral alleles is also reported. The number of rows is the same as the number of rows of allele_mat.  
+* `ar_results`: Will indicate the allele used as the reference allele (in this case, the ancestral allele). Because ancestral reconstruction was used, the probability of the ancestral alleles is also reported. The number of rows is the same as the number of rows of `allele_mat`.  
 
 ```{r}
 head(results_maximal$ar_results)
@@ -177,7 +177,7 @@ head(results_maximal$ar_results)
 * `dup`: same as `results_minimal`. Mutiple indices indicates multiallelic site split, not overlapping genes split. 
 
 
-* `gene_mat`: Because a gff file was provided, a gene matrix is generated Each row is a gene, not a SNP. 
+* `gene_mat`: Because a gff file was provided, a gene matrix is generated. Each row is a gene, not a SNP. 
 
 ```{r}
 head(results_maximal$gene_mat)
