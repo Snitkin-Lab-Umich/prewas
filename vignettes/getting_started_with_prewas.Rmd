@@ -102,7 +102,7 @@ results_minimal = prewas(dna = vcf,
 
 #### Will output a list containing: 
 
-* `allele_mat`: An allele matrix, created from the vcf where each multiallelic site will be on its own line. The rowname will be the position of the variant in the vcf file. If the position is triallelic, there will be two rows containing the same information. The rows will be labeled "pos"" and "pos.1". If the position is quadallelic, there will be three rows containing the same information. The rows will be labeled "pos", "pos.1", and "pos.2".
+* `allele_mat`: An allele matrix, created from the vcf where each multiallelic site will be on its own line. The rowname will be the position of the variant in the vcf file. If the position is triallelic, there will be two rows containing the same information. The rows will be labeled "pos" and "pos.1". If the position is quadallelic, there will be three rows containing the same information. The rows will be labeled "pos", "pos.1", and "pos.2".
 
 * `bin_mat`: A binary matrix, the same dimensions as the allele matrix and with corresponding row names, where 0 is the reference allele and 1 indicates a variant. The reference allele is the major allele (because `anc = FALSE`). 
 
