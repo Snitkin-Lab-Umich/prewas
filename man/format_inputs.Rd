@@ -17,8 +17,9 @@ the tree file.}
 naming the outgroup in the dataset or a path to a file containing the
 outgroup name.}
 
-\item{gff}{NULL or character. If character it should be a path to the GFF
-file.}
+\item{gff}{NULL, character, or matrix. If character it should be a path to
+the GFF file. If NULL ignored. If a matrix or data.frame it should be the
+GFF information stored in 9 columns with the genes as rows.}
 }
 \value{
 A list with the following four elements:
