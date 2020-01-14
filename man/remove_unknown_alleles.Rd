@@ -10,7 +10,7 @@ remove_unknown_alleles(allele_mat, alleles, ar_results)
 \item{allele_mat}{Matrix. Allele matrix. Rows are variants, columns are
 samples.}
 
-\item{alleles}{TODO: OBJECT TYPE? reference alleles (ancestral alleles or
+\item{alleles}{Factor. Vector of reference alleles (ancestral alleles or
 major alleles)}
 
 \item{ar_results}{Data.frame. Results from ancestral reconstruction}
@@ -18,9 +18,12 @@ major alleles)}
 \value{
 A list of three objects:
   \describe{
-    \item{allele_mat}{Matrix.}
-    \item{ar_results}{Data.frame.}
-    \item{removed}{Character. Names of removed samples.}
+    \item{allele_mat}{Matrix. Rows are variants. Columns are samples.}
+    \item{ar_results}{Data.frame. Variants with unknown ancestral states
+    removed. Rows are variants. If ancestral reconstruction was performed:
+    first column in ancestral allele & second column is probability. If no
+    ancestral reconstruction performed: the only column is the major allele.}
+    \item{removed}{Character. Vector with names of removed samples.}
   }
 }
 \description{

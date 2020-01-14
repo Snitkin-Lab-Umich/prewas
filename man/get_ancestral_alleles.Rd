@@ -16,7 +16,8 @@ list of two elements:
   \describe{
     \item{ar_results}{Data.frame. Data.frame of most likely ancestral allele
     for each row in allele matrix and probability that that is the ancestral
-    state.}
+    state. Rows are variants. First column is the allele. Second column is
+    the probability.}
     \item{tree}{phylo. Tree used for ancestral state reconstruction.}
   }
 }

@@ -37,3 +37,16 @@ An list with the following items:
 Prepocess multiallelic sites, variants in overlapping genes, and
   reference all variants to either the ancestral or major allele.
 }
+\examples{
+\dontrun{
+vcf = prewas::vcf
+gff = prewas::gff
+tree = prewas::tree
+outgroup = prewas::outgroup
+prewas(dna = vcf,
+       tree = tree,
+       outgroup = outgroup,
+       gff = gff,
+       anc = TRUE)
+}
+}

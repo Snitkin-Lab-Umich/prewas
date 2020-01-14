@@ -7,10 +7,12 @@
 get_major_alleles(allele_mat)
 }
 \arguments{
-\item{allele_mat}{Matrix. Allele matrix.}
+\item{allele_mat}{Matrix. Allele matrix. Rows are variants. Columns are
+samples.}
 }
 \value{
-major_allele: major allele for each position.
+major_allele: Character vector. Gives the major allele for each
+  position. Names are the genomic loci. Values are the nucleotides.
 }
 \description{
 Finds the major allele (most common allele) for each variant position in an

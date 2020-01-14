@@ -7,10 +7,11 @@
 make_binary_matrix(allele_mat, reference_allele)
 }
 \arguments{
-\item{allele_mat}{Matrix. Allele matrix (split by multi-allelic site)}
+\item{allele_mat}{Matrix. Allele matrix (split by multi-allelic site). Rows
+are variants. Columns are samples.}
 
-\item{reference_allele}{vector of alleles that are 0 in binary matrix
-(ancestral allele or major allele)}
+\item{reference_allele}{Factor. Vector of alleles that are 0 in binary matrix
+(ancestral allele or major allele). Named vector. Names are genetic loci.}
 }
 \value{
 bin_mat. Matrix. Binary matrix of variant presence/absence.
