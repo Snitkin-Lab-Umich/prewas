@@ -5,9 +5,7 @@
 #' @return gene_names: Character. Vector of characters. Length = nrow(bin_mat).
 #'
 get_gene_names <- function(bin_mat){
-  check_is_this_class(bin_mat, "matrix")
   check_if_binary_matrix(bin_mat)
-
   variant_names <- row.names(bin_mat)
   gene_names <- gsub(".*[|]", "", variant_names)
   return(gene_names)
