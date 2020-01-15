@@ -40,6 +40,9 @@ is_file <- function(obj){
 #' is_this_class(object, "character")
 #' }
 is_this_class <- function(obj, current_class){
+  if (length(current_class) != 1) {
+    stop("Current_class must have a length of 1")
+  }
   if (class(current_class) != "character") {
     stop("Current_class is expected to be a string describing a class")
   }
@@ -163,7 +166,6 @@ read_gff <- function(gff){
 #' @return gff: Matrix.
 subset_gff <- function(gff){
   check_is_this_class(gff, "matrix")
-  # TODO add a check_dimenions() call and write the check_dimensions function
 
   gff <- gff[gff[, 3] == 'CDS', ] # subset gff on CDS
   if (nrow(gff) == 0) {
@@ -179,7 +181,6 @@ subset_gff <- function(gff){
 #' @return gff: Data.frame.
 clean_up_cds_name_from_gff <- function(gff){
   check_is_this_class(gff, "matrix")
-  # TODO add a check_dimenions() call and write the check_dimensions function
 
   cds_name <- apply(gff, 1, function(row){
     temp <- gsub('^ID=', '', row[9])
