@@ -56,36 +56,24 @@ test_that("is_this_class() returns TRUE when inputs match", {
 })
 
 test_that("is_this_class() returns FALSE when inputs mismatch", {
-  # character / numeric
   expect_false(is_this_class("5", "numeric"))
-  # numeric / character
   expect_false(is_this_class(5, "character"))
-  # matrix / data.frame
   expect_false(is_this_class(matrix(0, 1, 1), "data.frame"))
-  # factor / character
   expect_false(is_this_class(as.factor("foo"), "character"))
 })
 
 # check_is_this_class ---------------------------------------------------------#
 test_that("check_is_this_class() doesn't give error when given matching inputs", {
-  # numeric
   expect_silent(check_is_this_class(5, "numeric"))
-  # character
   expect_silent(check_is_this_class("5", "character"))
-  # matrix
   expect_silent(check_is_this_class(matrix(0, 1, 1), "matrix"))
-  # factor
   expect_silent(check_is_this_class(as.factor("foo"), "factor"))
 })
 
 test_that("check_is_this_class() gives error when given mismatching inputs", {
-  # numeric / character
   expect_error(check_is_this_class(5, "character"))
-  # character / numeric
   expect_error(check_is_this_class("5", "numeric"))
-  # matrix / data.frame
   expect_error(check_is_this_class(matrix(0, 1, 1), "data.frame"))
-  # factor / character
   expect_error(check_is_this_class(as.factor("foo"), "character"))
 })
 
@@ -96,13 +84,9 @@ test_that("check_is_tree() doesn't give error when given tree input", {
 })
 
 test_that("check_is_tree() gives error when given non-tree input", {
-  # numeric
   expect_error(check_is_tree(5))
-  # character
   expect_error(check_is_tree("foo"))
-  # matrix
   expect_error(check_is_tree(matrix(0, 1, 1)))
-  # factor
   expect_error(check_is_tree(as.factor("foo")))
 })
 
@@ -121,13 +105,9 @@ test_that("check_tree_is_rooted() gives error when given an unrooted tree input"
 })
 
 test_that("check_tree_is_rooted() gives error when given a non-tree input", {
-  # numeric
   expect_error(check_tree_is_rooted(5))
-  # character
   expect_error(check_tree_is_rooted("foo"))
-  # matrix
   expect_error(check_tree_is_rooted(matrix(0, 1, 1)))
-  # factor
   expect_error(check_tree_is_rooted(as.factor("foo")))
 })
 

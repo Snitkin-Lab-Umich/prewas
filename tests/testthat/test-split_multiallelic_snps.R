@@ -60,4 +60,3 @@ test_that("split_multi_to_biallelic_snps() gives error given invalid inputs", {
   expect_error(split_multi_to_biallelic_snps(as.data.frame(matrix(0, 1, 1)), "bar"))
   expect_error(split_multi_to_biallelic_snps(matrix(0, 1, 1), "bar"))
 })
-

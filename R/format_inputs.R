@@ -35,7 +35,7 @@ format_inputs <- function(dna,
 
   # Tree
   if (is.null(tree)) {
-    if(anc) tree <- build_tree(dna)
+    if (anc) tree <- build_tree(dna)
   } else {
     if (is_file(tree)) {
       # If tree stored as .tree file, read in

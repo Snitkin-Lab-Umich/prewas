@@ -1,5 +1,5 @@
 # replace_non_ATGC_with_N -----------------------------------------------------#
-test_that("Check that replace_non_ATGC_with_N() gives error when given invalid input", {
+test_that("replace_non_ATGC_with_N() gives error when given invalid input", {
   # integer
   expect_error(replace_non_ATGC_with_N(1))
 
@@ -10,7 +10,7 @@ test_that("Check that replace_non_ATGC_with_N() gives error when given invalid i
   expect_error(replace_non_ATGC_with_N(as.factor("foo")))
 })
 
-test_that("Check that replace_non_ATGC_with_N() returns matrix when given valid input", {
+test_that("replace_non_ATGC_with_N() returns matrix when given valid input", {
   allele_mat <- matrix(c("A", "T", "*", NA), nrow = 3, ncol = 4)
 
   replace_results <- replace_non_ATGC_with_N(allele_mat)
@@ -28,26 +28,26 @@ test_that("Check that replace_non_ATGC_with_N() returns matrix when given valid 
 })
 
 # identify_variant_sites ------------------------------------------------------#
-test_that("Check that identify_variant_sites() returns correct rows when given valid input", {
+test_that("identify_variant_sites() returns correct rows when given valid input", {
   allele_mat <- matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3)
   rows_to_keep_log <- identify_variant_sites(allele_mat)
   expect_equal(c(TRUE, FALSE, TRUE, FALSE), rows_to_keep_log)
 })
 
-test_that("Check that identify_variant_sites() gives error when given invalid input", {
+test_that("identify_variant_sites() gives error when given invalid input", {
   allele_mat <- as.data.frame(matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3))
   expect_error(identify_variant_sites(allele_mat))
 
   expect_error(identify_variant_sites("foo"))
 })
 
-test_that("Check that identify_variant_sites() gives error if there are no variant sites", {
+test_that("identify_variant_sites() gives error if there are no variant sites", {
   allele_mat <- matrix(c("A", "A", "A", "A", "A", "A"), nrow = 4, ncol = 3)
   expect_error(identify_variant_sites(allele_mat))
 })
 
 # remove_invariant_sites ------------------------------------------------------#
-test_that("Check that remove_invariant_sites() removes the correct rows when given valid input", {
+test_that("remove_invariant_sites() removes the correct rows when given valid input", {
   allele_mat <- matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3)
   rows_to_keep_log <- identify_variant_sites(allele_mat)
   only_variant_mat <- remove_invariant_sites(allele_mat, rows_to_keep_log)
@@ -55,7 +55,7 @@ test_that("Check that remove_invariant_sites() removes the correct rows when giv
   expect_equal(expected_results, only_variant_mat)
 })
 
-test_that("Check that remove_invariant_sites() gives errors when given invalide inputs", {
+test_that("remove_invariant_sites() gives errors when given invalide inputs", {
   expect_error(remove_invariant_sites("foo", "bar"))
 
   allele_mat <- matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3)
@@ -79,7 +79,7 @@ test_that("Check that remove_invariant_sites() gives errors when given invalide 
 })
 
 # keep_only_variant_sites -----------------------------------------------------#
-test_that("Check that keep_only_variant_sites returns expected matrix when given valid input", {
+test_that("keep_only_variant_sites returns expected matrix when given valid input", {
   allele_mat <- matrix(c("A", "T", "A", "*", NA,
                          "A", "T", "A", "A", "A",
                          "A", "A", "T", "A", "T"), nrow = 5, ncol = 3)
@@ -91,7 +91,7 @@ test_that("Check that keep_only_variant_sites returns expected matrix when given
 })
 
 
-test_that("Check that keep_only_variant_sites errors when given invalid input", {
+test_that("keep_only_variant_sites errors when given invalid input", {
   allele_mat <- matrix(c("A", "T", "A", "*", NA,
                          "A", "T", "A", "A", "A",
                          "A", "A", "T", "A", "T"), nrow = 5, ncol = 3)

@@ -78,7 +78,7 @@ get_ancestral_alleles <- function(tree, mat){
     tip_state <- unique(tip_states)
     if (length(tip_state) > 1) {
       ar <- ape::ace(x = tip_states, phy = tree, type = "discrete")
-      states <- ar$lik.anc[1,]
+      states <- ar$lik.anc[1, ]
       tip_state <- names(states)[which.max(states)]
       prob <- states[which.max(states)]
       c(tip_state, prob)
@@ -152,7 +152,7 @@ make_binary_matrix <- function(allele_mat, reference_allele){
   # initialize binary matrix
   bin_mat <- allele_mat
   # if allele is the reference allele, code it as 0
-  bin_mat[bin_mat == ref_allele_mat] = 0
+  bin_mat[bin_mat == ref_allele_mat] <- 0
   # get variant positions
   sites <- unique(gsub('\\..*', '', rownames(bin_mat)))
   # iterate over each site (to handle multiallelic sites)
@@ -162,7 +162,8 @@ make_binary_matrix <- function(allele_mat, reference_allele){
     bases <- unique(site)
     # remove reference (0) and unknown (N) bases
     bases <- bases[bases != "0" & bases != "N"]
-    # create mini-matrix for this variant position where rows are bases and columns are samples
+    # create mini-matrix for this variant position where rows are bases and
+    # columns are samples
     binsplit <- matrix(NA, nrow = length(bases), ncol = ncol(bin_mat))
     rownames(binsplit) <- bases
     # for each base, code that base as 1 and all others as 0
@@ -181,6 +182,6 @@ make_binary_matrix <- function(allele_mat, reference_allele){
   rownames(bin_mat) <- rownames(allele_mat)
   colnames(bin_mat) <- colnames(allele_mat)
   # make binary matrix numeric
-  class(bin_mat) <- 'numeric'
+  class(bin_mat) <- "numeric"
   return(bin_mat)
 }

@@ -1,6 +1,6 @@
-collapse_snps_by_gene -------------------------------------------------------#
-get_gene_names --------------------------------------------------------------#
-test_that("Check that get_gene_names() extracts correct gene names from a valid bin_mat", {
+# collapse_snps_by_gene -------------------------------------------------------#
+# get_gene_names --------------------------------------------------------------#
+test_that("get_gene_names() extracts correct gene names from a valid bin_mat", {
   temp_bin_mat <- matrix(c(0, 1, 1), nrow = 10, ncol = 3)
   row.names(temp_bin_mat) <-
     paste0(1:10, "|gene_", c(rep("1", 3), rep("2", 5), rep("3", 2)))
@@ -10,7 +10,7 @@ test_that("Check that get_gene_names() extracts correct gene names from a valid 
   expect_equal(length(gene_names), nrow(temp_bin_mat))
 })
 
-test_that("Check that get_gene_names() gives error when not given a binary matrix", {
+test_that("get_gene_names() gives error when not given a binary matrix", {
   expect_error(get_gene_names(0))
   expect_error(get_gene_names(""))
   expect_error(get_gene_names(as.data.frame(matrix(0, 10, 10))))
@@ -18,7 +18,7 @@ test_that("Check that get_gene_names() gives error when not given a binary matri
 })
 
 # collapse_snps_into_genes ----------------------------------------------------#
-test_that("Check that collpase_snps_into_genes() behaves as expected when given valid input", {
+test_that("collpase_snps_into_genes() behaves as expected when given valid input", {
   # When collapsing is possible
   temp_bin_mat <- matrix(c(0, 0, 1), nrow = 10, ncol = 3)
   row.names(temp_bin_mat) <-
@@ -41,7 +41,7 @@ test_that("Check that collpase_snps_into_genes() behaves as expected when given 
   expect_equal(dim(temp_gene_mat), dim(temp_bin_mat))
 })
 
-test_that("Check that collapse_snps_into_genes() give error when given invalid matrix", {
+test_that("collapse_snps_into_genes() give error when given invalid matrix", {
   # Non-binary matrix
   temp_bin_mat <- matrix(c(0, 0, 1), nrow = 10, ncol = 3)
   row.names(temp_bin_mat) <-

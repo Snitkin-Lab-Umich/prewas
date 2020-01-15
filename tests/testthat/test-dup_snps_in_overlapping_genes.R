@@ -1,6 +1,6 @@
 # dup_snps_in_overlapping_genes -----------------------------------------------#
 # dup_snps_in_overlapping_genes -----------------------------------------------#
-test_that("Check that dup_snps_in_overlapping_genes() works as expected when given valid inputs", {
+test_that("dup_snps_in_overlapping_genes() works as expected when given valid inputs", {
   temp_gff <- read_gff(prewas::gff)
   temp_gff <- temp_gff[1:4, , drop = FALSE]
 
@@ -14,7 +14,7 @@ test_that("Check that dup_snps_in_overlapping_genes() works as expected when giv
   expect_equal(ncol(temp_dup_mat), 3)
 })
 
-test_that("Check that dup_snps_in_overlapping_genes() gives error when given invalid inputs", {
+test_that("dup_snps_in_overlapping_genes() gives error when given invalid inputs", {
   expect_error(dup_snps_in_overlapping_genes("foo", matrix(0, 10, 10)))
   expect_error(dup_snps_in_overlapping_genes(matrix(0, 10, 10), "foo"))
   expect_error(dup_snps_in_overlapping_genes(matrix(0, 10, 10), matrix(0, 10, 10)))
