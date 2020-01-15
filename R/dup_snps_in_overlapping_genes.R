@@ -13,10 +13,10 @@ dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
   }
 
   # position of SNP
-  pos <- gsub('[.].*$', '', row.names(bin_mat))
+  pos <- gsub("[.].*$", "", row.names(bin_mat))
 
   # what genes are present at the pos?
-  genes_at_pos <- lapply(pos, function(p){
+  genes_at_pos <- lapply(pos, function(p) {
     gff_mat[gff_mat[, 4] <= p & gff_mat[, 5] >= p, 9]
   })
 
@@ -30,11 +30,11 @@ dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
   # there will be a .num. if its a multiallelic site
   pos_dup_gene <- paste(rep(row.names(bin_mat), num_of_genes_at_pos),
                         unlist(genes_at_pos),
-                        sep = '|')
+                        sep = "|")
 
   # duplicate overlapping genes
-  bin_mat_dup = bin_mat[rep(indices, num_of_genes_at_pos), ]
-  row.names(bin_mat_dup) = pos_dup_gene
+  bin_mat_dup <- bin_mat[rep(indices, num_of_genes_at_pos), ]
+  row.names(bin_mat_dup) <- pos_dup_gene
 
   return(bin_mat_dup)
 }
