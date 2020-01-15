@@ -84,20 +84,19 @@ prewas <- function(dna,
                    anc = TRUE){
   # Check inputs ---------------------------------------------------------------
   inputs <- format_inputs(dna, tree, outgroup, gff, anc)
-  # dna_mat: rows == variants & columns == isolates
   dna_mat <- inputs$dna
   tree <- inputs$tree
   outgroup_char <- inputs$outgroup
   gff_mat <- inputs$gff
 
   # preprocess tree and dna_mat ------------------------------------------------
-  if(anc){
+  if (anc) {
     tree <- root_tree(tree, outgroup_char)
     subsetted_data <- subset_tree_and_matrix(tree, dna_mat)
     tree <- subsetted_data$tree
     allele_mat_only_var <- keep_only_variant_sites(subsetted_data$mat)
-  }else{
-    check_is_this_class(dna_mat, 'matrix')
+  } else {
+    check_is_this_class(dna_mat, "matrix")
     allele_mat_only_var <- keep_only_variant_sites(dna_mat)
   }
 
@@ -152,7 +151,7 @@ prewas <- function(dna,
     gene_names <- get_gene_names(bin_mat)
     gene_mat <- collapse_snps_into_genes(bin_mat, gene_names)
   } else {
-    gene_mat = NULL
+    gene_mat <- NULL
   }
 
   return(list(allele_mat = allele_mat_split,

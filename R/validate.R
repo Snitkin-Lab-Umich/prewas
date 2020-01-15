@@ -86,7 +86,7 @@ is_this_class <- function(obj, current_class){
 check_is_this_class <- function(obj, current_class){
   class_log <- is_this_class(obj, current_class)
   if (class_log != TRUE) {
-    stop(paste('Input must be a', current_class))
+    stop(paste("Input must be a", current_class))
   }
 }
 
@@ -104,8 +104,8 @@ check_is_this_class <- function(obj, current_class){
 #' }
 
 check_is_tree <- function(tree){
-  if (!is_this_class(tree, 'phylo')) {
-    stop('Input requires either a path to a tree file or an ape phylo object')
+  if (!is_this_class(tree, "phylo")) {
+    stop("Input requires either a path to a tree file or an ape phylo object")
   }
 }
 
@@ -125,7 +125,7 @@ check_is_tree <- function(tree){
 check_tree_is_rooted <- function(tree){
   check_is_tree(tree)
   if (!ape::is.rooted(tree)) {
-    stop('Tree must be rooted.')
+    stop("Tree must be rooted.")
   }
 }
 
@@ -137,11 +137,11 @@ check_tree_is_rooted <- function(tree){
 read_gff <- function(gff){
   if (is_file(gff)) {
     gff <- utils::read.table(gff,
-                             sep = '\t',
+                             sep = "\t",
                              header = FALSE,
                              stringsAsFactors = FALSE,
                              quote = "",
-                             comment.char = '#')
+                             comment.char = "#")
   }
   if (is_this_class(gff, "data.frame")) {
     gff <- as.matrix(gff)
@@ -167,9 +167,10 @@ read_gff <- function(gff){
 subset_gff <- function(gff){
   check_is_this_class(gff, "matrix")
 
-  gff <- gff[gff[, 3] == 'CDS', ] # subset gff on CDS
+  gff <- gff[gff[, 3] == "CDS", ] # subset gff on CDS
   if (nrow(gff) == 0) {
-    stop("GFF has no CDS regions. Remove the gff from prewas inputs and rerun or use a different GFF with CDS regions.")
+    stop(paste("GFF has no CDS regions. Remove the gff from prewas inputs and",
+               "rerun or use a different GFF with CDS regions."))
   }
   return(gff)
 }
@@ -182,9 +183,9 @@ subset_gff <- function(gff){
 clean_up_cds_name_from_gff <- function(gff){
   check_is_this_class(gff, "matrix")
 
-  cds_name <- apply(gff, 1, function(row){
-    temp <- gsub('^ID=', '', row[9])
-    temp <- gsub(';.*$', '', temp)
+  cds_name <- apply(gff, 1, function(row) {
+    temp <- gsub("^ID=", "", row[9])
+    temp <- gsub(";.*$", "", temp)
   })
   gff[, 9] <- cds_name
   return(gff)
@@ -230,7 +231,7 @@ load_vcf_file <- function(vcf) {
 #'
 check_setequal_tree_mat <- function(tip_labels, colnames_mat){
   if (!setequal(tip_labels, colnames_mat)) {
-    stop('Tree and variant matrix sample names do not match.')
+    stop("Tree and variant matrix sample names do not match.")
   }
 }
 

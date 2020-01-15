@@ -1,5 +1,5 @@
 # prewas ----------------------------------------------------------------------#
-test_that("Check that prewas() gives expected output when given valid input", {
+test_that("prewas() gives expected output when given valid input", {
   # Warning given because the outgroup will be dropped from the DNA matrix.
   test_results <- prewas::prewas(dna = prewas::vcf,
                                  tree = prewas::tree,
@@ -9,19 +9,19 @@ test_that("Check that prewas() gives expected output when given valid input", {
   expect_identical(prewas::results, test_results)
 })
 
-test_that("Check that prewas() gives an error when given either a non-vcfR object or a non-file-path as the VCF data", {
+test_that("prewas() gives an error when given either a non-vcfR object or a non-file-path as the VCF data", {
   expect_error(prewas::prewas(dna = NULL))
   expect_error(prewas::prewas(dna = "foo"))
   expect_error(prewas::prewas(dna =  matrix(0, 10, 10)))
 })
 
-test_that("Check that prewas() gives an error when given a non-tree object", {
+test_that("prewas() gives an error when given a non-tree object", {
   expect_error(prewas::prewas(dna = prewas::vcf, tree = 5))
   expect_error(prewas::prewas(dna = prewas::vcf, tree = "foo"))
   expect_error(prewas::prewas(dna = prewas::vcf, tree = matrix(0, 10, 10)))
 })
 
-test_that("Check that prewas() gives an error when given an non-character outgroup object", {
+test_that("prewas() gives an error when given an non-character outgroup object", {
   expect_error(prewas::prewas(dna = prewas::vcf,
                               tree = prewas::tree,
                               outgroup = 5))
@@ -30,13 +30,13 @@ test_that("Check that prewas() gives an error when given an non-character outgro
                               outgroup =  matrix(0, 10, 10)))
 })
 
-test_that("Check that prewas() gives a warning when given an outgroup not found in the tree", {
+test_that("prewas() gives a warning when given an outgroup not found in the tree", {
   expect_warning(prewas::prewas(dna = prewas::vcf,
                                 tree = prewas::tree,
                                 outgroup = "foo"))
 })
 
-test_that("Check that prewas() gives an error when given incorrect gff data", {
+test_that("prewas() gives an error when given incorrect gff data", {
   expect_error(prewas::prewas(dna = prewas::vcf,
                               tree = prewas::tree,
                               outgroup = prewas::outgroup,

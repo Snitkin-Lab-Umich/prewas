@@ -12,10 +12,11 @@
 make_all_tree_edges_positive <- function(tree){
   check_is_tree(tree)
   if (sum(tree$edge.length <= 0) > 0) {
-    warning('All non-positive branch lengths changed to small positive number to be able to perform ancestral reconstruction.')
+    warning(paste0("All non-positive branch lengths changed to small positive ",
+                   "number to be able to perform ancestral reconstruction."))
     # Change any edge lengths that are zero to a very small number (so ancestral
     # reconstruction doesn't break)
-    tree$edge.length[tree$edge.length <= 0] =
+    tree$edge.length[tree$edge.length <= 0] <-
       min(tree$edge.length[tree$edge.length > 0]) / 1000
   }
   return(tree)
@@ -33,10 +34,6 @@ make_all_tree_edges_positive <- function(tree){
 #'   position. Names are the genomic loci. Values are the nucleotides.
 #'
 get_major_alleles <- function(allele_mat){
-
-  #print(dim(allele_mat))
-  #print(class(allele_mat))
-  #check_is_this_class(allele_mat, "matrix")
   major_allele <- apply(allele_mat, 1, function(x) {
     names(which.max(table(x)))
   })
@@ -80,7 +77,7 @@ get_ancestral_alleles <- function(tree, mat){
   ar_all <- t(future.apply::future_apply(mat, 1, function(tip_states) {
     tip_state <- unique(tip_states)
     if (length(tip_state) > 1) {
-      ar <- ape::ace(x = tip_states, phy = tree, type = 'discrete')
+      ar <- ape::ace(x = tip_states, phy = tree, type = "discrete")
       states <- ar$lik.anc[1,]
       tip_state <- names(states)[which.max(states)]
       prob <- states[which.max(states)]
@@ -90,7 +87,7 @@ get_ancestral_alleles <- function(tree, mat){
     }
   }))
   ar_all <- data.frame(ar_all)
-  colnames(ar_all) <- c('ancestral_allele', 'probability')
+  colnames(ar_all) <- c("ancestral_allele", "probability")
 
   return(list(ar_results = ar_all, tree = tree))
 }
@@ -121,11 +118,11 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results){
   check_is_this_class(alleles, "factor")
   check_is_this_class(ar_results, "data.frame")
 
-  unknown <- alleles %in% c('-','N')
+  unknown <- alleles %in% c("-", "N")
   removed <- rownames(allele_mat)[unknown]
   if (length(removed) > 0) {
     warning(paste(length(removed),
-                  'positions removed because ancestral allele is unknown'))
+                  "positions removed because ancestral allele is unknown"))
   }
   return(list(allele_mat = allele_mat[!unknown, ],
               ar_results = ar_results[!unknown, , drop = FALSE],
@@ -171,10 +168,10 @@ make_binary_matrix <- function(allele_mat, reference_allele){
     # for each base, code that base as 1 and all others as 0
     for (b in bases) {
       binsite <- site
-      binsite[binsite != b] = 0
-      binsite[binsite == b] = 1
+      binsite[binsite != b] <- 0
+      binsite[binsite == b] <- 1
       binsite <- as.numeric(binsite)
-      binsplit[b, ] = binsite
+      binsplit[b, ] <- binsite
     }
     return(binsplit)
   })

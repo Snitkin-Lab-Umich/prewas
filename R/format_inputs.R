@@ -20,7 +20,11 @@
 #'     \item{outgroup}{character}
 #'     \item{gff}{data.frame}
 #'   }
-format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE){
+format_inputs <- function(dna,
+                          tree = NULL,
+                          outgroup = NULL,
+                          gff = NULL,
+                          anc = TRUE){
   # DNA
   if (is.null(dna)) {
     stop("User must provide a vcfR object or path to a VCF 4.1 file")
@@ -37,7 +41,7 @@ format_inputs <- function(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = T
       # If tree stored as .tree file, read in
       tree <- ape::read.tree(tree)
     }
-    if (!is_this_class(tree, 'phylo')) {
+    if (!is_this_class(tree, "phylo")) {
       stop("Tree should either be a .tree or a phylo object")
     }
   }

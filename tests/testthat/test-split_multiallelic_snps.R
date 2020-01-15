@@ -1,5 +1,5 @@
 # split_multi_to_biallelic_snps -----------------------------------------------#
-test_that("Check that split_multi_to_biallelic_snps() gives expected output when input with only biallelic sites", {
+test_that("split_multi_to_biallelic_snps() gives expected output when input with only biallelic sites", {
 
   # Generate biallelic matrix
   test_mat <- matrix(c("A", "T", "G", "C"), nrow = 4, ncol = 5)
@@ -25,7 +25,7 @@ test_that("Check that split_multi_to_biallelic_snps() gives expected output when
   expect_equal(test_mat, test_split$mat_split)
 })
 
-test_that("Check that split_multi_to_biallelic_snps() gives expected output when input with a quadallelic site", {
+test_that("split_multi_to_biallelic_snps() gives expected output when input with a quadallelic site", {
   # Generate matrix with one multiallelic line
   test_mat <- matrix(c("A", "T", "G", "C"), nrow = 4, ncol = 5)
   test_mat[1, 1] <- "G"
@@ -55,7 +55,7 @@ test_that("Check that split_multi_to_biallelic_snps() gives expected output when
   expect_equal(test_split$mat_split[2, ], test_split$mat_split[3, ])
 })
 
-test_that("Check that split_multi_to_biallelic_snps() gives error given invalid inputs", {
+test_that("split_multi_to_biallelic_snps() gives error given invalid inputs", {
   expect_error(split_multi_to_biallelic_snps("foo", "bar"))
   expect_error(split_multi_to_biallelic_snps(as.data.frame(matrix(0, 1, 1)), "bar"))
   expect_error(split_multi_to_biallelic_snps(matrix(0, 1, 1), "bar"))

@@ -1,6 +1,6 @@
 # reference_alleles -----------------------------------------------------------#
 # make_all_tree_edges_positive ------------------------------------------------#
-test_that("Check that make_all_tree_edges_positive haves as expected when given valid inputs", {
+test_that("make_all_tree_edges_positive haves as expected when given valid inputs", {
   # Create tree with zero and negative edge lengths
   set.seed(1)
   temp_tree <- ape::rcoal(n = 10)
@@ -20,20 +20,20 @@ test_that("Check that make_all_tree_edges_positive haves as expected when given 
 })
 
 # get_major_alleles -----------------------------------------------------------#
-test_that("Check that get_major_alleles behaves as expected when given valid inputs", {
+test_that("get_major_alleles behaves as expected when given valid inputs", {
   allele_mat <- load_vcf_file(prewas::vcf)
   major_allele_df <- get_major_alleles(allele_mat)
   expect_equal(class(major_allele_df), "character")
   expect_equal(length(major_allele_df), nrow(allele_mat))
 })
 
-test_that("Check that get_major_alleles gives error when given invalid input", {
+test_that("get_major_alleles gives error when given invalid input", {
   expect_error(get_major_alleles("foo"))
   expect_error(get_major_alleles(15))
 })
 
 # get_ancestral_alleles -------------------------------------------------------#
-test_that("Check that get_ancestral_alleles behaves as expected when given valid inputs", {
+test_that("get_ancestral_alleles behaves as expected when given valid inputs", {
   temp_tree <- prewas::tree
   temp_tree <- root_tree(temp_tree, "t1")
   temp_dna <- load_vcf_file(prewas::vcf)
@@ -52,7 +52,7 @@ test_that("Check that get_ancestral_alleles behaves as expected when given valid
   expect_equal(ncol(temp_ar_results$ar_results), 2)
 })
 
-test_that("Check that get_ancestral_alleles gives error when given invalid input", {
+test_that("get_ancestral_alleles gives error when given invalid input", {
   # DNA matrix not in correct format
   expect_error(get_ancestral_alleles(prewas::tree, prewas::vcf))
 
@@ -64,7 +64,7 @@ test_that("Check that get_ancestral_alleles gives error when given invalid input
 })
 
 # remove_unknown_alleles ------------------------------------------------------#
-test_that("Check that remove_unknown_alleles correctly removes Ns when given valid input", {
+test_that("remove_unknown_alleles correctly removes Ns when given valid input", {
   temp_tree <- prewas::tree
   temp_tree <- root_tree(temp_tree, "t1")
   temp_dna <- load_vcf_file(prewas::vcf)
@@ -85,12 +85,12 @@ test_that("Check that remove_unknown_alleles correctly removes Ns when given val
                            temp_ar_results$ar_results))
 })
 
-test_that("Check that remove_unknown_alleles gives error when given invalid input", {
+test_that("remove_unknown_alleles gives error when given invalid input", {
   expect_error(remove_unknown_alleles("foo", "foo", "foo"))
 })
 
 # make_binary_matrix ----------------------------------------------------------#
-test_that("Check that make_binary_matrix performs as expected when given valid input", {
+test_that("make_binary_matrix performs as expected when given valid input", {
   temp_tree <- prewas::tree
   temp_tree <- root_tree(temp_tree, "t1")
   temp_dna <- load_vcf_file(prewas::vcf)
@@ -116,6 +116,6 @@ test_that("Check that make_binary_matrix performs as expected when given valid i
   expect_silent(check_if_binary_matrix(temp_bin))
 })
 
-test_that("Check that make_binary_matrix gives error when given invalid input", {
+test_that("make_binary_matrix gives error when given invalid input", {
   expect_error(make_binary_matrix("foo", "foo"))
 })
