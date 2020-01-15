@@ -154,7 +154,7 @@ make_binary_matrix <- function(allele_mat, reference_allele){
   # if allele is the reference allele, code it as 0
   bin_mat[bin_mat == ref_allele_mat] <- 0
   # get variant positions
-  sites <- unique(gsub('\\..*', '', rownames(bin_mat)))
+  sites <- unique(gsub("\\..*", "", rownames(bin_mat)))
   # iterate over each site (to handle multiallelic sites)
   bin_mat <- sapply(sites, function(x) {
     site <- bin_mat[rownames(bin_mat) == x, ] # get 1st site
