@@ -23,4 +23,4 @@ The Description field should not start with the package name,
 
 The NOTE is spurious because these words are all correctly spelled technical terms & the Description field does begin with "This package".
 
-* This is a new release.
+* This is a new submission.
