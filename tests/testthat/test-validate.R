@@ -115,8 +115,8 @@ test_that("check_tree_is_rooted() gives error when given a non-tree input", {
 test_that("read_gff() correctly parses input gff file", {
   test_gff <- read_gff(prewas::gff)
   expect_equal(ncol(test_gff), 9)
-  expect_equal(class(test_gff[, 1]), "character")
-  expect_equal(class(test_gff), "matrix")
+  expect_true(methods::is(test_gff[, 1], "character"))
+  expect_true(methods::is(test_gff, "matrix"))
 })
 
 test_that("read_gff() gives error if given invalid input", {
@@ -170,9 +170,9 @@ test_that("clean_up_cds_name_from_gff() gives error for non-GFF input", {
 # load_vcf_file ---------------------------------------------------------------#
 test_that("load_vcf_file() works when given vcfR object", {
   vcf_output <- load_vcf_file(prewas::vcf)
-  expect_equal(class(vcf_output), "matrix")
+  expect_true(methods::is(vcf_output, "matrix"))
   expect_equal(ncol(vcf_output), 14)
-  expect_equal(class(vcf_output[1, ]), "character")
+  expect_true(methods::is(vcf_output[1, ], "character"))
 })
 
 test_that("load_vcf_file() gives error when given non-VCF file input", {

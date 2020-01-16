@@ -15,7 +15,7 @@ test_that("replace_non_ATGC_with_N() returns matrix when given valid input", {
 
   replace_results <- replace_non_ATGC_with_N(allele_mat)
   # Returns a matrix
-  expect_equal(class(replace_results), "matrix")
+  expect_true(methods::is(replace_results, "matrix"))
 
   # Replaces all NAs
   expect_equal(0, sum(is.na(replace_results)))

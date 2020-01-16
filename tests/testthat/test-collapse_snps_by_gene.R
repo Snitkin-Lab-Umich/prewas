@@ -6,7 +6,7 @@ test_that("get_gene_names() extracts correct gene names from a valid bin_mat", {
     paste0(1:10, "|gene_", c(rep("1", 3), rep("2", 5), rep("3", 2)))
   colnames(temp_bin_mat) <- c("t1", "t2", "t3")
   gene_names <- get_gene_names(temp_bin_mat)
-  expect_equal(class(gene_names), "character")
+  expect_true(methods::is(gene_names, "character"))
   expect_equal(length(gene_names), nrow(temp_bin_mat))
 })
 

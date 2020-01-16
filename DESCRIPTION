@@ -21,7 +21,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Imports: 
     ape (>= 5.3), 
     future (>= 1.15.1),
@@ -29,7 +29,8 @@ Imports:
     phangorn (>= 2.5.5), 
     stats (>= 3.5.0),
     vcfR (>= 1.8.0), 
-    utils (>= 3.5.0)
+    utils (>= 3.5.0),
+    methods (>= 3.5.0)
 Suggests: 
     testthat (>= 2.2.1),
     knitr (>= 1.24),

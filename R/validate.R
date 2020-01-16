@@ -8,7 +8,7 @@
 #' check_is_number(100)
 #' }
 check_is_number <- function(num){
-  if (!class(num) %in% c("numeric")) {
+  if (!methods::is(num, "numeric")) {
     stop("Input must be a numeric")
   }
 }
@@ -20,7 +20,7 @@ check_is_number <- function(num){
 #' @return is_file Logical
 is_file <- function(obj){
   is_file <- FALSE
-  if (class(obj) == "character") {
+  if (methods::is(obj, "character")) {
     if (file.exists(obj)) {
       is_file <- TRUE
     }
@@ -43,7 +43,7 @@ is_this_class <- function(obj, current_class){
   if (length(current_class) != 1) {
     stop("Current_class must have a length of 1")
   }
-  if (class(current_class) != "character") {
+  if (!methods::is(current_class, "character")) {
     stop("Current_class is expected to be a string describing a class")
   }
   r_classes <- c("character",
@@ -62,10 +62,7 @@ is_this_class <- function(obj, current_class){
     stop("current_class is expected to be a R class")
   }
 
-  is_this_class <- FALSE
-  if (class(obj) == current_class) {
-    is_this_class <- TRUE
-  }
+  is_this_class <- methods::is(obj, current_class)
   return(is_this_class)
 }
 

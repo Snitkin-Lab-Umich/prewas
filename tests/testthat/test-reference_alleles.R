@@ -23,7 +23,7 @@ test_that("make_all_tree_edges_positive haves as expected when given valid input
 test_that("get_major_alleles behaves as expected when given valid inputs", {
   allele_mat <- load_vcf_file(prewas::vcf)
   major_allele_df <- get_major_alleles(allele_mat)
-  expect_equal(class(major_allele_df), "character")
+  expect_true(methods::is(major_allele_df, "character"))
   expect_equal(length(major_allele_df), nrow(allele_mat))
 })
 
@@ -46,8 +46,8 @@ test_that("get_ancestral_alleles behaves as expected when given valid inputs", {
   expect_equal(length(temp_ar_results), 2)
   expect_identical(names(temp_ar_results), c("ar_results", "tree"))
   expect_true(ape::is.rooted(temp_ar_results$tree))
-  expect_equal(class(temp_ar_results$ar_results), "data.frame")
-  expect_equal(class(temp_ar_results$tree), "phylo")
+  expect_true(methods::is(temp_ar_results$ar_results, "data.frame"))
+  expect_true(methods::is(temp_ar_results$tree, "phylo"))
   expect_equal(nrow(temp_ar_results$ar_results), nrow(temp_dna))
   expect_equal(ncol(temp_ar_results$ar_results), 2)
 })

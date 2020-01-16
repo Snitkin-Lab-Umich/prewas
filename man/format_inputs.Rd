@@ -4,8 +4,7 @@
 \alias{format_inputs}
 \title{Format user-provided inputs to prewas().}
 \usage{
-format_inputs(dna, tree = NULL, outgroup = NULL, gff = NULL,
-  anc = TRUE)
+format_inputs(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE)
 }
 \arguments{
 \item{dna}{Character or vcfR. Path to VCF file or vcfR object.}
