@@ -12,7 +12,7 @@ collapse_snps_into_genes(bin_mat, gene_vec)
 \item{gene_vec}{Character. Vector of gene names.}
 }
 \value{
-gene_mat: Marix.
+gene_mat: Matrix.
 }
 \description{
 Collapse SNPs into the gene(s) which they are from
