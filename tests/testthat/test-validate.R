@@ -94,7 +94,7 @@ test_that("check_is_tree() gives error when given non-tree input", {
 # check_tree_is_rooted --------------------------------------------------------#
 test_that("check_tree_is_rooted() doesn't give error when given a rooted tree input", {
   test_tree <- ape::rcoal(n = 5)
-  test_tree <- phytools::midpoint.root(test_tree)
+  test_tree <- phangorn::midpoint(test_tree)
   expect_silent(check_tree_is_rooted(test_tree))
 })
 

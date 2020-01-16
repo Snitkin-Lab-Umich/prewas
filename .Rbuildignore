@@ -4,3 +4,4 @@ prewas.yaml
 ^doc$
 ^Meta$
 ^cran-comments\.md$
+*yaml

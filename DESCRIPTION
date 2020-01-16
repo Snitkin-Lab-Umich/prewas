@@ -27,7 +27,6 @@ Imports:
     future (>= 1.15.1),
     future.apply (>= 1.3.0), 
     phangorn (>= 2.5.5), 
-    phytools (>= 0.6-99), 
     stats (>= 3.5.0),
     vcfR (>= 1.8.0), 
     utils (>= 3.5.0)

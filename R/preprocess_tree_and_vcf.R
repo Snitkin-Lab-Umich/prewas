@@ -79,7 +79,7 @@ root_tree <- function(tree, outgroup = NULL){
   # IF NO OUTGROUP AND TREE IS UNROOTED
   } else if (is.null(outgroup) & !ape::is.rooted(tree)) {
     # MIDPOINT ROOT TREE
-    tree <- phytools::midpoint.root(tree)
+    tree <- phangorn::midpoint(tree)
     return(tree)
   }
   return(tree)
