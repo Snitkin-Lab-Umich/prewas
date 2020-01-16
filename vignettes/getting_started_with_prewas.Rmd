@@ -30,7 +30,7 @@ When creating the binary variant matrix, prewas can perform 3 pre-processing ste
 
 1. choosing a reference allele. 
 
-These 3 steps in the prewas workflow are shown below. (B) shows how prewas handles multialleleic sites, (C) shows options for choosing a reference allele and (D) shows how prewas can group SNPs into genes. A detailed workflow indicating required file inputs can be seen below in the "Detailed prewas workflow" section. 
+These 3 steps in the prewas workflow are shown below. (B) shows how prewas handles multiallelic sites, (C) shows options for choosing a reference allele and (D) shows how prewas can group SNPs into genes. A detailed workflow indicating required file inputs can be seen below in the "Detailed prewas workflow" section. 
 
 ![prewas workflow](Figure_1.png){width=70%}
 
@@ -173,7 +173,7 @@ head(results_maximal$bin_mat, 10)
 head(results_maximal$ar_results)
 ```
 
-* `dup`: Same format as `results_minimal`. Mutiple indices indicates multiallelic site split, but not overlapping genes split. 
+* `dup`: Same format as `results_minimal`. Multiple indices indicates multiallelic site split, but not overlapping genes split. 
 
 * `gene_mat`: Because a gff file was provided, a gene matrix is generated. Each row is a gene, not a SNP. 
 

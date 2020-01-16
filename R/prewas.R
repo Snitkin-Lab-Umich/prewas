@@ -50,7 +50,7 @@
 #'     duplicated rows. If the index is unique (appears once), that means it is
 #'     not a multiallelic site. If the index appears more than once, that means
 #'     the row was replicated `x` times, where `x` is the number of alternative
-#'     alleles. Note: the mutiple indices indicates multiallelic site splits,
+#'     alleles. Note: the multiple indices indicates multiallelic site splits,
 #'     not overlapping genes splits.}
 #'     \item{gene_mat}{`NULL` or `matrix`. `NULL` if no gene information
 #'     provided (`gff = NULL`). If gene information is provided, a gene matrix

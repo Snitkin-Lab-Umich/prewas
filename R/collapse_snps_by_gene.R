@@ -16,7 +16,7 @@ get_gene_names <- function(bin_mat){
 #' @param bin_mat Matrix.
 #' @param gene_vec Character. Vector of gene names.
 #'
-#' @return gene_mat: Marix.
+#' @return gene_mat: Matrix.
 #'
 collapse_snps_into_genes <- function(bin_mat, gene_vec){
   check_is_this_class(gene_vec, "character")
