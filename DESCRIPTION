@@ -3,9 +3,18 @@ Type: Package
 Title: Data Pre-Processing for Bacterial Genome-Wide Association Studies
 Version: 1.0.0
 Authors@R: c(
-    person("Katie", "Saund", email = "katiephd@umich.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6214-6713")),
-    person("Zena", "Lapp", email = "zenalapp@umich.edu", role = "aut", comment = c(ORCID = "0000-0003-4674-2176")), 
-    person("Stephanie", "Thiede", email = "thiede@umich.edu", role = "aut", comment = c(ORCID = "0000-0003-0173-4324")))
+    person("Katie", "Saund", 
+           email = "katiephd@umich.edu", 
+           role = c("aut", "cre"), 
+           comment = c(ORCID = "0000-0002-6214-6713")),
+    person("Zena", "Lapp",
+           email = "zenalapp@umich.edu",
+           role = "aut", 
+           comment = c(ORCID = "0000-0003-4674-2176")), 
+    person("Stephanie", "Thiede",
+           email = "thiede@umich.edu", 
+           role = "aut",
+           comment = c(ORCID = "0000-0003-0173-4324")))
 Description: A tool to standardize the pre-processing of genomic variants before 
     performing a bacterial genome-wide association study (bGWAS). prewas creates
     a variant matrix (where each row is a variant, each column is a sample, and 
@@ -14,7 +23,8 @@ Description: A tool to standardize the pre-processing of genomic variants before
     prewas can perform 3 pre-processing steps including: dealing with 
     multiallelic SNPs, (optional) dealing with SNPs in overlapping genes, and 
     choosing a reference allele. prewas can output matrices for use with both 
-    SNP-based bGWAS and gene-based bGWAS.
+    SNP-based bGWAS and gene-based bGWAS. This method is described in Saund et 
+    al. (2019) <doi:10.1101/2019.12.20.873158v1>.
 URL: http://github.com/Snitkin-Lab-Umich/prewas
 BugReports: http://github.com/Snitkin-Lab-Umich/prewas/issues
 License: MIT + file LICENSE
