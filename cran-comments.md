@@ -1,3 +1,11 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Removed "This package" from the beginning of the description field.
+
+* Added a reference to the methods paper in the description field in the form of
+  Author (year) <doi:...>
+
 ## Test environments
 * local OS X install, R 3.6.2 & devel
 * win, R 3.5.3, 3.6.2 & devel
