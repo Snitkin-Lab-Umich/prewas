@@ -15,7 +15,7 @@ Authors@R: c(
            email = "thiede@umich.edu", 
            role = "aut",
            comment = c(ORCID = "0000-0003-0173-4324")))
-Description: A tool to standardize the pre-processing of genomic variants before 
+Description: Standardize the pre-processing of genomic variants before 
     performing a bacterial genome-wide association study (bGWAS). prewas creates
     a variant matrix (where each row is a variant, each column is a sample, and 
     the entries are presence - 1 - or absence - 0 - of the variant) that can be 
@@ -24,7 +24,7 @@ Description: A tool to standardize the pre-processing of genomic variants before
     multiallelic SNPs, (optional) dealing with SNPs in overlapping genes, and 
     choosing a reference allele. prewas can output matrices for use with both 
     SNP-based bGWAS and gene-based bGWAS. This method is described in Saund et 
-    al. (2019) <doi:10.1101/2019.12.20.873158v1>.
+    al. (2019) <doi:10.1101/2019.12.20.873158>.
 URL: http://github.com/Snitkin-Lab-Umich/prewas
 BugReports: http://github.com/Snitkin-Lab-Umich/prewas/issues
 License: MIT + file LICENSE
