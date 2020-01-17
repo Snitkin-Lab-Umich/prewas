@@ -20,11 +20,14 @@ NOTE:
 ```
 Possibly mis-spelled words in DESCRIPTION:
   Pre (3:13)
-  bGWAS (12:6, 14:48, 18:42, 18:63)
-  multiallelic (16:19)
-  pre (10:56, 15:49)
-  prewas (12:14, 15:28, 17:57)
+  Saund (27:71)
+  al (28:5)
+  bGWAS (20:59, 23:23, 27:15, 27:36)
+  et (27:77)
+  multiallelic (25:5)
+  pre (19:30, 24:26)
+  prewas (20:67, 24:5, 26:34)
 ```
 
 The NOTE is spurious because these words are all correctly spelled technical 
-terms.
+terms, names, or Latin.
