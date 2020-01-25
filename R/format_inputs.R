@@ -12,7 +12,7 @@
 #' @param anc logical. If TRUE ancestral reconstruction is performed and the
 #'   ancestral allele is used for referencing. If FALSE no ancestral
 #'   reconstruction is performed and the major allele is used for referencing.
-#'
+#' @noRd
 #' @return A list with the following four elements:
 #'   \describe{
 #'     \item{dna}{vcfR}

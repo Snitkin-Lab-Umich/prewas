@@ -21,7 +21,7 @@
 #'     the split_rows_flag is one less than the number of alleles at that locus.
 #'     }
 #'   }
-#'
+#' @noRd
 split_multi_to_biallelic_snps <- function(mat, ar_results){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")

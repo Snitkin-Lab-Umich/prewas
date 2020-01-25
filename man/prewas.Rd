@@ -79,15 +79,13 @@ prewas is a tool to standardize the pre-processing of your
   matrices for use with both SNP-based bGWAS and gene-based bGWAS.
 }
 \examples{
-\dontrun{
 vcf = prewas::vcf
 gff = prewas::gff
 tree = prewas::tree
 outgroup = prewas::outgroup
-prewas(dna = vcf,
-       tree = tree,
-       outgroup = outgroup,
-       gff = gff,
-       anc = TRUE)
-}
+output <- prewas(dna = vcf,
+                 tree = tree,
+                 outgroup = outgroup,
+                 gff = gff,
+                 anc = FALSE)
 }

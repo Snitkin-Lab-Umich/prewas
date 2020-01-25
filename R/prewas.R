@@ -66,17 +66,15 @@
 #'   }
 #' @export
 #' @examples
-#' \dontrun{
 #' vcf = prewas::vcf
 #' gff = prewas::gff
 #' tree = prewas::tree
 #' outgroup = prewas::outgroup
-#' prewas(dna = vcf,
-#'        tree = tree,
-#'        outgroup = outgroup,
-#'        gff = gff,
-#'        anc = TRUE)
-#' }
+#' output <- prewas(dna = vcf,
+#'                  tree = tree,
+#'                  outgroup = outgroup,
+#'                  gff = gff,
+#'                  anc = FALSE)
 prewas <- function(dna,
                    tree = NULL,
                    outgroup = NULL,

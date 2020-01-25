@@ -3,10 +3,7 @@
 #' Doesn't return anything. Gives an error message if input is not a number.
 #'
 #' @param num Number
-#' @examples
-#' \dontrun{
-#' check_is_number(100)
-#' }
+#' @noRd
 check_is_number <- function(num){
   if (!methods::is(num, "numeric")) {
     stop("Input must be a numeric")
@@ -16,7 +13,7 @@ check_is_number <- function(num){
 #' Tests if input object is a file.
 #'
 #' @param obj Any R object.
-#'
+#' @noRd
 #' @return is_file Logical
 is_file <- function(obj){
   is_file <- FALSE
@@ -34,11 +31,7 @@ is_file <- function(obj){
 #' @param current_class String. Name of the expected class of the R object.
 #'
 #' @return is_this_class: Logical.
-#' @examples
-#' \dontrun{
-#' object <- "example"
-#' is_this_class(object, "character")
-#' }
+#' @noRd
 is_this_class <- function(obj, current_class){
   if (length(current_class) != 1) {
     stop("Current_class must have a length of 1")
@@ -73,13 +66,7 @@ is_this_class <- function(obj, current_class){
 #'
 #' @param obj Any R object.
 #' @param current_class Character string. Name of R class
-#'
-#' @examples
-#' \dontrun{
-#' object <- "example"
-#' check_is_this_class(object, "character")
-#' }
-
+#' @noRd
 check_is_this_class <- function(obj, current_class){
   class_log <- is_this_class(obj, current_class)
   if (class_log != TRUE) {
@@ -93,13 +80,7 @@ check_is_this_class <- function(obj, current_class){
 #' 'phylo' object.
 #'
 #' @param tree Phylogenetic tree.
-#'
-#' @examples
-#' \dontrun{
-#' tree <- ape::rtree(10)
-#' check_is_tree(tree)
-#' }
-
+#' @noRd
 check_is_tree <- function(tree){
   if (!is_this_class(tree, "phylo")) {
     stop("Input requires either a path to a tree file or an ape phylo object")
@@ -112,13 +93,7 @@ check_is_tree <- function(tree){
 #' rooted tree.
 #'
 #' @param tree Phylogenetic tree.
-#'
-#' @examples
-#' \dontrun{
-#' tree <- ape::rtree(10)
-#' check_tree_is_rooted(tree)
-#' }
-
+#' @noRd
 check_tree_is_rooted <- function(tree){
   check_is_tree(tree)
   if (!ape::is.rooted(tree)) {
@@ -129,7 +104,7 @@ check_tree_is_rooted <- function(tree){
 #' Read in a GFF file given a file path
 #'
 #' @param gff Character or matrix. If character: path to GFF file.
-#'
+#' @noRd
 #' @return gff: matrix
 read_gff <- function(gff){
   if (is_file(gff)) {
@@ -159,7 +134,7 @@ read_gff <- function(gff){
 #' Keep only GFF features that are in CDS regions.
 #'
 #' @param gff Matrix. Rows = genomic features.
-#'
+#' @noRd
 #' @return gff: Matrix.
 subset_gff <- function(gff){
   check_is_this_class(gff, "matrix")
@@ -175,7 +150,7 @@ subset_gff <- function(gff){
 #' Remove ID prefix from CDS feature descriptions (e.g. gene names).
 #'
 #' @param gff Data.frame. Rows = genomic features.
-#'
+#' @noRd
 #' @return gff: Data.frame.
 clean_up_cds_name_from_gff <- function(gff){
   check_is_this_class(gff, "matrix")
@@ -192,7 +167,7 @@ clean_up_cds_name_from_gff <- function(gff){
 #'
 #' @param vcf Either character or vcfR. If character, it is a path to a VCF
 #'   file.
-#'
+#' @noRd
 #' @return vcf_geno_mat: Matrix.
 load_vcf_file <- function(vcf) {
   if (is_file(vcf)) {
@@ -225,7 +200,7 @@ load_vcf_file <- function(vcf) {
 #'
 #' @param tip_labels Character. Vector of tree$tip.labels.
 #' @param colnames_mat Character. Vector of column names from variant matrix.
-#'
+#' @noRd
 check_setequal_tree_mat <- function(tip_labels, colnames_mat){
   if (!setequal(tip_labels, colnames_mat)) {
     stop("Tree and variant matrix sample names do not match.")

@@ -2,7 +2,7 @@
 #'
 #' @param bin_mat Matrix. Binary matrix.
 #' @param gff_mat Matrix. GFF information.
-#'
+#' @noRd
 #' @return bin_mat_dup: Matrix.
 dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
   check_is_this_class(bin_mat, "matrix")

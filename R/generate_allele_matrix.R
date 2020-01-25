@@ -3,7 +3,7 @@
 #' @param mat Matrix.
 #'
 #' @return mat: Matrix.
-#'
+#' @noRd
 replace_non_ATGC_with_N <- function(mat){
   check_is_this_class(mat, "matrix")
   mat <- apply(mat, 2, toupper)
@@ -19,7 +19,7 @@ replace_non_ATGC_with_N <- function(mat){
 #' @param mat Matrix.
 #'
 #' @return rows_to_keep: Logical vector.
-#'
+#' @noRd
 identify_variant_sites <- function(mat){
   check_is_this_class(mat, "matrix")
   rows_to_keep <- apply(mat, 1, function(row) {
@@ -42,7 +42,7 @@ identify_variant_sites <- function(mat){
 #'   (variant loci).
 #'
 #' @return mat: Matrix.
-#'
+#' @noRd
 remove_invariant_sites <- function(mat, rows_to_keep){
   check_is_this_class(mat, "matrix")
   check_is_this_class(rows_to_keep, "logical")
@@ -64,7 +64,7 @@ remove_invariant_sites <- function(mat, rows_to_keep){
 #' @param dna_mat Matrix.
 #'
 #' @return variant_only_dna_mat: Matrix.
-#'
+#' @noRd
 keep_only_variant_sites <- function(dna_mat){
   check_is_this_class(dna_mat, "matrix")
   dna_mat <- replace_non_ATGC_with_N(dna_mat)

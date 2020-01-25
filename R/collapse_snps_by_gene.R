@@ -3,7 +3,7 @@
 #' @param bin_mat Matrix.
 #'
 #' @return gene_names: Character. Vector of characters. Length = nrow(bin_mat).
-#'
+#' @noRd
 get_gene_names <- function(bin_mat){
   check_if_binary_matrix(bin_mat)
   variant_names <- row.names(bin_mat)
@@ -17,7 +17,7 @@ get_gene_names <- function(bin_mat){
 #' @param gene_vec Character. Vector of gene names.
 #'
 #' @return gene_mat: Matrix.
-#'
+#' @noRd
 collapse_snps_into_genes <- function(bin_mat, gene_vec){
   check_is_this_class(gene_vec, "character")
   check_if_binary_matrix(bin_mat)
