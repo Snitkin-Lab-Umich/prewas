@@ -212,7 +212,7 @@ check_setequal_tree_mat <- function(tip_labels, colnames_mat){
 #' Function gives error if matrix is not binary; otherwise, returns nothing.
 #'
 #' @param mat Matrix.
-#'
+#' @noRd
 check_if_binary_matrix <- function(mat) {
   check_is_this_class(mat, "matrix")
 
