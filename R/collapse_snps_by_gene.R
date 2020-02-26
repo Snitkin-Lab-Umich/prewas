@@ -11,6 +11,19 @@ get_gene_names <- function(bin_mat){
   return(gene_names)
 }
 
+#' Get names of alleles from a binary allele matrix
+#'
+#' @param bin_mat Matrix.
+#'
+#' @return allele_names: Character. Vector of characters. Length = nrow(bin_mat).
+#' @noRd
+get_allele_names <- function(bin_mat){
+  check_if_binary_matrix(bin_mat)
+  variant_names <- row.names(bin_mat)
+  allele_names <- gsub('\\|.*|\\..*','', variant_names)
+  return(allele_names)
+}
+
 #' Collapse SNPs into the gene(s) which they are from
 #'
 #' @param bin_mat Matrix.

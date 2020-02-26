@@ -51,3 +51,26 @@ test_that("collapse_snps_into_genes() give error when given invalid matrix", {
   temp_bin_mat[temp_bin_mat == 1] <- 2
   expect_error(collapse_snps_into_genes(temp_bin_mat, gene_names))
 })
+
+test_that("collapse_snps_into_genes() behaves as expected when given valid allele grouping",{
+  # When multiallelic sites
+  temp_bin_mat <- matrix(c(0, 0, 1), nrow = 10, ncol = 3)
+  row.names(temp_bin_mat) <-
+    paste0(1:10, "|gene_", c(rep("1", 3), rep("2", 5), rep("3", 2)))
+  colnames(temp_bin_mat) <- c("t1", "t2", "t3")
+  row.names(temp_bin_mat)[10] <- "9.1|gene_3"
+  allele_names <- get_allele_names(temp_bin_mat)
+  
+  temp_new_bin_mat <- collapse_snps_into_genes(temp_bin_mat, allele_names)
+  expect_equal(unname(temp_new_bin_mat[9, , drop = TRUE]), c(1, 0, 1))
+
+  # When there is no collapsing possible
+  temp_bin_mat <- matrix(c(0, 0, 1), nrow = 10, ncol = 3)
+  row.names(temp_bin_mat) <-
+    paste0(1:10, "|gene_", c(rep("1", 3), rep("2", 5), rep("3", 2)))
+  colnames(temp_bin_mat) <- c("t1", "t2", "t3")
+  allele_names <- get_allele_names(temp_bin_mat)
+  
+  temp_new_bin_mat <- collapse_snps_into_genes(temp_bin_mat, allele_names)
+  expect_equal(dim(temp_new_bin_mat), dim(temp_bin_mat))
+})
