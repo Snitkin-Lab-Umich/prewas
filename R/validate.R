@@ -163,7 +163,10 @@ clean_up_cds_name_from_gff <- function(gff){
   return(gff)
 }
 
-#' Read in variant data from a VCF file or vcfR object
+#' Read in variant data from a VCF file or vcfR object prepared
+#'
+#' @description This function can now handle the multiVCF as prepared by
+#'   bcftools / snpeff
 #'
 #' @param vcf Either character or vcfR. If character, it is a path to a VCF
 #'   file.
@@ -181,6 +184,11 @@ load_vcf_file <- function(vcf) {
   vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
 
   for (i in 1:nrow(vcf_geno_mat)) {
+    vcf_geno_mat[i, grepl(pattern = "^[.][/][.]", x = vcf_geno_mat[i, ])] <- "0"
+    vcf_geno_mat[i, grepl(pattern = "^[1][/][1]", x = vcf_geno_mat[i, ])] <- "1"
+    vcf_geno_mat[i, grepl(pattern = "^[2][/][2]", x = vcf_geno_mat[i, ])] <- "2"
+    vcf_geno_mat[i, grepl(pattern = "^[3][/][3]", x = vcf_geno_mat[i, ])] <- "3"
+
     alt_alleles <- strsplit(vcf_alt_allele[i], split = ",")
     vcf_alt_allele_1 <- alt_alleles[[1]][1]
     vcf_alt_allele_2 <- alt_alleles[[1]][2]
