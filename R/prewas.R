@@ -26,6 +26,9 @@
 #' @param anc `Logical`. Optional input. When `TRUE` prewas performs ancestral
 #'   reconstruction. When `FALSE` prewas calculates the major allele. Defaults
 #'   to `TRUE`.
+#'   @param grp_nonref `Logical`. Optional input. When `TRUE` prewas collapses all 
+#'   non-reference alleles for multi-allelic sites. When `FALSE` prewas keeps 
+#'   multi-allelic sites separate. Defaults to `FALSE`.
 #'
 #' @return A list with the following items:
 #'   \describe{
@@ -79,7 +82,8 @@ prewas <- function(dna,
                    tree = NULL,
                    outgroup = NULL,
                    gff = NULL,
-                   anc = TRUE){
+                   anc = TRUE,
+                   grp_nonref = FALSE){
   # Check inputs ---------------------------------------------------------------
   inputs <- format_inputs(dna, tree, outgroup, gff, anc)
   dna_mat <- inputs$dna
@@ -138,9 +142,9 @@ prewas <- function(dna,
     names(alleles) <- rownames(allele_results_split)
   }
 
-  # reference to ancestral state -----------------------------------------------
+  # reference to reference allele ----------------------------------------------
   bin_mat <- make_binary_matrix(allele_mat_split, alleles)
-
+  
   if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
     bin_mat <- dup_snps_in_overlapping_genes(bin_mat, gff_mat)
@@ -150,6 +154,12 @@ prewas <- function(dna,
     gene_mat <- collapse_snps_into_genes(bin_mat, gene_names)
   } else {
     gene_mat <- NULL
+  }
+  
+  if(grp_nonref){
+    # collapse variants by position --------------------------------------------
+    allele_names = get_allele_names(bin_mat)
+    bin_mat <- collapse_snps_into_genes(bin_mat, allele_names)
   }
 
   return(list(allele_mat = allele_mat_split,
