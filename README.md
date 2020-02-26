@@ -7,12 +7,7 @@ The prewas R package allows users to create a binary SNP matrix from a whole gen
 To install prewas follow these commands in R:  
  
 ```
-## install devtools 
-install.packages("devtools", dep=TRUE)
-library(devtools)
-
-## install prewas from github:
-install_github("Snitkin-Lab-Umich/prewas")
+install.packages("prewas")
 library(prewas)
 ```
 
