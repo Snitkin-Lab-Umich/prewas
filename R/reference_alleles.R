@@ -88,6 +88,7 @@ get_ancestral_alleles <- function(tree, mat){
   }))
   ar_all <- data.frame(ar_all)
   colnames(ar_all) <- c("ancestral_allele", "probability")
+ ar_all$ancestral_allele <- as.factor(ar_all$ancestral_allele)
 
   return(list(ar_results = ar_all, tree = tree))
 }
