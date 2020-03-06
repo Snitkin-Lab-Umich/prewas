@@ -4,7 +4,14 @@
 \alias{prewas}
 \title{Preprocess SNPs before bGWAS}
 \usage{
-prewas(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE)
+prewas(
+  dna,
+  tree = NULL,
+  outgroup = NULL,
+  gff = NULL,
+  anc = TRUE,
+  grp_nonref = FALSE
+)
 }
 \arguments{
 \item{dna}{`Character` or `vcfR`. Required input. Path to VCF4.1 file or
@@ -27,6 +34,10 @@ file containing only the outgroup name. Ignored if `NULL`. Defaults to
 \item{anc}{`Logical`. Optional input. When `TRUE` prewas performs ancestral
 reconstruction. When `FALSE` prewas calculates the major allele. Defaults
 to `TRUE`.}
+
+\item{grp_nonref}{`Logical`. Optional input. When `TRUE` prewas collapses all
+non-reference alleles for multi-allelic sites. When `FALSE` prewas keeps
+multi-allelic sites separate. Defaults to `FALSE`.}
 }
 \value{
 A list with the following items:
@@ -87,5 +98,6 @@ output <- prewas(dna = vcf,
                  tree = tree,
                  outgroup = outgroup,
                  gff = gff,
-                 anc = FALSE)
+                 anc = FALSE ,
+                 grp_nonref = FALSE)
 }

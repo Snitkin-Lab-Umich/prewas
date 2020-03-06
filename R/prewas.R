@@ -26,7 +26,7 @@
 #' @param anc `Logical`. Optional input. When `TRUE` prewas performs ancestral
 #'   reconstruction. When `FALSE` prewas calculates the major allele. Defaults
 #'   to `TRUE`.
-#'   @param grp_nonref `Logical`. Optional input. When `TRUE` prewas collapses all
+#' @param grp_nonref `Logical`. Optional input. When `TRUE` prewas collapses all
 #'   non-reference alleles for multi-allelic sites. When `FALSE` prewas keeps
 #'   multi-allelic sites separate. Defaults to `FALSE`.
 #'
@@ -77,7 +77,8 @@
 #'                  tree = tree,
 #'                  outgroup = outgroup,
 #'                  gff = gff,
-#'                  anc = FALSE)
+#'                  anc = FALSE ,
+#'                  grp_nonref = FALSE)
 prewas <- function(dna,
                    tree = NULL,
                    outgroup = NULL,
