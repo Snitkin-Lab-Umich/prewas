@@ -26,9 +26,9 @@ split_multi_to_biallelic_snps <- function(mat, ar_results){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")
 
-  # GET NUMBER OF UNIQUE ALLELES (A, C, T, or G) AT A POSITION
+  # GET NUMBER OF UNIQUE ALLELES AT A POSITION
   num_alleles <- apply(mat, 1, function(row) {
-    sum(c("A", "C", "T", "G") %in% row)
+    length(unique(row))
   })
 
   # GET ROW INDICES

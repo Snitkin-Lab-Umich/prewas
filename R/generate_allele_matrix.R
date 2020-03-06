@@ -6,9 +6,17 @@
 #' @noRd
 replace_non_ATGC_with_N <- function(mat){
   check_is_this_class(mat, "matrix")
+
+  # Make all nucleotides upper case
   mat <- apply(mat, 2, toupper)
+
+  # Replace NAs with "N"
   mat[is.na(mat)] <- "N"
-  mat[!(mat %in% c("A", "T", "G", "C"))] <- "N"
+
+
+  # For single nucleotide variants, replace non-A/T/G/C with N (ignore long
+  # strings like insertions)
+  mat[nchar(mat) == 1 & !(mat %in% c("A", "T", "G", "C"))] <- "N"
   return(mat)
 }
 
@@ -23,7 +31,7 @@ replace_non_ATGC_with_N <- function(mat){
 identify_variant_sites <- function(mat){
   check_is_this_class(mat, "matrix")
   rows_to_keep <- apply(mat, 1, function(row) {
-    sum(unique(row) %in% c("A", "T", "G", "C"))
+    sum(unique(row) != "N")
   })
   rows_to_keep <- rows_to_keep > 1
   rows_to_keep <- unname(rows_to_keep)

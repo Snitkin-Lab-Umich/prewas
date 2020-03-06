@@ -27,6 +27,26 @@ test_that("replace_non_ATGC_with_N() returns matrix when given valid input", {
   expect_equal(6, sum(grepl(pattern = "N", x = replace_results)))
 })
 
+test_that("replace_non_ATGC_with_N() returns valid results when given indels", {
+  allele_mat <- matrix(c("A", "ATTTTTGC", "*", NA), nrow = 3, ncol = 4)
+
+  replace_results <- replace_non_ATGC_with_N(allele_mat)
+  # Returns a matrix
+  expect_true(methods::is(replace_results, "matrix"))
+
+  # Replaces all NAs
+  expect_equal(0, sum(is.na(replace_results)))
+
+  # Replaces all starts
+  expect_equal(0, sum(grepl(pattern = "[*]", x = replace_results)))
+
+  # Replaces the correct number of NAs and *s
+  expect_equal(6, sum(grepl(pattern = "N", x = replace_results)))
+
+  # Does *not* replaces the insertion, ATTTTTGC
+  expect_equal(3, sum(grepl(pattern = "ATTTTTGC", x = replace_results)))
+})
+
 # identify_variant_sites ------------------------------------------------------#
 test_that("identify_variant_sites() returns correct rows when given valid input", {
   allele_mat <- matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3)

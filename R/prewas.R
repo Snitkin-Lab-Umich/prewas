@@ -158,9 +158,9 @@ prewas <- function(dna,
     gene_mat <- NULL
   }
 
-  if(grp_nonref){
+  if (grp_nonref) {
     # collapse variants by position --------------------------------------------
-    allele_names = get_allele_names(bin_mat)
+    allele_names <- get_allele_names(bin_mat)
     bin_mat <- collapse_snps_into_genes(bin_mat, allele_names)
   }
 

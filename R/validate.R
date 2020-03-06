@@ -184,20 +184,22 @@ load_vcf_file <- function(vcf) {
   vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
 
   for (i in 1:nrow(vcf_geno_mat)) {
-    vcf_geno_mat[i, grepl(pattern = "^[.][/][.]", x = vcf_geno_mat[i, ])] <- "0"
-    vcf_geno_mat[i, grepl(pattern = "^[1][/][1]", x = vcf_geno_mat[i, ])] <- "1"
-    vcf_geno_mat[i, grepl(pattern = "^[2][/][2]", x = vcf_geno_mat[i, ])] <- "2"
-    vcf_geno_mat[i, grepl(pattern = "^[3][/][3]", x = vcf_geno_mat[i, ])] <- "3"
-
     alt_alleles <- strsplit(vcf_alt_allele[i], split = ",")
-    vcf_alt_allele_1 <- alt_alleles[[1]][1]
-    vcf_alt_allele_2 <- alt_alleles[[1]][2]
-    vcf_alt_allele_3 <- alt_alleles[[1]][3]
+    num_alt_alleles <- length(alt_alleles[[1]])
 
+    # Simplify indel encoding from bcftools/snpeff for reference allele
+    vcf_geno_mat[i, grepl(pattern = "^[.][/][.]", x = vcf_geno_mat[i, ])] <- "0"
+
+    # Recode reference allele to character
     vcf_geno_mat[i, vcf_geno_mat[i, ] == "0"] <- vcf_ref_allele[i]
-    vcf_geno_mat[i, vcf_geno_mat[i, ] == "1"] <- vcf_alt_allele_1
-    vcf_geno_mat[i, vcf_geno_mat[i, ] == "2"] <- vcf_alt_allele_2
-    vcf_geno_mat[i, vcf_geno_mat[i, ] == "3"] <- vcf_alt_allele_3
+
+    for (j in 1:num_alt_alleles) {
+      # Simplify indel encoding from bcftools/snpeff
+      vcf_geno_mat[i, grepl(pattern = paste0("^", j, "[/]", j), x = vcf_geno_mat[i, ])] <- j
+
+      # Recode numbers to allele characters
+      vcf_geno_mat[i, vcf_geno_mat[i, ] == j] <- alt_alleles[[1]][j]
+    }
   }
   return(vcf_geno_mat)
 }
