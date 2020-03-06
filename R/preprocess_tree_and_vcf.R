@@ -33,7 +33,18 @@ build_tree <- function(mat){
   check_is_this_class(mat, "matrix")
 
   phydat <- phangorn::phyDat(t(mat))
-  distmat <- phangorn::dist.ml(phydat)
+  # phydat will be empty is there are no rows with just SNPs (A / T/ G/ C/ N)
+
+  error_msg <- "There are not enough SNPs in the variant data to generate a tree, which is necessary when anc = TRUE. Please either supply a different VCF file or set anc = FALSE."
+  distmat <- tryCatch(phangorn::dist.ml(phydat),
+                                error = function(x) {
+                                  error_msg
+                                }
+  )
+  if (is_this_class(distmat, "character")) {
+    stop(error_msg)
+  }
+  # distmat <- phangorn::dist.ml(phydat)
   nj_tree <- phangorn::NJ(distmat)
   fit <- phangorn::pml(nj_tree, phydat)
   print("Start building tree")
