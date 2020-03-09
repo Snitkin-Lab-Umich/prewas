@@ -204,6 +204,13 @@ results_no_tree = prewas(dna = vcf,
 results_no_tree$tree
 ```
 
+### Want to group by minor allele?
+
+If you want to group by minor allele to increase power by grouping rarer alleles. 
+
+```{r results_ma, warning = FALSE}
+results_ma = prewas(dna = vcf, grp_nonref = TRUE)
+```
 
 ## Detailed prewas workflow
 
