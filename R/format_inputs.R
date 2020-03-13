@@ -31,7 +31,12 @@ format_inputs <- function(dna,
   }
 
   # Convert vcfR object or VCF file to allele matrix
-  dna <- load_vcf_file(dna)
+  vcf_info <- load_vcf_file(dna)
+  dna <- vcf_info[[1]]
+
+  if(!is.null(vcf_info[[2]])){
+    snpeff <- vcf_info[[2]]
+  }
 
   # Tree
   if (is.null(tree)) {
@@ -81,6 +86,7 @@ format_inputs <- function(dna,
   results <- list("dna" = dna,
                   "tree" = tree,
                   "outgroup" = outgroup,
-                  "gff" = gff)
+                  "gff" = gff,
+                  "snpeff" = snpeff)
   return(results)
 }
