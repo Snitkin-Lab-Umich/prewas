@@ -33,10 +33,8 @@ format_inputs <- function(dna,
   # Convert vcfR object or VCF file to allele matrix
   vcf_info <- load_vcf_file(dna)
   dna <- vcf_info[[1]]
+  snpeff <- vcf_info[[2]]
 
-  if(!is.null(vcf_info[[2]])){
-    snpeff <- vcf_info[[2]]
-  }
 
   # Tree
   if (is.null(tree)) {
