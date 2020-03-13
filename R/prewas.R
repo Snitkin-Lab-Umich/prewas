@@ -139,11 +139,15 @@ prewas <- function(dna,
 
   # split multiallelic snps ----------------------------------------------------
   split <- split_multi_to_biallelic_snps(mat = allele_mat_only_var,
-                                        ar_results = allele_results)
+                                        ar_results = allele_results,
+                                        snpeff = snpeff)
 
   allele_mat_split <- split$mat_split
   allele_results_split <- split$ar_results_split
+  snpeff_split <- split$snpeff_split
+  print(snpeff_split)
   split_rows_flag <- split$split_rows_flag
+
 
   if (anc) {
     alleles <- allele_results_split$ancestral_allele
