@@ -91,6 +91,7 @@ prewas <- function(dna,
   tree <- inputs$tree
   outgroup_char <- inputs$outgroup
   gff_mat <- inputs$gff
+  snpeff <- inputs$snpeff
 
   # preprocess tree and dna_mat ------------------------------------------------
   if (anc) {
