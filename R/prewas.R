@@ -98,10 +98,14 @@ prewas <- function(dna,
     tree <- root_tree(tree, outgroup_char)
     subsetted_data <- subset_tree_and_matrix(tree, dna_mat)
     tree <- subsetted_data$tree
-    allele_mat_only_var <- keep_only_variant_sites(subsetted_data$mat)
+    allele_mat_snpeff_only_var <- keep_only_variant_sites(subsetted_data$mat, snpeff)
+    allele_mat_only_var <- allele_mat_snpeff_only_var[[1]]
+    snpeff_only_var <- allele_mat_snpeff_only_var[[2]]
   } else {
     check_is_this_class(dna_mat, "matrix")
-    allele_mat_only_var <- keep_only_variant_sites(dna_mat)
+    allele_mat_snpeff_only_var <- keep_only_variant_sites(dna_mat, snpeff)
+    allele_mat_only_var <- allele_mat_snpeff_only_var[[1]]
+    snpeff_only_var <- allele_mat_snpeff_only_var[[2]]
   }
 
   # ancestral reconstruction ---------------------------------------------------
@@ -112,9 +116,11 @@ prewas <- function(dna,
     remove_unknown_anc_results <-
       remove_unknown_alleles(allele_mat_only_var,
                              allele_results$ancestral_allele,
-                             allele_results)
+                             allele_results,
+                             snpeff)
     allele_mat_only_var <- remove_unknown_anc_results$allele_mat
     allele_results <- remove_unknown_anc_results$ar_results
+    snpeff <- remove_unknown_anc_results$snpeff
   } else {
     alleles <- get_major_alleles(allele_mat_only_var)
     tree <- NULL
@@ -124,9 +130,11 @@ prewas <- function(dna,
     remove_unknown_anc_results <-
       remove_unknown_alleles(allele_mat_only_var,
                              allele_results$major_allele,
-                             allele_results)
+                             allele_results,
+                             snpeff)
     allele_mat_only_var <- remove_unknown_anc_results$allele_mat
     allele_results <- remove_unknown_anc_results$ar_results
+    snpeff <- remove_unknown_anc_results$snpeff
   }
 
   # split multiallelic snps ----------------------------------------------------
