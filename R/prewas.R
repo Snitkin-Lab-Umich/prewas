@@ -157,7 +157,9 @@ prewas <- function(dna,
   }
 
   # reference to reference allele ----------------------------------------------
-  bin_mat <- make_binary_matrix(allele_mat_split, alleles)
+  bin_mat_results <- make_binary_matrix(allele_mat_split, alleles)
+  bin_mat <- bin_mat_results[[1]]
+  alt_allele <- bin_mat_results[[2]]
 
   if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
