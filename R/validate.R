@@ -202,7 +202,14 @@ load_vcf_file <- function(vcf) {
       vcf_geno_mat[i, vcf_geno_mat[i, ] == j] <- alt_alleles[[1]][j]
     }
   }
-  return(vcf_geno_mat)
+
+  # Get SNPeff annotations, if they exist
+  if (length(grep('SnpEff', vcf@meta)) > 0){
+    snpeff_pred <- vcfR::extract_info_tidy(vcf, info_fields = 'ANN')
+  }else{
+    snpeff_pred <- NULL
+  }
+  return(list(vcf_geno_mat, snpeff_pred))
 }
 
 #' Confirm that the tree and variant matrix contain exactly the same samples
