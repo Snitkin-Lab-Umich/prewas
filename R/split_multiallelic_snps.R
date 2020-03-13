@@ -22,7 +22,7 @@
 #'     }
 #'   }
 #' @noRd
-split_multi_to_biallelic_snps <- function(mat, ar_results){
+split_multi_to_biallelic_snps <- function(mat, ar_results, snpeff){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")
 
@@ -37,12 +37,14 @@ split_multi_to_biallelic_snps <- function(mat, ar_results){
   # ROWS THAT HAVE N ALLELES ARE REPLICATED N-1 TIMES
   split_rows_flag <- rep(row_indices, (num_alleles - 1))
 
-  # SPLIT MAT AND AR_RESULTS
+  # SPLIT MAT AND AR_RESULTS AND SNPEFF
   mat_split <- mat[split_rows_flag, ]
   ar_results_split <- ar_results[split_rows_flag, , drop = FALSE]
   rownames(mat_split) <- rownames(ar_results_split)
+  snpeff_split <- snpeff[split_rows_flag]
 
   return(list(mat_split = mat_split,
               ar_results_split = ar_results_split,
+              snpeff_split = snpeff_split,
               split_rows_flag = split_rows_flag))
 }
