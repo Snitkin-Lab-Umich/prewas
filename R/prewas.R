@@ -145,7 +145,6 @@ prewas <- function(dna,
   allele_mat_split <- split$mat_split
   allele_results_split <- split$ar_results_split
   snpeff_split <- split$snpeff_split
-  print(snpeff_split)
   split_rows_flag <- split$split_rows_flag
 
 
