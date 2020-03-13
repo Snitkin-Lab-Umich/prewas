@@ -157,6 +157,8 @@ make_binary_matrix <- function(allele_mat, reference_allele){
   bin_mat[bin_mat == ref_allele_mat] <- 0
   # get variant positions
   sites <- unique(gsub("\\..*", "", rownames(bin_mat)))
+  # generate vector of alternative alleles
+  alt_allele <- c()
   # iterate over each site (to handle multiallelic sites)
   bin_mat <- sapply(sites, function(x) {
     site <- bin_mat[rownames(bin_mat) == x, ] # get 1st site
@@ -175,6 +177,7 @@ make_binary_matrix <- function(allele_mat, reference_allele){
       binsite[binsite == b] <- 1
       binsite <- as.numeric(binsite)
       binsplit[b, ] <- binsite
+      alt_allele <- c(alt_allele,b)
     }
     return(binsplit)
   })
@@ -185,5 +188,27 @@ make_binary_matrix <- function(allele_mat, reference_allele){
   colnames(bin_mat) <- colnames(allele_mat)
   # make binary matrix numeric
   class(bin_mat) <- "numeric"
-  return(bin_mat)
+  return(list(bin_mat, alt_allele))
+}
+
+#' Title
+#'
+#' @param alt_allele
+#' @param snpeff
+#'
+#' @return
+#' @export
+#'
+#' @examples
+parse_snpeff <- function(alt_allele, snpeff_split){
+  pred_impact = rep(NA, length(alt_allele))
+  for (i in 1:length(alt_allele)) {
+    annot = snpeff_split[[i]][grep(paste0('^',alt_allele[i]), snpeff_split[[i]])]
+    if (length(annot) == 1){
+      pred_impact[i] = unlist(strsplit(annot, '[|]'))[3]
+    }else {
+      pred_impact[i] = annot
+    }
+  }
+
 }
