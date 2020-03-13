@@ -205,7 +205,11 @@ load_vcf_file <- function(vcf) {
 
   # Get SNPeff annotations, if they exist
   if (length(grep('SnpEff', vcf@meta)) > 0){
+    # Extract annotations
     snpeff_pred <- vcfR::extract_info_tidy(vcf, info_fields = 'ANN')
+    # Get unique annotations
+    snpeff_pred <- sapply(snpeff_pred$ANN, function(s){unique(unlist((strsplit(s, ','))))})
+    snpeff_pred <- unname(snpeff_pred)
   }else{
     snpeff_pred <- NULL
   }
