@@ -175,11 +175,11 @@ clean_up_cds_name_from_gff <- function(gff){
 #' @return vcf_geno_mat: Matrix.
 load_vcf_file <- function(vcf) {
   if (is_file(vcf)) {
-    vcf <- vcfR::read.vcfR(file = vcf)
+    vcf <- vcfR::read.vcfR(file = vcf, convertNA = FALSE)
   }
   check_is_this_class(vcf, "vcfR")
 
-  vcf_geno_mat <- vcf@gt[, 2:ncol(vcf@gt), drop = FALSE]
+  vcf_geno_mat <- vcf@gt
   row.names(vcf_geno_mat) <- vcf@fix[, colnames(vcf@fix) == "POS", drop = TRUE]
   vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
   vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
