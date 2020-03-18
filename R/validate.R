@@ -180,6 +180,8 @@ load_vcf_file <- function(vcf) {
   check_is_this_class(vcf, "vcfR")
 
   vcf_geno_mat <- vcf@gt
+  vcf_geno_mat <- vcf_geno_mat[,colnames(vcf_geno_mat) != "FORMAT"]
+
   row.names(vcf_geno_mat) <- vcf@fix[, colnames(vcf@fix) == "POS", drop = TRUE]
   vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
   vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
