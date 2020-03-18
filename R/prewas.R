@@ -123,9 +123,13 @@ prewas <- function(dna,
       remove_unknown_alleles(allele_mat_only_var,
                              allele_results$ancestral_allele,
                              allele_results,
+                             o_ref_only_var,
+                             o_alt_only_var,
                              snpeff)
     allele_mat_only_var <- remove_unknown_anc_results$allele_mat
     allele_results <- remove_unknown_anc_results$ar_results
+    o_ref <- remove_unknown_anc_results$o_ref
+    o_alt <- remove_unknown_anc_results$o_alt
     snpeff <- remove_unknown_anc_results$snpeff
   } else {
     alleles <- get_major_alleles(allele_mat_only_var)
@@ -137,9 +141,13 @@ prewas <- function(dna,
       remove_unknown_alleles(allele_mat_only_var,
                              allele_results$major_allele,
                              allele_results,
+                             o_ref_only_var,
+                             o_alt_only_var,
                              snpeff)
     allele_mat_only_var <- remove_unknown_anc_results$allele_mat
     allele_results <- remove_unknown_anc_results$ar_results
+    o_ref <- remove_unknown_anc_results$o_ref
+    o_alt <- remove_unknown_anc_results$o_alt
     snpeff <- remove_unknown_anc_results$snpeff
   }
 
