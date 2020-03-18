@@ -182,8 +182,11 @@ prewas <- function(dna,
   n_alt <- bin_mat_results[[2]] # new alternative allele, after splitting
 
   # snpeff ---------------------------------------------------------------------
-  snpeff_bin_mat <- parse_snpeff(o_alt_split, snpeff_split)
-  print(snpeff_bin_mat)
+  snpeff_parsed <- parse_snpeff(o_alt_split, snpeff_split)
+  predicted_impact <- snpeff_parsed$pred_impact
+  gene <- snpeff_parsed$gene
+  print(predicted_impact)
+  print(gene)
 
   if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
