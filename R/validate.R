@@ -213,7 +213,10 @@ load_vcf_file <- function(vcf) {
   }else{
     snpeff_pred <- NULL
   }
-  return(list(vcf_geno_mat, snpeff_pred))
+  return(list("vcf_geno_mat" = vcf_geno_mat,
+              "vcf_ref_allele" = vcf_ref_allele,
+              "vcf_alt_allele" = vcf_alt_allele,
+              "snpeff_pred" = snpeff_pred))
 }
 
 #' Confirm that the tree and variant matrix contain exactly the same samples
