@@ -51,7 +51,7 @@ identify_variant_sites <- function(mat){
 #'
 #' @return mat: Matrix.
 #' @noRd
-remove_invariant_sites <- function(mat, snpeff, rows_to_keep){
+remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
   check_is_this_class(mat, "matrix")
   check_is_this_class(rows_to_keep, "logical")
 
@@ -64,8 +64,14 @@ remove_invariant_sites <- function(mat, snpeff, rows_to_keep){
   }
 
   mat <- mat[rows_to_keep, , drop = FALSE]
+  o_ref <- o_ref[rows_to_keep]
+  o_alt <- o_alt[rows_to_keep]
   snpeff <- snpeff[rows_to_keep]
-  return(list(mat, snpeff))
+
+  return(list('mat' = mat,
+              'o_ref' = o_ref,
+              'o_alt' = o_alt,
+              'snpeff' = snpeff))
 }
 
 #' Given a DNA matrix keep only those rows with SNPs.
@@ -74,12 +80,18 @@ remove_invariant_sites <- function(mat, snpeff, rows_to_keep){
 #'
 #' @return variant_only_dna_mat: Matrix.
 #' @noRd
-keep_only_variant_sites <- function(dna_mat, snpeff){
+keep_only_variant_sites <- function(dna_mat, o_ref, o_alt, snpeff){
   check_is_this_class(dna_mat, "matrix")
   dna_mat <- replace_non_ATGC_with_N(dna_mat)
   variant_site_log <- identify_variant_sites(dna_mat)
-  invariant_sites_removed <- remove_invariant_sites(dna_mat, snpeff, variant_site_log)
-  variant_only_dna_mat <- invariant_sites_removed[[1]]
-  snpeff_var_pos <- invariant_sites_removed[[2]]
-  return(list(variant_only_dna_mat,snpeff_var_pos))
+  invariant_sites_removed <- remove_invariant_sites(dna_mat, o_ref, o_alt, snpeff, variant_site_log)
+  variant_only_dna_mat <- invariant_sites_removed$mat
+  o_ref_var_pos <- invariant_sites_removed$o_ref
+  o_alt_var_pos <- invariant_sites_removed$o_alt
+  snpeff_var_pos <- invariant_sites_removed$snpeff
+
+  return(list('variant_only_dna_mat' = variant_only_dna_mat,
+              'o_ref_var_pos' = o_ref_var_pos,
+              'o_alt_var_pos' = o_alt_var_pos,
+              'snpeff_var_pos' = snpeff_var_pos))
 }
