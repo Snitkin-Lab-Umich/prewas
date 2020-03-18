@@ -42,17 +42,17 @@ split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff)
   ar_results_split <- ar_results[split_rows_flag, , drop = FALSE]
   rownames(mat_split) <- rownames(ar_results_split)
   o_ref_split <- o_ref[split_rows_flag]
-  o_alt_split <- o_alt[split_rows_flag]
 
   # assign allele to multiallelic site
   o_alt_split <- unlist(sapply(unique(split_rows_flag), function(i) {
-    alleles = rep(o_alt_split[i], sum(split_rows_flag == i))
+    alleles = rep(o_alt[i], sum(split_rows_flag == i))
 
     sapply(1:length(alleles), function(j) {
       unlist(strsplit(alleles[j], ','))[j]
       })
 
     }))
+
   snpeff_split <- snpeff[split_rows_flag]
 
   return(list(mat_split = mat_split,
