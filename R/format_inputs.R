@@ -32,8 +32,10 @@ format_inputs <- function(dna,
 
   # Convert vcfR object or VCF file to allele matrix
   vcf_info <- load_vcf_file(dna)
-  dna <- vcf_info[[1]]
-  snpeff <- vcf_info[[2]]
+  dna <- vcf_info$vcf_geno_mat
+  o_ref <- vcf_info$vcf_ref_allele
+  o_alt <- vcf_info$vcf_alt_allele
+  snpeff <- vcf_info$snpeff_pred
 
 
   # Tree
@@ -85,6 +87,8 @@ format_inputs <- function(dna,
                   "tree" = tree,
                   "outgroup" = outgroup,
                   "gff" = gff,
+                  "o_ref" = o_ref,
+                  "o_alt" = o_alt,
                   "snpeff" = snpeff)
   return(results)
 }
