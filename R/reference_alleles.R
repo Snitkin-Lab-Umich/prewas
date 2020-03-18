@@ -147,50 +147,42 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #'
 #' @return bin_mat. Matrix. Binary matrix of variant presence/absence.
 #' @noRd
-make_binary_matrix <- function(allele_mat, reference_allele){
-  check_is_this_class(reference_allele, "factor")
+make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
+  #check_is_this_class(reference_allele, "factor")
   check_is_this_class(allele_mat, "matrix")
 
   # make matrix of reference allele that's the same size as the allele matrix
-  ref_allele_mat <- replicate(ncol(allele_mat), reference_allele)
+  ref_allele_mat <- replicate(ncol(allele_mat), n_ref)
   # initialize binary matrix
   bin_mat <- allele_mat
   # if allele is the reference allele, code it as 0
   bin_mat[bin_mat == ref_allele_mat] <- 0
-  # get variant positions
-  sites <- unique(gsub("\\..*", "", rownames(bin_mat)))
-  # generate vector of alternative alleles
-  alt_allele <- c()
-  # iterate over each site (to handle multiallelic sites)
-  bin_mat <- sapply(sites, function(x) {
-    site <- bin_mat[rownames(bin_mat) == x, ] # get 1st site
-    # get all bases at that position
-    bases <- unique(site)
-    # remove reference (0) and unknown (N) bases
-    bases <- bases[bases != "0" & bases != "N"]
-    # create mini-matrix for this variant position where rows are bases and
-    # columns are samples
-    binsplit <- matrix(NA, nrow = length(bases), ncol = ncol(bin_mat))
-    rownames(binsplit) <- bases
-    # for each base, code that base as 1 and all others as 0
-    for (b in bases) {
-      binsite <- site
-      binsite[binsite != b] <- 0
-      binsite[binsite == b] <- 1
-      binsite <- as.numeric(binsite)
-      binsplit[b, ] <- binsite
-      alt_allele <- c(alt_allele,b)
+
+  # initialize n_alt (new alternative allele)
+  n_alt <-  rep(NA, length(o_alt))
+
+  # assign new alternative (after new reference)
+  for (i in 1:length(o_alt)) {
+    if (n_ref[i] == o_alt[i]) {
+      n_alt[i] <- o_ref[i]
+    }else{
+      n_alt[i] <- o_alt[i]
     }
-    return(binsplit)
-  })
-  # change from list to matrix
-  bin_mat <- do.call(rbind, bin_mat)
+  }
+
+  # iterate over each row in bin_mat
+  for (j in 1:nrow(bin_mat)) {
+    bin_mat[j,bin_mat[j,] != n_alt[j]] <- 0
+    bin_mat[j,bin_mat[j,] == n_alt[j]] <- 1
+  }
+
   # update rownames and colnames of  binary matrix
   rownames(bin_mat) <- rownames(allele_mat)
   colnames(bin_mat) <- colnames(allele_mat)
+
   # make binary matrix numeric
   class(bin_mat) <- "numeric"
-  return(list(bin_mat, alt_allele))
+  return(list(bin_mat, n_alt))
 }
 
 #' Title
