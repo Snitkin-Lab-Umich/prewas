@@ -22,7 +22,7 @@
 #'     }
 #'   }
 #' @noRd
-split_multi_to_biallelic_snps <- function(mat, ar_results, snpeff){
+split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")
 
@@ -41,10 +41,23 @@ split_multi_to_biallelic_snps <- function(mat, ar_results, snpeff){
   mat_split <- mat[split_rows_flag, ]
   ar_results_split <- ar_results[split_rows_flag, , drop = FALSE]
   rownames(mat_split) <- rownames(ar_results_split)
+  o_ref_split <- o_ref[split_rows_flag]
+  o_alt_split <- o_alt[split_rows_flag]
+
+  o_alt_split <- unlist(sapply(unique(split_rows_flag), function(i) {
+    alleles = rep(o_alt_split[i], sum(split_rows_flag == i))
+
+    sapply(1:length(alleles), function(j) {
+      unlist(strsplit(alleles[j], ','))[j]
+      })
+
+    }))
   snpeff_split <- snpeff[split_rows_flag]
 
   return(list(mat_split = mat_split,
               ar_results_split = ar_results_split,
+              o_ref_split = o_ref_split,
+              o_alt_split = o_alt_split,
               snpeff_split = snpeff_split,
               split_rows_flag = split_rows_flag))
 }
