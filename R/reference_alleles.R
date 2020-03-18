@@ -114,7 +114,7 @@ get_ancestral_alleles <- function(tree, mat){
 #'     \item{removed}{Character. Vector with names of removed samples.}
 #'   }
 #' @noRd
-remove_unknown_alleles <- function(allele_mat, alleles, ar_results, snpeff){
+remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(allele_mat, "matrix")
   check_is_this_class(alleles, "factor")
   check_is_this_class(ar_results, "data.frame")
@@ -128,6 +128,8 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, snpeff){
   return(list(allele_mat = allele_mat[!unknown, ],
               ar_results = ar_results[!unknown, , drop = FALSE],
               snpeff = snpeff[!unknown],
+              o_ref = o_ref[!unknown],
+              o_alt = o_alt[!unknown],
               removed = removed))
 }
 
