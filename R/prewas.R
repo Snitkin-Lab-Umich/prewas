@@ -151,6 +151,7 @@ prewas <- function(dna,
     snpeff <- remove_unknown_anc_results$snpeff
   }
 
+  print(o_alt)
   # split multiallelic snps ----------------------------------------------------
   split <- split_multi_to_biallelic_snps(mat = allele_mat_only_var,
                                          o_ref = o_ref,
@@ -166,17 +167,19 @@ prewas <- function(dna,
   o_alt_split <- split$o_alt_split
 
   if (anc) {
-    alleles <- allele_results_split$ancestral_allele
-    names(alleles) <- rownames(allele_results_split)
+    n_ref <- allele_results_split$ancestral_allele
+    names(n_ref) <- rownames(allele_results_split)
   } else {
-    alleles <- allele_results_split$major_allele
-    names(alleles) <- rownames(allele_results_split)
+    n_ref <- allele_results_split$major_allele
+    names(n_ref) <- rownames(allele_results_split)
   }
-
+  print(o_ref_split)
+  print(n_ref)
+  print(o_alt_split)
   # reference to reference allele ----------------------------------------------
-  bin_mat_results <- make_binary_matrix(allele_mat_split, alleles)
+  bin_mat_results <- make_binary_matrix(allele_mat_split, o_ref_split, n_ref, o_alt_split)
   bin_mat <- bin_mat_results[[1]]
-  alt_allele <- bin_mat_results[[2]]
+  n_alt <- bin_mat_results[[2]] # new alternative allele, after splitting
 
   if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
