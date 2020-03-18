@@ -196,16 +196,29 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
 #' @examples
 parse_snpeff <- function(alt_allele, snpeff_split){
   pred_impact = rep(NA, length(alt_allele))
+  gene = rep(NA, length(alt_allele))
+
   for (i in 1:length(alt_allele)) {
     annot = snpeff_split[[i]][grep(paste0('^',alt_allele[i]), snpeff_split[[i]])]
 
     if (length(annot) == 1) {
       pred_impact[i] <- unlist(strsplit(annot, '[|]'))[3]
-    }else {
-      pred_impact[i] <- paste(annot, collapse = ',')
+      gene[i] <- unlist(strsplit(annot, '[|]'))[4]
+    }else if (length(annot) == 0){
+      pred_impact[i] <- ""
+      gene[i] <- ""
+    }else{
+      multi_annots <- unlist(strsplit(annot, ',')) # would occur if overlapping genes
+      pred_impact[i] <- paste(sapply(multi_annots, function(s) {
+        unlist(strsplit(s, '[|]'))[3]
+      }), collapse = '|')
+      gene[i] <- paste(sapply(multi_annots, function(s) {
+        unlist(strsplit(s, '[|]'))[4]
+      }), collapse = '|')
     }
   }
 
-  return(pred_impact)
+  return(list(pred_impact = pred_impact,
+              gene = gene))
 
 }
