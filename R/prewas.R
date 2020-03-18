@@ -100,14 +100,18 @@ prewas <- function(dna,
     tree <- root_tree(tree, outgroup_char)
     subsetted_data <- subset_tree_and_matrix(tree, dna_mat)
     tree <- subsetted_data$tree
-    allele_mat_snpeff_only_var <- keep_only_variant_sites(subsetted_data$mat, snpeff)
-    allele_mat_only_var <- allele_mat_snpeff_only_var[[1]]
-    snpeff_only_var <- allele_mat_snpeff_only_var[[2]]
+    allele_mat_snpeff_only_var <- keep_only_variant_sites(subsetted_data$mat, o_ref, o_alt, snpeff)
+    allele_mat_only_var <- allele_mat_snpeff_only_var$variant_only_dna_mat
+    o_ref_only_var <- allele_mat_snpeff_only_var$o_ref_var_pos
+    o_alt_only_var <-  allele_mat_snpeff_only_var$o_alt_var_pos
+    snpeff_only_var <- allele_mat_snpeff_only_var$snpeff_var_pos
   } else {
     check_is_this_class(dna_mat, "matrix")
-    allele_mat_snpeff_only_var <- keep_only_variant_sites(dna_mat, snpeff)
-    allele_mat_only_var <- allele_mat_snpeff_only_var[[1]]
-    snpeff_only_var <- allele_mat_snpeff_only_var[[2]]
+    allele_mat_snpeff_only_var <- keep_only_variant_sites(dna_mat, o_ref, o_alt, snpeff)
+    allele_mat_only_var <- allele_mat_snpeff_only_var$variant_only_dna_mat
+    o_ref_only_var <- allele_mat_snpeff_only_var$o_ref_var_pos
+    o_alt_only_var <-  allele_mat_snpeff_only_var$o_alt_var_pos
+    snpeff_only_var <- allele_mat_snpeff_only_var$snpeff_var_pos
   }
 
   # ancestral reconstruction ---------------------------------------------------
