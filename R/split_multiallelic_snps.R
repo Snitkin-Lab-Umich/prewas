@@ -44,6 +44,7 @@ split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff)
   o_ref_split <- o_ref[split_rows_flag]
   o_alt_split <- o_alt[split_rows_flag]
 
+  # assign allele to multiallelic site
   o_alt_split <- unlist(sapply(unique(split_rows_flag), function(i) {
     alleles = rep(o_alt_split[i], sum(split_rows_flag == i))
 
