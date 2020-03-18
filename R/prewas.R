@@ -91,6 +91,8 @@ prewas <- function(dna,
   tree <- inputs$tree
   outgroup_char <- inputs$outgroup
   gff_mat <- inputs$gff
+  o_ref <- inputs$o_ref
+  o_alt <- inputs$o_alt
   snpeff <- inputs$snpeff
 
   # preprocess tree and dna_mat ------------------------------------------------
