@@ -188,7 +188,20 @@ prewas <- function(dna,
   print(predicted_impact)
   print(gene)
 
-  if (!is.null(gff_mat)) {
+  if (!is.null(snpeff_split)) {
+    if (!is.null(gff_mat)) {
+      print('Warning: GFF is not being used; annotations are coming from vcf file')
+    }
+
+    output <- dup_snps_in_overlapping_genes_snpeff(bin_mat, predicted_impact, gene)
+    bin_mat <- output$bin_mat_dup
+    predicted_impact_split <- output$predicted_impact_split
+    print(row.names(bin_mat))
+    print(predicted_impact_split)
+
+    # collapse snps by gene and impact -----------------------------------------
+
+  }else if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
     bin_mat <- dup_snps_in_overlapping_genes(bin_mat, gff_mat)
 
