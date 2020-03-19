@@ -196,11 +196,10 @@ prewas <- function(dna,
     output <- dup_snps_in_overlapping_genes_snpeff(bin_mat, predicted_impact, gene)
     bin_mat <- output$bin_mat_dup
     predicted_impact_split <- output$predicted_impact_split
-    print(row.names(bin_mat))
-    print(predicted_impact_split)
 
     # collapse snps by gene and impact -----------------------------------------
-
+    gene_names <- get_gene_names(bin_mat)
+    gene_mat <- collapse_snps_into_genes_by_impact(bin_mat, gene_names, predicted_impact_split)
   }else if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
     bin_mat <- dup_snps_in_overlapping_genes(bin_mat, gff_mat)
