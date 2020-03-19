@@ -190,11 +190,12 @@ prewas <- function(dna,
 
   if (!is.null(snpeff_split)) {
     if (!is.null(gff_mat)) {
-      print('Warning: GFF is not being used; annotations are coming from vcf file')
+      warning('GFF is not being used; annotations are coming from vcf file')
     }
 
     output <- dup_snps_in_overlapping_genes_snpeff(bin_mat, predicted_impact, gene)
     bin_mat <- output$bin_mat_dup
+    print(row.names(bin_mat))
     predicted_impact_split <- output$predicted_impact_split
 
     # collapse snps by gene and impact -----------------------------------------
@@ -211,10 +212,14 @@ prewas <- function(dna,
     gene_mat <- NULL
   }
 
-  if (grp_nonref) {
+  if (!is.null(snpeff_split) & grp_nonref) {
+    allele_names <- get_allele_names(bin_mat)
+    bin_mat <- collapse_snps_into_genes_by_impact(bin_mat, allele_names, predicted_impact_split)
+  } else if (grp_nonref) {
     # collapse variants by position --------------------------------------------
     allele_names <- get_allele_names(bin_mat)
     bin_mat <- collapse_snps_into_genes(bin_mat, allele_names)
+
   }
 
   return(list(allele_mat = allele_mat_split,
