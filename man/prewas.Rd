@@ -4,14 +4,8 @@
 \alias{prewas}
 \title{Preprocess SNPs before bGWAS}
 \usage{
-prewas(
-  dna,
-  tree = NULL,
-  outgroup = NULL,
-  gff = NULL,
-  anc = TRUE,
-  grp_nonref = FALSE
-)
+prewas(dna, tree = NULL, outgroup = NULL, gff = NULL, anc = TRUE,
+  grp_nonref = FALSE)
 }
 \arguments{
 \item{dna}{`Character` or `vcfR`. Required input. Path to VCF4.1 file or
