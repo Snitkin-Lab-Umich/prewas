@@ -69,12 +69,20 @@ collapse_snps_into_genes <- function(bin_mat, gene_vec){
 #' @noRd
 get_gene_mat_by_impact <- function(num_unique_genes, unique_gene_names, gene_vec, bin_mat, pred_impact, impact) {
   gene_mat <- matrix(NA, nrow = num_unique_genes, ncol = ncol(bin_mat))
-  row.names(gene_mat) <- paste(unique_gene_names, impact, sep = '|')
+
+  if (length(impact) > 1) {
+    row.names(gene_mat) <- paste(unique_gene_names, paste(impact,collapse = '-'), sep = '|')
+  }else {
+    row.names(gene_mat) <- paste(unique_gene_names, impact, sep = '|')
+    }
   colnames(gene_mat) <- colnames(bin_mat)
 
-  if (impact == 'ALL') {
-    impact <- c('MODERATE', 'MODIFIER', 'HIGH', 'LOW')
+  if (length(impact) == 1) {
+    if (impact == 'ALL') {
+      impact <- c('MODERATE', 'MODIFIER', 'HIGH', 'LOW')
+    }
   }
+
 
   for (i in 1:num_unique_genes) {
     current_gene <- unique_gene_names[i]
@@ -95,7 +103,7 @@ get_gene_mat_by_impact <- function(num_unique_genes, unique_gene_names, gene_vec
 #'
 #' @return a list of gene_mats, collapsed by gene and snpeff impact
 #' @noRd
-collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impact){
+collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impact, snpeff_grouping){
   check_is_this_class(gene_vec, "character")
   check_if_binary_matrix(bin_mat)
 
@@ -121,12 +129,20 @@ collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impa
   gene_mat_all <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
                                          gene_vec, bin_mat, predicted_impact,
                                         'ALL')
+  if (!is.null(snpeff_grouping)) {
+    gene_mat_custom <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
+                                         gene_vec, bin_mat, predicted_impact,
+                                         snpeff_grouping)
+  }else{
+    gene_mat_custom <- NULL
+  }
 
   return(list(gene_mat_all = gene_mat_all,
               gene_mat_modifier = gene_mat_modifier,
               gene_mat_high = gene_mat_high,
               gene_mat_moderate = gene_mat_moderate,
-              gene_mat_low = gene_mat_low))
+              gene_mat_low = gene_mat_low,
+              gene_mat_custom = gene_mat_custom))
 
 }
 
