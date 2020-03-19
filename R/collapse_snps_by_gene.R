@@ -55,14 +55,15 @@ collapse_snps_into_genes <- function(bin_mat, gene_vec){
   return(gene_mat)
 }
 
-#' Title
+#' Aggregate SNPs by gene and snpeff impact
 #'
 #' @param num_unique_genes
 #' @param unique_gene_names
-#' @param gene_vec
-#' @param bin_mat
-#' @param pred_impact
-#' @param impact
+#' @param gene_vec passed into collapse_snps_into_genes_by_impact
+#' @param bin_mat passed into collapse_snps_into_genes_by_impact
+#' @param pred_impact passed into collapse_snps_into_genes_by_impact
+#' @param impact character indicating snpeff impact of HIGH, MODERATE, LOW,
+#' MODIFIER, or ALL
 #'
 #' @return list of gene_mats aggregated by impact
 #' @noRd
@@ -86,6 +87,14 @@ get_gene_mat_by_impact <- function(num_unique_genes, unique_gene_names, gene_vec
   return(gene_mat)
 }
 
+#' Collapse SNPs into the gene(s) which they are from and by snpeff impcat
+#'
+#' @param bin_mat Matrix.
+#' @param gene_vec Character. Vector of gene names.
+#' @param predicted_impact Character. Vector of predicted functional impacts.
+#'
+#' @return a list of gene_mats, collapsed by gene and snpeff impact
+#' @noRd
 collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impact){
   check_is_this_class(gene_vec, "character")
   check_if_binary_matrix(bin_mat)
