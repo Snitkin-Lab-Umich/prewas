@@ -84,6 +84,7 @@ prewas <- function(dna,
                    outgroup = NULL,
                    gff = NULL,
                    anc = TRUE,
+                   snpeff_grouping = NULL,
                    grp_nonref = FALSE){
   # Check inputs ---------------------------------------------------------------
   inputs <- format_inputs(dna, tree, outgroup, gff, anc)
@@ -200,7 +201,7 @@ prewas <- function(dna,
 
     # collapse snps by gene and impact -----------------------------------------
     gene_names <- get_gene_names(bin_mat)
-    gene_mat <- collapse_snps_into_genes_by_impact(bin_mat, gene_names, predicted_impact_split)
+    gene_mat <- collapse_snps_into_genes_by_impact(bin_mat, gene_names, predicted_impact_split, snpeff_grouping)
   }else if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
     bin_mat <- dup_snps_in_overlapping_genes(bin_mat, gff_mat)
