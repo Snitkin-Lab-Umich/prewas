@@ -9,6 +9,7 @@
 #'   dealing with  multiallelic SNPs, (optional) dealing with SNPs in
 #'   overlapping genes, and choosing a reference allele. prewas can output
 #'   matrices for use with both SNP-based bGWAS and gene-based bGWAS.
+#'   TODO add a one sentence description of SNPEFF.
 #'
 #' @param dna `Character` or `vcfR`. Required input. Path to VCF4.1 file or
 #'   `vcfR` object.
@@ -63,6 +64,7 @@
 #'     \item{gene_mat}{`NULL` or `matrix`. `NULL` if no gene information
 #'     provided (`gff = NULL`). If gene information is provided, a gene matrix
 #'     is generated where each row is a gene and each column is a sample.}
+#'     TODO update gene_mat description for possible snpeff output
 #'     \item{tree}{`NULL` or `phylo`. If `anc = FALSE` no tree is use or
 #'     generated and the function returns `NULL`. If `anc = TRUE` and the user
 #'     provides a tree but no outgroup: the function returns the tree after
