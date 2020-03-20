@@ -82,6 +82,13 @@ remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
 #' @noRd
 keep_only_variant_sites <- function(dna_mat, o_ref, o_alt, snpeff){
   check_is_this_class(dna_mat, "matrix")
+  if (length(o_ref) != length(o_alt)) {
+    stop("Reference and alternative allele vectors must be same length")
+  }
+  if (nrow(dna_mat) != length(o_ref)) {
+    stop("Length of reference and alternative allele vectors must equal nrow(dna_mat)")
+  }
+
   dna_mat <- replace_non_ATGC_with_N(dna_mat)
   variant_site_log <- identify_variant_sites(dna_mat)
   invariant_sites_removed <- remove_invariant_sites(dna_mat, o_ref, o_alt, snpeff, variant_site_log)
