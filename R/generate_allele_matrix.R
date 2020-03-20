@@ -55,13 +55,24 @@ identify_variant_sites <- function(mat){
 remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
   check_is_this_class(mat, "matrix")
   check_is_this_class(rows_to_keep, "logical")
-
   if (length(rows_to_keep) != nrow(mat)) {
     stop("Logical must have length == nrow(mat)")
   }
-
   if (sum(rows_to_keep) == 0) {
     stop("There are no valid variant sites in this dataset")
+  }
+  if (length(o_ref) != length(o_alt)) {
+    stop("o_ref and o_alt need to have same length")
+  }
+  if (length(o_ref) != nrow(mat)) {
+    stop("o_ref & o_alt need to have an entry for every mat row")
+  }
+  if (!is.null(snpeff)) {
+    check_is_this_class(snpeff, "list")
+    check_is_this_class(snpeff[[1]], "character")
+    if (length(snpeff) != length(o_ref)) {
+      stop("If not null snpeff needs to have an entry for every row in mat")
+    }
   }
 
   mat <- mat[rows_to_keep, , drop = FALSE]
@@ -90,6 +101,13 @@ keep_only_variant_sites <- function(dna_mat, o_ref, o_alt, snpeff){
   }
   if (nrow(dna_mat) != length(o_ref)) {
     stop("Length of reference and alternative allele vectors must equal nrow(dna_mat)")
+  }
+  if (!is.null(snpeff)) {
+    check_is_this_class(snpeff, "list")
+    check_is_this_class(snpeff[[1]], "character")
+    if (length(snpeff) != length(o_ref)) {
+      stop("If not null snpeff needs to have an entry for every row in mat")
+    }
   }
 
   dna_mat <- replace_non_ATGC_with_N(dna_mat)

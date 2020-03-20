@@ -36,6 +36,9 @@ split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff)
   if (!is.null(snpeff)) {
     check_is_this_class(snpeff, "list")
     check_is_this_class(snpeff[[1]], "character")
+    if (length(snpeff) != length(o_ref)) {
+      stop("If not null snpeff needs to have an entry for every row in mat")
+    }
   }
 
   # GET NUMBER OF UNIQUE ALLELES AT A POSITION

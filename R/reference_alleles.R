@@ -125,11 +125,14 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
     stop("o_ref and o_alt need to have same length")
   }
   if (length(o_ref) != nrow(allele_mat)) {
-    stop("o_ref & o_alt need to have an entry for every allele_mat row")
+    stop("o_ref & o_alt need to have an entry for every mat row")
   }
   if (!is.null(snpeff)) {
     check_is_this_class(snpeff, "list")
     check_is_this_class(snpeff[[1]], "character")
+    if (length(snpeff) != length(o_ref)) {
+      stop("If not null snpeff needs to have an entry for every row in mat")
+    }
   }
 
 
