@@ -69,25 +69,41 @@ test_that("remove_unknown_alleles correctly removes Ns when given valid input", 
   temp_tree <- prewas::tree
   temp_tree <- root_tree(temp_tree, "t1")
   temp_dna <- load_vcf_file(prewas::vcf)
-  temp_dna <- temp_dna[1:10, , drop = FALSE]
-  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree, temp_dna))
+  temp_dna_mat <- temp_dna$vcf_geno_mat[1:10, , drop = FALSE]
+  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree,
+                                                          temp_dna_mat))
   temp_tree <- subsetted_data$tree
-  temp_dna <- keep_only_variant_sites(subsetted_data$mat)
-  temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna)
-  temp_ar_results$ar_results$ancestral_allele <- as.character(temp_ar_results$ar_results$ancestral_allele)
+  temp_dna_list <- keep_only_variant_sites(dna_mat = subsetted_data$mat,
+                                           o_ref = temp_dna$vcf_ref_allele,
+                                           o_alt = temp_dna$vcf_alt_allele,
+                                           snpeff = temp_dna$snpeff_pred)
+  temp_dna_mat <- temp_dna_list$variant_only_dna_mat
+  temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna_mat)
+  temp_ar_results$ar_results$ancestral_allele <-
+    as.character(temp_ar_results$ar_results$ancestral_allele)
   temp_ar_results$ar_results$ancestral_allele[1] <- "N"
   temp_ar_results$ar_results$ancestral_allele[2] <- "-"
-  temp_ar_results$ar_results$ancestral_allele <- as.factor(temp_ar_results$ar_results$ancestral_allele)
+  temp_ar_results$ar_results$ancestral_allele <-
+    as.factor(temp_ar_results$ar_results$ancestral_allele)
 
+
+  # Data with Ns and dashes
+  expect_true(sum(temp_ar_results$ar_results$ancestral_allele %in% c("N", "-")) == 2)
 
   expect_warning(temp_remove <-
-    remove_unknown_alleles(temp_dna,
-                           temp_ar_results$ar_results$ancestral_allele,
-                           temp_ar_results$ar_results))
+    remove_unknown_alleles(allele_mat = temp_dna_mat,
+                           alleles = temp_ar_results$ar_results$ancestral_allele,
+                           ar_results = temp_ar_results$ar_results,
+                           o_ref = temp_dna_list$o_ref_var_pos,
+                           o_alt = temp_dna_list$o_alt_var_pos,
+                           snpeff = temp_dna_list$snpeff_var_pos))
+
+  # Now data no longer has Ns and dashes
+  expect_true(sum(temp_remove$ar_results$ancestral_allele %in% c("N", "-")) == 0)
 })
 
 test_that("remove_unknown_alleles gives error when given invalid input", {
-  expect_error(remove_unknown_alleles("foo", "foo", "foo"))
+  expect_error(remove_unknown_alleles("foo", "foo", "foo", "foo", "foo", "foo"))
 })
 
 # make_binary_matrix ----------------------------------------------------------#
