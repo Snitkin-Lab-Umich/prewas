@@ -19,12 +19,17 @@
 #'     \item{tree}{phylo}
 #'     \item{outgroup}{character}
 #'     \item{gff}{data.frame}
+#'     \item{o_ref}{Original reference alleles. Character vector.}
+#'     \item{o_alt}{Original alternative alleles from VCF. Character vector.}
+#'     \item{snpeff}{VCF provided snpeff annotations.}
 #'   }
 format_inputs <- function(dna,
                           tree = NULL,
                           outgroup = NULL,
                           gff = NULL,
-                          anc = TRUE){
+                          anc = TRUE,
+                          snpeff_grouping = NULL,
+                          grp_nonref = FALSE){
   # DNA
   if (is.null(dna)) {
     stop("User must provide a vcfR object or path to a VCF 4.1 file")
@@ -82,6 +87,13 @@ format_inputs <- function(dna,
     # Remove ID= prefix from gene name in column 9
     gff <- clean_up_cds_name_from_gff(gff)
   }
+
+  # Check that group non-reference is logical
+  if (!is.logical(grp_nonref)) {
+    stop("User must provide a logical grp_nonref value")
+  }
+
+  check_snpeff_user_input(snpeff_grouping)
 
   results <- list("dna" = dna,
                   "tree" = tree,

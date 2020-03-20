@@ -247,3 +247,21 @@ check_if_binary_matrix <- function(mat) {
     stop("Matrix should be only 1s and 0s")
   }
 }
+
+#' Check that the user supplied valid snpeff annotation groups
+#'
+#' @description Doesn't return anything. Stops prewas() from running if the
+#'   user provided inputs are invalid.
+#' @param snpeff_grouping NULL or vector of characters:
+#'   c('HIGH','MODERATE', LOW', 'MODIFER')
+#'
+#' @noRd
+check_snpeff_user_input <- function(snpeff_grouping){
+  valid_annots <- c("MODERATE", "MODIFIER", "LOW", "HIGH")
+  if (!is.null(snpeff_grouping)) {
+    check_is_this_class(snpeff_grouping, "character")
+    if (!sum(snpeff_grouping %in% valid_annots) > 0) {
+      stop("If a user supplies asnpeff_grouping input, create a vector combination of 'HIGH','MODERATE', LOW', and/or 'MODIFER'. Must write the impact combinations in all caps (e.g. c('HIGH', 'MODERATE')).")
+    }
+  }
+}

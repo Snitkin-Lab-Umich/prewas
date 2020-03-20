@@ -26,12 +26,12 @@
 #' @param anc `Logical`. Optional input. When `TRUE` prewas performs ancestral
 #'   reconstruction. When `FALSE` prewas calculates the major allele. Defaults
 #'   to `TRUE`.
-#' @param snpeff_grouping `NULL`, `character`. Optional input. Only used when a snpeff
-#' annotated multivcf is inputted. Use when you want to group SNPs by gene and
-#' snpeff impact. If `NULL` no custom-grouped gene matrix will be generated.
-#' Options for input are a vector combination of 'HIGH', 'MODERATE', LOW',
-#' 'MODIFER'. Must write the impact combinations in all caps (e.g. c('HIGH', 'MODERATE')).
-#' Defaults to `NULL`.
+#' @param snpeff_grouping `NULL`, `character`. Optional input. Only used when a
+#'   snpeff annotated multivcf is inputted. Use when you want to group SNPs by
+#'   gene and snpeff impact. If `NULL` no custom-grouped gene matrix will be
+#'   generated. Options for input are a vector combination of 'HIGH',
+#'   'MODERATE', LOW', 'MODIFER'. Must write the impact combinations in all caps
+#'   (e.g. c('HIGH', 'MODERATE')). Defaults to `NULL`.
 #' @param grp_nonref `Logical`. Optional input. When `TRUE` prewas collapses all
 #'   non-reference alleles for multi-allelic sites. When `FALSE` prewas keeps
 #'   multi-allelic sites separate. Defaults to `FALSE`.
@@ -92,7 +92,8 @@ prewas <- function(dna,
                    snpeff_grouping = NULL,
                    grp_nonref = FALSE){
   # Check inputs ---------------------------------------------------------------
-  inputs <- format_inputs(dna, tree, outgroup, gff, anc)
+  inputs <-
+    format_inputs(dna, tree, outgroup, gff, anc, snpeff_grouping, grp_nonref)
   dna_mat <- inputs$dna
   tree <- inputs$tree
   outgroup_char <- inputs$outgroup

@@ -241,3 +241,35 @@ test_that("check_if_binary_matrix() returns error when given non-binary matrix",
   temp_bin_mat <- matrix(NA, ncol = 10, nrow = 10)
   expect_error(check_if_binary_matrix(temp_bin_mat))
 })
+
+# check_snpeff_user_input -----------------------------------------------------#
+test_that("check_snpeff_user_input returns nothing when given valid inputs", {
+
+  expect_silent(check_snpeff_user_input(NULL))
+  expect_silent(check_snpeff_user_input("MODERATE"))
+  expect_silent(check_snpeff_user_input("MODIFIER"))
+  expect_silent(check_snpeff_user_input("LOW"))
+  expect_silent(check_snpeff_user_input("HIGH"))
+
+  expect_silent(check_snpeff_user_input(c("HIGH", "MODERATE")))
+  expect_silent(check_snpeff_user_input(c("HIGH", "MODIFIER")))
+  expect_silent(check_snpeff_user_input(c("HIGH", "LOW")))
+  expect_silent(check_snpeff_user_input(c("HIGH", "HIGH")))
+  expect_silent(check_snpeff_user_input(c("MODIFIER", "MODERATE")))
+
+  expect_silent(check_snpeff_user_input(c("MODERATE", "LOW", "HIGH")))
+  expect_silent(check_snpeff_user_input(c("MODIFIER", "LOW", "HIGH")))
+  expect_silent(check_snpeff_user_input(c("MODIFIER", "MODERATE", "HIGH")))
+
+  expect_silent(check_snpeff_user_input(c("MODIFIER",
+                                          "MODERATE",
+                                          "LOW",
+                                          "HIGH")))
+})
+
+test_that("check_snpeff_user_input returns nothing when given valid inputs", {
+  expect_error(check_snpeff_user_input("foo"))
+  expect_error(check_snpeff_user_input(5))
+  expect_error(check_snpeff_user_input(matrix(NA, 10, 10)))
+  expect_error(check_snpeff_user_input("modifier"))
+})
