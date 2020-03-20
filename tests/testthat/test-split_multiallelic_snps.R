@@ -16,7 +16,13 @@ test_that("split_multi_to_biallelic_snps() gives expected output when input with
   test_ar <- as.data.frame(test_ar)
   test_ar$probability <- as.numeric(as.character(test_ar$probability))
 
-  test_split <- split_multi_to_biallelic_snps(test_mat, test_ar)
+  ref <- c("G", "G", "A", "G")
+  alt <- c("A", "T", "G", "C")
+  test_split <- split_multi_to_biallelic_snps(mat = test_mat,
+                                              ar_results = test_ar,
+                                              o_ref = ref,
+                                              snpeff = NULL,
+                                              o_alt = alt)
   expect_equal(length(test_split), 3)
   expect_true(methods::is(test_split$mat_split, "matrix"))
   expect_true(methods::is(test_split$ar_results_split, "data.frame"))
