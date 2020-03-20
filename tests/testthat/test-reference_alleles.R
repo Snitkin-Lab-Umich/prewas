@@ -37,18 +37,19 @@ test_that("get_ancestral_alleles behaves as expected when given valid inputs", {
   temp_tree <- prewas::tree
   temp_tree <- root_tree(temp_tree, "t1")
   temp_dna <- load_vcf_file(prewas::vcf)
-  temp_dna <- temp_dna[1:10, , drop = FALSE]
-  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree, temp_dna))
+  temp_dna_mat <- temp_dna$vcf_geno_mat
+  temp_dna_mat <- temp_dna_mat[1:10, , drop = FALSE]
+  expect_warning(subset_tree_and_matrix(temp_tree, temp_dna_mat))
   temp_tree <- subsetted_data$tree
-  temp_dna <- keep_only_variant_sites(subsetted_data$mat)
-  temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna)
+  temp_dna_mat <- keep_only_variant_sites(subsetted_data$mat, o_ref = temp_dna$vcf_ref_allele, o_alt = temp_dna$vcf_alt_allele, snpeff = temp_dna$snpeff_pred)
+  temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna_mat$variant_only_dna_mat)
 
   expect_equal(length(temp_ar_results), 2)
   expect_identical(names(temp_ar_results), c("ar_results", "tree"))
   expect_true(ape::is.rooted(temp_ar_results$tree))
   expect_true(methods::is(temp_ar_results$ar_results, "data.frame"))
   expect_true(methods::is(temp_ar_results$tree, "phylo"))
-  expect_equal(nrow(temp_ar_results$ar_results), nrow(temp_dna))
+  expect_equal(nrow(temp_ar_results$ar_results), nrow(temp_dna_mat$variant_only_dna_mat))
   expect_equal(ncol(temp_ar_results$ar_results), 2)
 })
 
@@ -58,7 +59,7 @@ test_that("get_ancestral_alleles gives error when given invalid input", {
 
   # Unrooted tree
   temp_dna <- load_vcf_file(prewas::vcf)
-  temp_dna <- temp_dna[1:10, , drop = FALSE]
+  temp_dna <- temp_dna$vcf_geno_mat[1:10, , drop = FALSE]
   expect_error(get_ancestral_alleles(prewas::tree, temp_dna))
 
 })
