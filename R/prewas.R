@@ -101,14 +101,20 @@ prewas <- function(dna,
     tree <- root_tree(tree, outgroup_char)
     subsetted_data <- subset_tree_and_matrix(tree, dna_mat)
     tree <- subsetted_data$tree
-    allele_mat_snpeff_only_var <- keep_only_variant_sites(subsetted_data$mat, o_ref, o_alt, snpeff)
+    allele_mat_snpeff_only_var <- keep_only_variant_sites(subsetted_data$mat,
+                                                          o_ref,
+                                                          o_alt,
+                                                          snpeff)
     allele_mat_only_var <- allele_mat_snpeff_only_var$variant_only_dna_mat
     o_ref_only_var <- allele_mat_snpeff_only_var$o_ref_var_pos
     o_alt_only_var <-  allele_mat_snpeff_only_var$o_alt_var_pos
     snpeff_only_var <- allele_mat_snpeff_only_var$snpeff_var_pos
   } else {
     check_is_this_class(dna_mat, "matrix")
-    allele_mat_snpeff_only_var <- keep_only_variant_sites(dna_mat, o_ref, o_alt, snpeff)
+    allele_mat_snpeff_only_var <- keep_only_variant_sites(dna_mat,
+                                                          o_ref,
+                                                          o_alt,
+                                                          snpeff)
     allele_mat_only_var <- allele_mat_snpeff_only_var$variant_only_dna_mat
     o_ref_only_var <- allele_mat_snpeff_only_var$o_ref_var_pos
     o_alt_only_var <-  allele_mat_snpeff_only_var$o_alt_var_pos
@@ -175,7 +181,10 @@ prewas <- function(dna,
   }
 
   # reference to reference allele ----------------------------------------------
-  bin_mat_results <- make_binary_matrix(allele_mat_split, o_ref_split, n_ref, o_alt_split)
+  bin_mat_results <- make_binary_matrix(allele_mat_split,
+                                        o_ref_split,
+                                        n_ref,
+                                        o_alt_split)
   bin_mat <- bin_mat_results[[1]]
   n_alt <- bin_mat_results[[2]] # new alternative allele, after splitting
 
@@ -189,13 +198,18 @@ prewas <- function(dna,
       warning('GFF is not being used; annotations are coming from vcf file')
     }
 
-    output <- dup_snps_in_overlapping_genes_snpeff(bin_mat, predicted_impact, gene)
+    output <- dup_snps_in_overlapping_genes_snpeff(bin_mat,
+                                                   predicted_impact,
+                                                   gene)
     bin_mat <- output$bin_mat_dup
     predicted_impact_split <- output$predicted_impact_split
 
     # collapse snps by gene and impact -----------------------------------------
     gene_names <- get_gene_names(bin_mat)
-    gene_mat <- collapse_snps_into_genes_by_impact(bin_mat, gene_names, predicted_impact_split, snpeff_grouping)
+    gene_mat <- collapse_snps_into_genes_by_impact(bin_mat,
+                                                   gene_names,
+                                                   predicted_impact_split,
+                                                   snpeff_grouping)
   }else if (!is.null(gff_mat)) {
     # overlapping genes --------------------------------------------------------
     bin_mat <- dup_snps_in_overlapping_genes(bin_mat, gff_mat)
@@ -209,7 +223,9 @@ prewas <- function(dna,
 
   if (!is.null(snpeff_split) & grp_nonref) {
     allele_names <- get_allele_names(bin_mat)
-    bin_mat <- collapse_snps_into_genes_by_impact(bin_mat, allele_names, predicted_impact_split)
+    bin_mat <- collapse_snps_into_genes_by_impact(bin_mat,
+                                                  allele_names,
+                                                  predicted_impact_split)
   } else if (grp_nonref) {
     # collapse variants by position --------------------------------------------
     allele_names <- get_allele_names(bin_mat)
