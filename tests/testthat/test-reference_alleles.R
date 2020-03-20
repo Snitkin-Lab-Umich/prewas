@@ -111,28 +111,43 @@ test_that("make_binary_matrix performs as expected when given valid input", {
   temp_tree <- prewas::tree
   temp_tree <- root_tree(temp_tree, "t1")
   temp_dna <- load_vcf_file(prewas::vcf)
-  temp_dna <- temp_dna[1:10, , drop = FALSE]
-  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree, temp_dna))
+  temp_dna_mat <- temp_dna$vcf_geno_mat
+  temp_dna_mat <- temp_dna_mat[1:10, , drop = FALSE]
+  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree, temp_dna_mat))
   temp_tree <- subsetted_data$tree
-  temp_dna <- keep_only_variant_sites(subsetted_data$mat)
-  temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna)
+  ref <- unname(subsetted_data$mat[, 1, drop = TRUE])
+  alt <- c("G", "A", "A",
+           "T", "A,G", "T,C",
+           "T", "T", "T", "C")
+  temp_dna_list <- keep_only_variant_sites(subsetted_data$mat,
+                                           o_ref = ref,
+                                           o_alt = alt,
+                                           snpeff = NULL)
+  temp_ar_results <-
+    get_ancestral_alleles(tree = temp_tree,
+                          mat = temp_dna_list$variant_only_dna_mat)
 
   split <-
-    split_multi_to_biallelic_snps(mat = temp_dna,
-                                  ar_results = temp_ar_results$ar_results)
+    split_multi_to_biallelic_snps(mat = temp_dna_list$variant_only_dna_mat,
+                                  ar_results = temp_ar_results$ar_results,
+                                  o_ref = temp_dna_list$o_ref_var_pos,
+                                  o_alt = temp_dna_list$o_alt_var_pos,
+                                  snpeff = NULL)
 
   allele_mat_split <- split$mat_split
   allele_results_split <- split$ar_results_split
-  split_rows_flag <- split$split_rows_flag
 
   alleles <- allele_results_split$ancestral_allele
   names(alleles) <- rownames(allele_results_split)
 
-  temp_bin <- make_binary_matrix(allele_mat_split, alleles)
+  temp_bin <- make_binary_matrix(allele_mat = allele_mat_split,
+                                 n_ref = alleles,
+                                 o_ref = split$o_ref_split,
+                                 o_alt = split$o_alt_split)
 
-  expect_silent(check_if_binary_matrix(temp_bin))
+  expect_silent(check_if_binary_matrix(temp_bin[[1]]))
 })
 
 test_that("make_binary_matrix gives error when given invalid input", {
-  expect_error(make_binary_matrix("foo", "foo"))
+  expect_error(make_binary_matrix("foo", "foo", "foo", "foo"))
 })

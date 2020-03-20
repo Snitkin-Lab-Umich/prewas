@@ -142,10 +142,14 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #'
 #' @param allele_mat Matrix. Allele matrix (split by multi-allelic site). Rows
 #'   are variants. Columns are samples.
-#' @param reference_allele Factor. Vector of alleles that are 0 in binary matrix
-#'   (ancestral allele or major allele). Named vector. Names are genetic loci.
+#' @param o_ref
+#' @param n_ref
+#' @param o_alt
+#' TODO: fill in descriptions of the parameters above
 #'
-#' @return bin_mat. Matrix. Binary matrix of variant presence/absence.
+#' @return List of two elements
+#' bin_mat. Matrix. Binary matrix of variant presence/absence.
+#' n_alt. TODO: write description
 #' @noRd
 make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
   #check_is_this_class(reference_allele, "factor")
