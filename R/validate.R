@@ -51,7 +51,8 @@ is_this_class <- function(obj, current_class){
                  "data.frame",
                  "factor",
                  "vcfR" ,
-                 "dist")
+                 "dist",
+                 "list")
   if (!(current_class %in% r_classes)) {
     stop("current_class is expected to be a R class")
   }

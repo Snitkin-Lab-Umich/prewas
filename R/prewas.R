@@ -195,14 +195,16 @@ prewas <- function(dna,
   n_alt <- bin_mat_results[[2]] # new alternative allele, after splitting
 
   # snpeff ---------------------------------------------------------------------
-  snpeff_parsed <- parse_snpeff(o_alt_split, snpeff_split)
-  predicted_impact <- snpeff_parsed$pred_impact
-  gene <- snpeff_parsed$gene
+
 
   if (!is.null(snpeff_split)) {
     if (!is.null(gff_mat)) {
       warning('GFF is not being used; annotations are coming from vcf file')
     }
+
+    snpeff_parsed <- parse_snpeff(o_alt_split, snpeff_split)
+    predicted_impact <- snpeff_parsed$pred_impact
+    gene <- snpeff_parsed$gene
 
     output <- dup_snps_in_overlapping_genes_snpeff(bin_mat,
                                                    predicted_impact,

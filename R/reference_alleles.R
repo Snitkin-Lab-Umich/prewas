@@ -199,19 +199,27 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
 #' (locus tag or symbols in the snpeff annotation)
 #' @noRd
 parse_snpeff <- function(alt_allele, snpeff_split){
+  check_is_this_class(alt_allele, "character")
+  check_is_this_class(snpeff_split, "list")
+  check_is_this_class(snpeff_split[[1]], "character")
+
+  if (length(alt_allele) != length(snpeff_split)) {
+    stop("alt_allele and snpeff_split should have one entry per genotype")
+  }
+
   pred_impact = rep(NA, length(alt_allele))
   gene = rep(NA, length(alt_allele))
 
   for (i in 1:length(alt_allele)) {
-    annot = snpeff_split[[i]][grep(paste0('^',alt_allele[i]), snpeff_split[[i]])]
+    annot = snpeff_split[[i]][grep(paste0('^', alt_allele[i]), snpeff_split[[i]])]
 
     if (length(annot) == 1) {
       pred_impact[i] <- unlist(strsplit(annot, '[|]'))[3]
       gene[i] <- unlist(strsplit(annot, '[|]'))[4]
-    }else if (length(annot) == 0){
+    } else if (length(annot) == 0) {
       pred_impact[i] <- ""
       gene[i] <- ""
-    }else{
+    } else {
       multi_annots <- unlist(strsplit(annot, ',')) # would occur if overlapping genes
       pred_impact[i] <- paste(sapply(multi_annots, function(s) {
         unlist(strsplit(s, '[|]'))[3]
