@@ -170,9 +170,23 @@ test_that("clean_up_cds_name_from_gff() gives error for non-GFF input", {
 # load_vcf_file ---------------------------------------------------------------#
 test_that("load_vcf_file() works when given vcfR object", {
   vcf_output <- load_vcf_file(prewas::vcf)
-  expect_true(methods::is(vcf_output, "matrix"))
-  expect_equal(ncol(vcf_output), 14)
-  expect_true(methods::is(vcf_output[1, ], "character"))
+  expect_true(methods::is(vcf_output$vcf_geno_mat, "matrix"))
+  expect_equal(ncol(vcf_output$vcf_geno_mat), 14)
+  expect_true(methods::is(vcf_output$vcf_geno_mat[1, ], "character"))
+
+  expect_true(methods::is(vcf_output$vcf_ref_allele, "character"))
+  expect_true(methods::is(vcf_output$vcf_alt_allele, "character"))
+  expect_true(methods::is(vcf_output$snpeff_pred, "NULL"))
+
+  vcf_output <- load_vcf_file(prewas::snpeff_vcf)
+  expect_true(methods::is(vcf_output$vcf_geno_mat, "matrix"))
+  expect_equal(ncol(vcf_output$vcf_geno_mat), 49)
+  expect_true(methods::is(vcf_output$vcf_geno_mat[1, ], "character"))
+
+  expect_true(methods::is(vcf_output$vcf_ref_allele, "character"))
+  expect_true(methods::is(vcf_output$vcf_alt_allele, "character"))
+  expect_true(methods::is(vcf_output$snpeff_pred, "list"))
+  expect_true(methods::is(vcf_output$snpeff_pred[[1]], "character"))
 })
 
 test_that("load_vcf_file() gives error when given non-VCF file input", {
@@ -189,14 +203,14 @@ test_that("load_vcf_file() gives error when given non-file, non-vcfR object inpu
 # check_setequal_tree_mat -----------------------------------------------------#
 test_that("check_setequal_tree_mat gives no results when tree$tip.label equals colnames in VCF matrix", {
   vcf_output <- load_vcf_file(prewas::vcf)
-  vcf_colnames <- colnames(vcf_output)
+  vcf_colnames <- colnames(vcf_output$vcf_geno_mat)
   tree_tip_labels <- prewas::tree$tip.label
   expect_silent(check_setequal_tree_mat(tree_tip_labels, vcf_colnames))
 })
 
 test_that("check_setequal_tree_mat gives warning when tree$tip.label different than colnames in VCF matrix", {
   vcf_output <- load_vcf_file(prewas::vcf)
-  vcf_colnames <- colnames(vcf_output)
+  vcf_colnames <- colnames(vcf_output$vcf_geno_mat)
   tree_tip_labels <- prewas::tree$tip.label
 
   expect_error(check_setequal_tree_mat(tree, vcf_colnames))
