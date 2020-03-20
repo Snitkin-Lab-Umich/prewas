@@ -103,11 +103,18 @@ test_that("keep_only_variant_sites returns expected matrix when given valid inpu
   allele_mat <- matrix(c("A", "T", "A", "*", NA,
                          "A", "T", "A", "A", "A",
                          "A", "A", "T", "A", "T"), nrow = 5, ncol = 3)
-  test_output <- keep_only_variant_sites(allele_mat)
+  o_ref <- c("A", "T", "A", "A", "T")
+  o_alt <- c("T", "A", "T", "T", "A")
+  snpF <- NULL
+  # TO DO make o_ref, o_alt, snpeff
+  test_output <- keep_only_variant_sites(dna_mat = allele_mat,
+                                         o_ref = o_ref,
+                                         o_alt = o_alt,
+                                         snpeff = snpF)
   expected_output <- matrix(c("T", "A", "N",
                               "T", "A", "A",
                               "A", "T", "T"), nrow = 3, ncol = 3)
-  expect_equal(test_output, expected_output)
+  expect_equal(test_output$variant_only_dna_mat, expected_output)
 })
 
 
@@ -115,11 +122,26 @@ test_that("keep_only_variant_sites errors when given invalid input", {
   allele_mat <- matrix(c("A", "T", "A", "*", NA,
                          "A", "T", "A", "A", "A",
                          "A", "A", "T", "A", "T"), nrow = 5, ncol = 3)
+  o_ref <- c("A", "T", "A", "A", "T")
+  o_alt <- c("T", "A", "T", "T", "A")
+  snpF <- NULL
   # Wrong object type
-  expect_error(keep_only_variant_sites(as.data.frame(allele_mat)))
-  expect_error(keep_only_variant_sites("allele_mat"))
+  expect_error(keep_only_variant_sites(dna_mat = as.data.frame(allele_mat),
+                                       o_ref = o_ref,
+                                       o_alt = o_alt,
+                                       snpeff = snpF))
+  expect_error(keep_only_variant_sites(dna_mat = "allele_mat",
+                                       o_ref = o_ref,
+                                       o_alt = o_alt,
+                                       snpeff = snpF))
 
   # Only invariant sites
   allele_mat <- matrix(rep("A", 100), nrow = 10)
-  expect_error(keep_only_variant_sites(allele_mat))
+  o_ref <- rep("A", 10)
+  o_alt <- rep("T", 10)
+  snpF <- NULL
+  expect_error(keep_only_variant_sites(dna_mat = allele_mat,
+                                       o_ref = o_ref,
+                                       o_alt = o_alt,
+                                       snpeff = snpF))
 })
