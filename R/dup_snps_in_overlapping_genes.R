@@ -52,6 +52,7 @@ dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
 dup_snps_in_overlapping_genes_snpeff <- function(bin_mat, predicted_impact, gene) {
   check_is_this_class(bin_mat, "matrix")
   check_if_binary_matrix(bin_mat)
+  check_num_overlap_genes_match_num_impact(predicted_impact, gene)
 
   # number of genes per position
   num_ofgenes_at_pos <- sapply(gene, function(g) {

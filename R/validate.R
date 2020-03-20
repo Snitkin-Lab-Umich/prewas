@@ -268,13 +268,22 @@ check_snpeff_user_input <- function(snpeff_grouping){
   }
 }
 
+#' Check that the number of annotations match the number of genes at a position
+#' @description Doesn't return anything. Stops prewas() from running if the
+#'   user provided inputs are invalid.
+#' @param predicted_impact Character vector of snpeff predicted impact. Pipe
+#' delimited when overlapping genes.
+#' @param gene Character vector of genes/locus tag. Pipe
+#' delimited when overlapping genes.
+#' #' @noRd
+
 check_num_overlap_genes_match_num_impact <- function(predicted_impact, gene) {
-  num_annots <- sapply(predicted_impact, function(pi) {
-    length(unlist(strsplit(pi, '[|]')))
+  num_annots <- sapply(predicted_impact, function(p) {
+    length(unlist(strsplit(p, '[|]')))
   })
   num_genes <- sapply(gene, function(g) {
     length(unlist(strsplit(g, '[|]')))  })
   if (sum(unname(num_annots) != unname(num_genes)) != 0) {
-    stop('Number of annotations do not match the number of genes at this position')
+    stop('Number of annotations do not match the number of genes at at least 1 position')
   }
 }

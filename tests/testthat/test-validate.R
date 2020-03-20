@@ -273,3 +273,8 @@ test_that("check_snpeff_user_input returns nothing when given valid inputs", {
   expect_error(check_snpeff_user_input(matrix(NA, 10, 10)))
   expect_error(check_snpeff_user_input("modifier"))
 })
+
+test_that("check_snpeff_user_input returns nothing when given valid inputs", {
+  expect_error(check_num_overlap_genes_match_num_impact('HIGH', 'geneA|geneB'))
+  expect_error(check_num_overlap_genes_match_num_impact('HIGH|LOW', 'geneA'))
+})
