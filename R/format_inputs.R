@@ -1,4 +1,4 @@
-#' Format user-provided inputs to prewas().
+#' Format and check validity of user-provided prewas() inputs.
 #'
 #' @param dna Character or vcfR. Path to VCF file or vcfR object.
 #' @param tree NULL, character, or phylo. If character it should be a path to
@@ -12,6 +12,16 @@
 #' @param anc logical. If TRUE ancestral reconstruction is performed and the
 #'   ancestral allele is used for referencing. If FALSE no ancestral
 #'   reconstruction is performed and the major allele is used for referencing.
+#' @param snpeff_grouping `NULL`, `character`. Optional input. Only used when a
+#'   snpeff annotated multivcf is inputted. Use when you want to group SNPs by
+#'   gene and snpeff impact. If `NULL` no custom-grouped gene matrix will be
+#'   generated. Options for input are a vector combination of 'HIGH',
+#'   'MODERATE', LOW', 'MODIFER'. Must write the impact combinations in all caps
+#'   (e.g. c('HIGH', 'MODERATE')). Defaults to `NULL`.
+#' @param grp_nonref `Logical`. Optional input. When `TRUE` prewas collapses all
+#'   non-reference alleles for multi-allelic sites. When `FALSE` prewas keeps
+#'   multi-allelic sites separate. Defaults to `FALSE`.
+#'
 #' @noRd
 #' @return A list with the following four elements:
 #'   \describe{
