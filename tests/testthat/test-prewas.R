@@ -6,7 +6,22 @@ test_that("prewas() gives expected output when given valid input", {
                                  outgroup = prewas::outgroup,
                                  gff = prewas::gff,
                                  anc = FALSE)
-  expect_identical(prewas::results, test_results)
+  expect_identical(prewas::results$ar_results, test_results$ar_results)
+  expect_identical(prewas::results$dup, test_results$dup)
+  expect_identical(prewas::results$allele_mat, test_results$allele_mat)
+  expect_identical(prewas::results$gene_mat, test_results$gene_mat)
+  expect_identical(prewas::results$tree, test_results$tree)
+  expect_identical(colSums(prewas::results$bin_mat), colSums(test_results$bin_mat))
+  # Don't test that prewas::results$bin_mat and test_results$bin_mat are
+  #   identical because rows can get flipped. Example:
+  # > test_results$bin_mat[grepl("973", row.names(test_results$bin_mat)), ]
+  # t7 t3 t10 t6 t8 t2 t5 t9 t11 t1 t13 t4 t14 t12
+  # 973|gene_98    0  0   0  0  1  1  0  0   0  0   0  0   0   0
+  # 973.1|gene_98  1  1   1  1  0  0  0  0   0  0   0  0   0   0
+  # > prewas::results$bin_mat[grepl("973", row.names(prewas::results$bin_mat)),]
+  # t7 t3 t10 t6 t8 t2 t5 t9 t11 t1 t13 t4 t14 t12
+  # 973|gene_98    1  1   1  1  0  0  0  0   0  0   0  0   0   0
+  # 973.1|gene_98  0  0   0  0  1  1  0  0   0  0   0  0   0   0
 })
 
 test_that("prewas() gives an error when given either a non-vcfR object or a non-file-path as the VCF data", {
