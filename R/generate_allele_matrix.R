@@ -69,7 +69,6 @@ identify_variant_sites <- function(mat){
 #'     entry can have one or more SnpEff annotations.}
 #'   }
 #' @noRd
-#' TODO add descriptions of o_ref, o_alt, snpeff to BOTH params and return
 remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
   check_is_this_class(mat, "matrix")
   check_is_this_class(rows_to_keep, "logical")
