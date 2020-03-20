@@ -48,8 +48,26 @@ identify_variant_sites <- function(mat){
 #' @param rows_to_keep Logical. Vector of TRUE/FALSE. FALSE corresponds to rows
 #'   that should be dropped (invariant loci). TRUE corresponds to rows to keep
 #'   (variant loci).
+#' @param o_ref Character vector. Original reference alleles. Length = Number of
+#'   genotypes.
+#' @param o_alt Character vector. Original alternative alleles. Length = Number
+#'   of genotypes.
+#' @param snpeff NULL or list of character vectors. If list, then length(list) =
+#'   Number of genotypes. Each list entry can have one or more SnpEff
+#'   annotations.
 #'
-#' @return mat: Matrix.
+#' @return A list of four objects:
+#'   \describe{
+#'     \item{mat}{Matrix. Only variant sites are retained. Rows are variants.
+#'      Columns are samples.}
+#'     \item{o_ref}{Character vector. Original reference alleles. Length =
+#'     Number of genotypes with variant sites.}
+#'     \item{o_alt}{Character vector. Original alternative alleles. Length =
+#'      Number of genotype after remove genotypes with variant sites.}
+#'     \item{snpeff}{NULL or list of character vectors. If list, then
+#'     length(list) = Number of genotypes with variant sites. Each list
+#'     entry can have one or more SnpEff annotations.}
+#'   }
 #' @noRd
 #' TODO add descriptions of o_ref, o_alt, snpeff to BOTH params and return
 remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
@@ -86,14 +104,32 @@ remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
               'snpeff' = snpeff))
 }
 
-#' Given a DNA matrix keep only those rows with SNPs.
+#' Keep genotype information for variant sites
 #'
+#' @description Given a DNA matrix, its reference and alternative alleles, and
+#'   SnpEff annotations keep only those the genotypes with variants.
 #' @param dna_mat Matrix.
+#' @param o_ref Character vector. Original reference alleles. Length = Number of
+#'   genotypes.
+#' @param o_alt Character vector. Original alternative alleles. Length = Number
+#'   of genotypes.
+#' @param snpeff NULL or list of character vectors. If list, then length(list) =
+#'   Number of genotypes. Each list entry can have one or more SnpEff
+#'   annotations.
 #'
-#' @return variant_only_dna_mat: Matrix.
+#' @return A list of four objects:
+#'   \describe{
+#'     \item{variant_only_dna_mat}{Matrix. Only variant sites are retained. Rows
+#'      are variants. Columns are samples.}
+#'     \item{o_ref_var_pos}{Character vector. Original reference alleles.
+#'     Length = Number of genotypes with variant sites.}
+#'     \item{o_alt_var_pos}{Character vector. Original alternative alleles.
+#'     Length = Number of genotype after remove genotypes with variant sites.}
+#'     \item{snpeff_var_pos}{NULL or list of character vectors. If list, then
+#'     length(list) = Number of genotypes with variant sites. Each list
+#'     entry can have one or more SnpEff annotations.}
+#'   }
 #' @noRd
-#' TODO add descriptions of o_ref, o_alt, snpeff to params
-#' TODO add descriptions of o_ref_var_pos, o_alt_var_pos, snpeff_var_pos to return
 keep_only_variant_sites <- function(dna_mat, o_ref, o_alt, snpeff){
   check_is_this_class(dna_mat, "matrix")
   if (length(o_ref) != length(o_alt)) {
