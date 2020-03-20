@@ -1,9 +1,10 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Omitted examples from functions that are not exported.
-* Removed \dontrun{} from the one remaining example because the function can run in <5 seconds.
-## Test environments
+* Given updates to as.factor default behavior in R 4.0 code was changed to keep data correctly typed. 
+* Added three new features. 
+* Added new test data.
+* Updated documentation.
 * local OS X install, R 3.6.2 & devel
 * win, R 3.5.3, 3.6.2 & devel
 

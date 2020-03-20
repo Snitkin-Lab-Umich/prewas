@@ -62,17 +62,17 @@ dup_snps_in_overlapping_genes_snpeff <- function(bin_mat,
 
   # number of genes per position
   num_ofgenes_at_pos <- sapply(gene, function(g) {
-    length(unlist(strsplit(g, '[|]')))
+    length(unlist(strsplit(g, "[|]")))
   })
 
   # get gene names
   genes_at_pos <- sapply(gene, function(g) {
-    unlist(strsplit(g, '[|]'))
+    unlist(strsplit(g, "[|]"))
   })
 
   # snpeff impacts
   predicted_impact_split <- unname(unlist(sapply(predicted_impact, function(g) {
-    unlist(strsplit(g, '[|]'))
+    unlist(strsplit(g, "[|]"))
   })))
 
   # indices of bin_mat (number of rows)

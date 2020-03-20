@@ -8,7 +8,8 @@ test_that("make_all_tree_edges_positive haves as expected when given valid input
   temp_tree$edge.length[2] <- 0
 
   expect_warning(only_positive_edges <- make_all_tree_edges_positive(temp_tree))
-  expect_true(sum(only_positive_edges$edge.length > 0) == ape::Nedge(only_positive_edges))
+  expect_true(
+    sum(only_positive_edges$edge.length > 0) == ape::Nedge(only_positive_edges))
 
   # Create a tree with only positive edge lengths
   set.seed(1)
@@ -39,20 +40,23 @@ test_that("get_ancestral_alleles behaves as expected when given valid inputs", {
   temp_dna <- load_vcf_file(prewas::vcf)
   temp_dna_mat <- temp_dna$vcf_geno_mat
   temp_dna_mat <- temp_dna_mat[1:10, , drop = FALSE]
-  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree, temp_dna_mat))
+  expect_warning(subsetted_data <-
+                   subset_tree_and_matrix(temp_tree, temp_dna_mat))
   temp_tree <- subsetted_data$tree
   temp_dna_mat <- keep_only_variant_sites(subsetted_data$mat,
                                           o_ref = temp_dna$vcf_ref_allele[1:10],
                                           o_alt = temp_dna$vcf_alt_allele[1:10],
                                           snpeff = temp_dna$snpeff_pred)
-  temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna_mat$variant_only_dna_mat)
+  temp_ar_results <- get_ancestral_alleles(temp_tree,
+                                           temp_dna_mat$variant_only_dna_mat)
 
   expect_equal(length(temp_ar_results), 2)
   expect_identical(names(temp_ar_results), c("ar_results", "tree"))
   expect_true(ape::is.rooted(temp_ar_results$tree))
   expect_true(methods::is(temp_ar_results$ar_results, "data.frame"))
   expect_true(methods::is(temp_ar_results$tree, "phylo"))
-  expect_equal(nrow(temp_ar_results$ar_results), nrow(temp_dna_mat$variant_only_dna_mat))
+  expect_equal(nrow(temp_ar_results$ar_results),
+               nrow(temp_dna_mat$variant_only_dna_mat))
   expect_equal(ncol(temp_ar_results$ar_results), 2)
 })
 
@@ -76,10 +80,11 @@ test_that("remove_unknown_alleles correctly removes Ns when given valid input", 
   expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree,
                                                           temp_dna_mat))
   temp_tree <- subsetted_data$tree
-  temp_dna_list <- keep_only_variant_sites(dna_mat = subsetted_data$mat,
-                                           o_ref = temp_dna$vcf_ref_allele[1:10],
-                                           o_alt = temp_dna$vcf_alt_allele[1:10],
-                                           snpeff = temp_dna$snpeff_pred[1:10])
+  temp_dna_list <-
+    keep_only_variant_sites(dna_mat = subsetted_data$mat,
+                            o_ref = temp_dna$vcf_ref_allele[1:10],
+                            o_alt = temp_dna$vcf_alt_allele[1:10],
+                            snpeff = temp_dna$snpeff_pred[1:10])
   temp_dna_mat <- temp_dna_list$variant_only_dna_mat
   temp_ar_results <- get_ancestral_alleles(temp_tree, temp_dna_mat)
   temp_ar_results$ar_results$ancestral_allele <-
@@ -91,18 +96,21 @@ test_that("remove_unknown_alleles correctly removes Ns when given valid input", 
 
 
   # Data with Ns and dashes
-  expect_true(sum(temp_ar_results$ar_results$ancestral_allele %in% c("N", "-")) == 2)
+  expect_true(
+    sum(temp_ar_results$ar_results$ancestral_allele %in% c("N", "-")) == 2)
 
   expect_warning(temp_remove <-
-    remove_unknown_alleles(allele_mat = temp_dna_mat,
-                           alleles = temp_ar_results$ar_results$ancestral_allele,
-                           ar_results = temp_ar_results$ar_results,
-                           o_ref = temp_dna_list$o_ref_var_pos,
-                           o_alt = temp_dna_list$o_alt_var_pos,
-                           snpeff = temp_dna_list$snpeff_var_pos))
+    remove_unknown_alleles(
+      allele_mat = temp_dna_mat,
+      alleles = temp_ar_results$ar_results$ancestral_allele,
+      ar_results = temp_ar_results$ar_results,
+      o_ref = temp_dna_list$o_ref_var_pos,
+      o_alt = temp_dna_list$o_alt_var_pos,
+      snpeff = temp_dna_list$snpeff_var_pos))
 
   # Now data no longer has Ns and dashes
-  expect_true(sum(temp_remove$ar_results$ancestral_allele %in% c("N", "-")) == 0)
+  expect_true(
+    sum(temp_remove$ar_results$ancestral_allele %in% c("N", "-")) == 0)
 })
 
 test_that("remove_unknown_alleles gives error when given invalid input", {
@@ -116,7 +124,8 @@ test_that("make_binary_matrix performs as expected when given valid input", {
   temp_dna <- load_vcf_file(prewas::vcf)
   temp_dna_mat <- temp_dna$vcf_geno_mat
   temp_dna_mat <- temp_dna_mat[1:10, , drop = FALSE]
-  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree, temp_dna_mat))
+  expect_warning(subsetted_data <-
+                   subset_tree_and_matrix(temp_tree, temp_dna_mat))
   temp_tree <- subsetted_data$tree
   ref <- unname(subsetted_data$mat[, 1, drop = TRUE])
   alt <- c("G", "A", "A",

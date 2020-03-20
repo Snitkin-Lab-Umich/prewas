@@ -114,7 +114,9 @@ test_that("subset_tree_and_matrix() gives error when given invalid inputs", {
   # No tree
   expect_error(subset_tree_and_matrix("foo", prewas::vcf))
   expect_error(subset_tree_and_matrix(0, prewas::vcf))
-  expect_error(subset_tree_and_matrix("tests/testthat/test-preprocess_tree_and_fasta.R", prewas::vcf))
+  expect_error(
+    subset_tree_and_matrix("tests/testthat/test-preprocess_tree_and_fasta.R",
+                           prewas::vcf))
 
   # No matrix
   expect_error(subset_tree_and_matrix(prewas::tree, "foo"))

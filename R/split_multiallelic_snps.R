@@ -36,7 +36,11 @@
 #'     have one or more SnpEff annotations.}
 #'   }
 #' @noRd
-split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff){
+split_multi_to_biallelic_snps <- function(mat,
+                                          ar_results,
+                                          o_ref,
+                                          o_alt,
+                                          snpeff){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")
   if (length(o_ref) != length(o_alt)) {
@@ -75,7 +79,7 @@ split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff)
     alleles = rep(o_alt[i], sum(split_rows_flag == i))
 
     sapply(1:length(alleles), function(j) {
-      unlist(strsplit(alleles[j], ','))[j]
+      unlist(strsplit(alleles[j], ","))[j]
       })
 
     }))

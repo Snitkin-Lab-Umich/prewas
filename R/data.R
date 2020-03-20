@@ -26,8 +26,9 @@
 #'   \item{fix}{A character matrix with 14 rows and 8 columns. Contains
 #'   information on chromosome (CHROM), genome position (POS), reference genome
 #'   allele (REF), and alternative allele (ALT). Information column (INFO)
-#'   contains a field called "ANN" which provides the snpeff annotation including
-#'   predicted functional impact of the variant on the protein function.}
+#'   contains a field called "ANN" which provides the snpeff annotation
+#'   including predicted functional impact of the variant on the protein
+#'   function.}
 #'   \item{gt}{A character matrix with 14 rows and 49 columns. Presence/absence
 #'   for each variant defined in fix. Colnames are sample IDs.}
 #'  }
