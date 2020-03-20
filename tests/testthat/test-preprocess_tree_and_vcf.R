@@ -64,16 +64,17 @@ test_that("subset_tree_and_matrix() works as expected on valid inputs", {
   # Tree tips and colnames match
   dna <- load_vcf_file(prewas::vcf)
   tree <- prewas::tree
-  test_results <- subset_tree_and_matrix(tree, dna)
+  dna_mat <- dna$vcf_geno_mat
+  test_results <- subset_tree_and_matrix(tree, dna_mat)
   expect_equal(length(test_results), 2)
   expect_identical(c("tree", "mat"), names(test_results))
   expect_equal(ape::Ntip(prewas::tree), ape::Ntip(test_results$tree))
-  expect_identical(test_results$mat, dna)
+  expect_identical(test_results$mat, dna_mat)
   expect_identical(colnames(test_results$mat), test_results$tree$tip.label)
 
   # Same as above, but start with column names jumbled in dna object to check
   # that the matrix gets reordered
-  temp_dna <- dna
+  temp_dna <- dna_mat
   colnames(temp_dna) <- paste0("t", 1:14)
   test_results <- subset_tree_and_matrix(tree, temp_dna)
   expect_equal(length(test_results), 2)
@@ -82,30 +83,30 @@ test_that("subset_tree_and_matrix() works as expected on valid inputs", {
   expect_identical(colnames(test_results$mat), test_results$tree$tip.label)
 
   # Some tree tips not found in matrix
-  temp_dna <- dna[, 1:5, drop = FALSE]
+  temp_dna <- dna_mat[, 1:5, drop = FALSE]
   expect_warning(temp_results <- subset_tree_and_matrix(tree, temp_dna))
   expect_equal(length(temp_results), 2)
   expect_identical(c("tree", "mat"), names(temp_results))
   expect_equal(5, ape::Ntip(temp_results$tree))
-  expect_equal(nrow(temp_results$mat), nrow(dna))
+  expect_equal(nrow(temp_results$mat), nrow(dna_mat))
   expect_equal(ncol(temp_results$mat), 5)
 
   # Some matrix columns not found in tree
   temp_tree <- ape::drop.tip(tree, c("t1", "t2", "t3", "t4"))
-  expect_warning(temp_results <- subset_tree_and_matrix(temp_tree, dna))
+  expect_warning(temp_results <- subset_tree_and_matrix(temp_tree, dna_mat))
   expect_equal(length(temp_results), 2)
   expect_identical(c("tree", "mat"), names(temp_results))
   expect_equal(10, ape::Ntip(temp_results$tree))
-  expect_equal(nrow(temp_results$mat), nrow(dna))
+  expect_equal(nrow(temp_results$mat), nrow(dna_mat))
   expect_equal(ncol(temp_results$mat), 10)
 
   # Only 1 sample shared between tree and matrix
-  temp_dna <- dna[, 1, drop = FALSE]
+  temp_dna <- dna_mat[, 1, drop = FALSE]
   expect_error(temp_results <- subset_tree_and_matrix(tree, temp_dna))
 
   # No samples shared between tree and matrix
-  colnames(dna) <- letters[1:ncol(dna)]
-  expect_error(subset_tree_and_matrix(tree, dna))
+  colnames(dna_mat) <- letters[1:ncol(dna_mat)]
+  expect_error(subset_tree_and_matrix(tree, dna_mat))
 
 })
 
