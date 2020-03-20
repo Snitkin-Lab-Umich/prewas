@@ -1,10 +1,12 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## Package update
+In this package version I have:
 
-* Given updates to as.factor default behavior in R 4.0 code was changed to keep data correctly typed. 
-* Added three new features. 
-* Added new test data.
+* Given change in as.factor=FALSE default behavior in R 4.0 code was changed to keep data correctly typed. 
+* Added three new user-facing features. 
+* Added more data.
 * Updated documentation.
+
+I tested the package on: 
 * local OS X install, R 3.6.2 & devel
 * win, R 3.5.3, 3.6.2 & devel
 
@@ -17,6 +19,8 @@ No errors, warnings, or notes.
 NOTE: 
 ```
 Possibly mis-spelled words in DESCRIPTION:
+  Cingolani (29:61)
+  SnpEff (29:41)
   Pre (3:13)
   Saund (27:71)
   al (28:5)
@@ -25,6 +29,7 @@ Possibly mis-spelled words in DESCRIPTION:
   multiallelic (25:5)
   pre (19:30, 24:26)
   prewas (20:67, 24:5, 26:34)
+
 ```
 
 The NOTE is spurious because these words are all correctly spelled technical 

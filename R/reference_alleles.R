@@ -253,6 +253,7 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
 #'     Length = number of alleles.}
 #'     \item{gene}{Character vector. Gene names (locus tag or symbols from
 #'     SnpEff annotation). Length = number of alleles.}
+#'   }
 #' @noRd
 parse_snpeff <- function(alt_allele, snpeff_split){
   check_is_this_class(alt_allele, "character")
