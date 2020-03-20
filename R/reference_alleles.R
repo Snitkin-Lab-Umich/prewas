@@ -170,7 +170,8 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #'
 #' @param allele_mat Matrix. Allele matrix (split by multi-allelic site). Rows
 #'   are variants. Columns are samples.
-#' @param n_ref TODO: fill in description of nref
+#' @param n_ref Character vector. New reference allele after re-referening. Either
+#' major allele or ancetral allele. Length = Number of genotypes.
 #' @param o_ref Character vector. Original reference alleles. Length = Number of
 #'   genotypes.
 #' @param o_alt Character vector. Original alternative alleles. Length = Number
@@ -179,12 +180,17 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #' @return list of two elements:
 #'   \describe{
 #'     \item{bin_mat.}{Matrix. Binary matrix of variant presence/absence.}
-#'     \item{n_alt.}{TODO write description}
+#'     \item{n_alt.}{Character vector. Alternative allele after referencing to the
+#'     major allele or ancestral allele.}
 #'   }
 #' @noRd
 make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
-  # TODO add a check for n_ref class and size
-  #check_is_this_class(reference_allele, "factor")
+  check_is_this_class(n_ref, 'factor')
+
+  if (length(o_ref) != length(n_ref)) {
+    stop("o_ref and n_ref need to have same length")
+  }
+
   check_is_this_class(allele_mat, "matrix")
   if (length(o_ref) != length(o_alt)) {
     stop("o_ref and o_alt need to have same length")

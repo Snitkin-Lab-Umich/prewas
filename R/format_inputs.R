@@ -29,7 +29,7 @@
 #'     \item{tree}{phylo}
 #'     \item{outgroup}{character}
 #'     \item{gff}{data.frame}
-#'     \item{o_ref}{Original reference alleles. Character vector.}
+#'     \item{o_ref}{Original reference alleles from VCF. Character vector.}
 #'     \item{o_alt}{Original alternative alleles from VCF. Character vector.}
 #'     \item{snpeff}{VCF provided snpeff annotations.}
 #'   }
