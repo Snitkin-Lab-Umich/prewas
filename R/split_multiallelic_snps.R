@@ -6,6 +6,13 @@
 #'
 #' @param mat Matrix.
 #' @param ar_results Data.frame.
+#' @param o_ref Character vector. Original reference alleles. Length = Number of
+#'   genotypes.
+#' @param o_alt Character vector. Original alternative alleles. Length = Number
+#'   of genotypes.
+#' @param snpeff NULL or list of character vectors. If list, then length(list) =
+#'   Number of genotypes. Each list entry can have one or more SnpEff
+#'   annotations.
 #'
 #' @return A list with three elements:
 #'   \describe{
@@ -18,12 +25,17 @@
 #'      generated from splitting multiline to single line have .1 or .2 appended
 #'      to the rowname.}
 #'     \item{split_rows_flag}{Numeric. The count of times a number appears in
-#'     the split_rows_flag is one less than the number of alleles at that locus.
-#'     }
+#'     the split_rows_flag is one less than the number of alleles at that
+#'     locus.}
+#'     \item{o_ref}{Character vector. Original reference alleles. Length =
+#'     Number of genotypes after splitting.}
+#'     \item{o_alt}{Character vector. Original alternative alleles. Length =
+#'      Number of genotype after splittings.}
+#'     \item{snpeff}{NULL or list of character vectors. If list, then
+#'     length(list) = Number of genotypes after splitting. Each list entry can
+#'     have one or more SnpEff annotations.}
 #'   }
 #' @noRd
-#' TODO add description of o_ref, o_alt, snpeff
-#' TODO add descriptions of o_ref_split, o_alt_split, snpeff_split to return list
 split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")
