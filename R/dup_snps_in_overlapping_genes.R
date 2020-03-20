@@ -57,7 +57,6 @@ dup_snps_in_overlapping_genes_snpeff <- function(bin_mat, predicted_impact, gene
   num_ofgenes_at_pos <- sapply(gene, function(g) {
     length(unlist(strsplit(g, '[|]')))
   })
-  print(num_ofgenes_at_pos)
 
   # get gene names
   genes_at_pos <- sapply(gene, function(g) {
@@ -77,7 +76,6 @@ dup_snps_in_overlapping_genes_snpeff <- function(bin_mat, predicted_impact, gene
   pos_dup_gene <- paste(rep(row.names(bin_mat), num_ofgenes_at_pos),
                         unlist(genes_at_pos),
                         sep = "|")
-  print(pos_dup_gene)
 
   # duplicate overlapping genes
   bin_mat_dup <- bin_mat[rep(indices, num_ofgenes_at_pos), ]
