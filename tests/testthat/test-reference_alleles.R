@@ -22,9 +22,9 @@ test_that("make_all_tree_edges_positive haves as expected when given valid input
 # get_major_alleles -----------------------------------------------------------#
 test_that("get_major_alleles behaves as expected when given valid inputs", {
   allele_mat <- load_vcf_file(prewas::vcf)
-  major_allele_df <- get_major_alleles(allele_mat)
+  major_allele_df <- get_major_alleles(allele_mat$vcf_geno_mat)
   expect_true(methods::is(major_allele_df, "character"))
-  expect_equal(length(major_allele_df), nrow(allele_mat))
+  expect_equal(length(major_allele_df), nrow(allele_mat$vcf_geno_mat))
 })
 
 test_that("get_major_alleles gives error when given invalid input", {
