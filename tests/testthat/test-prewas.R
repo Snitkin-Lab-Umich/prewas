@@ -24,6 +24,30 @@ test_that("prewas() gives expected output when given valid input", {
   # 973.1|gene_98  0  0   0  0  1  1  0  0   0  0   0  0   0   0
 })
 
+test_that("prewas() gives expected output when given valid input", {
+  # Warning given because the gene information coming from vcf instead of gff
+  expect_warning(test_results <- prewas::prewas(dna = prewas::snpeff_vcf,
+                                 tree = prewas::tree,
+                                 outgroup = prewas::outgroup,
+                                 gff = prewas::gff,
+                                 anc = FALSE))
+  num_geno <- 17
+  split_num_geno <- 21
+  num_samples <- 49
+  expect_equal(nrow(test_results$ar_results), num_geno)
+  expect_equal(ncol(test_results$ar_results), 1)
+  expect_equal(ncol(test_results$allele_mat), num_samples)
+  expect_equal(nrow(test_results$allele_mat), num_geno)
+  expect_equal(ncol(test_results$bin_mat), num_samples)
+  expect_equal(nrow(test_results$bin_mat), split_num_geno)
+  expect_null(test_results$tree)
+
+  num_gene_mat_returned <- 6
+  expect_equal(length(test_results$gene_mat), num_gene_mat_returned)
+  expect_null(test_results$gene_mat$gene_mat_custom)
+})
+
+
 test_that("prewas() gives an error when given either a non-vcfR object or a non-file-path as the VCF data", {
   expect_error(prewas::prewas(dna = NULL))
   expect_error(prewas::prewas(dna = "foo"))
