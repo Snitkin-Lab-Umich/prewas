@@ -205,7 +205,7 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
 
     set.seed(5)
     temp_predicted_impact <- sample(c('MODIFIER', 'MODERATE', 'HIGH', 'LOW'),
-                                    length(allele_names),
+                                    length(gene_names),
                                     replace = TRUE)
 
     gene_mat <- get_gene_mat_by_impact(num_unique_genes,
