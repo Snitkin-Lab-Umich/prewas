@@ -67,7 +67,12 @@ collapse_snps_into_genes <- function(bin_mat, gene_vec){
 #'
 #' @return list of gene_mats aggregated by impact
 #' @noRd
-get_gene_mat_by_impact <- function(num_unique_genes, unique_gene_names, gene_vec, bin_mat, pred_impact, impact) {
+get_gene_mat_by_impact <- function(num_unique_genes,
+                                   unique_gene_names,
+                                   gene_vec,
+                                   bin_mat,
+                                   pred_impact,
+                                   impact) {
   gene_mat <- matrix(NA, nrow = num_unique_genes, ncol = ncol(bin_mat))
 
   if (length(impact) > 1) {
