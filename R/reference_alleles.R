@@ -187,13 +187,13 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
 
 #' Title
 #'
-#' @param alt_allele
-#' @param snpeff
+#' @param alt_allele Character vector of alternative allele that matches the
+#' snpeff annotation (original allele, not re-referenced alternative allele)
+#' @param snpeff_split Character vector of snpeff annotations extracted from vcf
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return list of predicted functional impact and gene names
+#' (locus tag or symbols in the snpeff annotation)
+#' @noRd
 parse_snpeff <- function(alt_allele, snpeff_split){
   pred_impact = rep(NA, length(alt_allele))
   gene = rep(NA, length(alt_allele))

@@ -57,8 +57,8 @@ collapse_snps_into_genes <- function(bin_mat, gene_vec){
 
 #' Aggregate SNPs by gene and snpeff impact
 #'
-#' @param num_unique_genes
-#' @param unique_gene_names
+#' @param num_unique_genes Numeric. number of unique gene names
+#' @param unique_gene_names Character vector of unique gene names
 #' @param gene_vec passed into collapse_snps_into_genes_by_impact
 #' @param bin_mat passed into collapse_snps_into_genes_by_impact
 #' @param pred_impact passed into collapse_snps_into_genes_by_impact
@@ -100,7 +100,7 @@ get_gene_mat_by_impact <- function(num_unique_genes, unique_gene_names, gene_vec
 #' @param bin_mat Matrix.
 #' @param gene_vec Character. Vector of gene names.
 #' @param predicted_impact Character. Vector of predicted functional impacts.
-#'
+#' @param snpeff_grouping Character. Vector or single string of impacts of interest.
 #' @return a list of gene_mats, collapsed by gene and snpeff impact
 #' @noRd
 collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impact, snpeff_grouping){
