@@ -267,3 +267,14 @@ check_snpeff_user_input <- function(snpeff_grouping){
     }
   }
 }
+
+check_num_overlap_genes_match_num_impact <- function(predicted_impact, gene) {
+  num_annots <- sapply(predicted_impact, function(pi) {
+    length(unlist(strsplit(pi, '[|]')))
+  })
+  num_genes <- sapply(gene, function(g) {
+    length(unlist(strsplit(g, '[|]')))  })
+  if (sum(unname(num_annots) != unname(num_genes)) != 0) {
+    stop('Number of annotations do not match the number of genes at this position')
+  }
+}
