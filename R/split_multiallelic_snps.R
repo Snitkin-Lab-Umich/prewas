@@ -22,6 +22,8 @@
 #'     }
 #'   }
 #' @noRd
+#' TODO add description of o_ref, o_alt, snpeff
+#' TODO add descriptions of o_ref_split, o_alt_split, snpeff_split to return list
 split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")

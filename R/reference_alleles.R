@@ -114,6 +114,8 @@ get_ancestral_alleles <- function(tree, mat){
 #'     \item{removed}{Character. Vector with names of removed samples.}
 #'   }
 #' @noRd
+#' TODO add  o_ref, o_alt, snpeff to params and return list
+#' TODO add to function description how it handles snpeff stuff
 remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(allele_mat, "matrix")
   check_is_this_class(alleles, "factor")
@@ -187,9 +189,11 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
   # make binary matrix numeric
   class(bin_mat) <- "numeric"
   return(list(bin_mat, n_alt))
+  # TODO: should n_alt be returned?
 }
 
-#' Title
+#' Title TODO update title
+#' TODO write description
 #'
 #' @param alt_allele Character vector of alternative allele that matches the
 #' snpeff annotation (original allele, not re-referenced alternative allele)
@@ -197,6 +201,7 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
 #'
 #' @return list of predicted functional impact and gene names
 #' (locus tag or symbols in the snpeff annotation)
+#' TODO better description of items returned
 #' @noRd
 parse_snpeff <- function(alt_allele, snpeff_split){
   check_is_this_class(alt_allele, "character")
