@@ -151,3 +151,59 @@ test_that("make_binary_matrix performs as expected when given valid input", {
 test_that("make_binary_matrix gives error when given invalid input", {
   expect_error(make_binary_matrix("foo", "foo", "foo", "foo"))
 })
+
+
+# parse_snpeff ----------------------------------------------------------------#
+test_that("parse_snpeff performs as expected when given valid input", {
+
+  vcf_with_snpeff <- load_vcf_file(prewas::snpeff_vcf)
+  temp_snpeff <- vcf_with_snpeff$snpeff_pred[1:10]
+  temp_snpeff[[5]] <- temp_snpeff[[6]] <- temp_snpeff[[3]]
+  temp_snpeff[[3]] <- temp_snpeff[[1]]
+  temp_tree <- prewas::tree
+  temp_tree <- root_tree(temp_tree, "t1")
+  temp_dna <- load_vcf_file(prewas::vcf)
+  temp_dna_mat <- temp_dna$vcf_geno_mat
+  temp_dna_mat <- temp_dna_mat[1:10, , drop = FALSE]
+  expect_warning(subsetted_data <- subset_tree_and_matrix(temp_tree,
+                                                          temp_dna_mat))
+  temp_tree <- subsetted_data$tree
+  ref <- unname(subsetted_data$mat[, 1, drop = TRUE])
+  alt <- c("G", "A", "A",
+           "T", "A,G", "T,C",
+           "T", "T", "T", "C")
+
+  for (i in c(1:4, 7:10)) {
+    temp_snpeff[[i]] <- gsub("^[A-Z]", alt[i], temp_snpeff[[i]])
+  }
+
+  for (i in c(5:6)) {
+    temp_snpeff[[i]][[1]] <-
+      gsub("^[A-Z]", substr(alt[i], 1, 1), temp_snpeff[[i]][[1]])
+    temp_snpeff[[i]][[2]] <-
+      gsub("^[A-Z]", substr(alt[i], 3, 3), temp_snpeff[[i]][[2]])
+
+  }
+
+  temp_dna_list <- keep_only_variant_sites(subsetted_data$mat,
+                                           o_ref = ref,
+                                           o_alt = alt,
+                                           snpeff = snpeff_pred)
+  temp_ar_results <-
+    get_ancestral_alleles(tree = temp_tree,
+                          mat = temp_dna_list$variant_only_dna_mat)
+
+  split <-
+    split_multi_to_biallelic_snps(mat = temp_dna_list$variant_only_dna_mat,
+                                  ar_results = temp_ar_results$ar_results,
+                                  o_ref = temp_dna_list$o_ref_var_pos,
+                                  o_alt = temp_dna_list$o_alt_var_pos,
+                                  snpeff = temp_dna_list$snpeff_var_pos)
+
+  parse_output <- parse_snpeff(alt_allele = split$o_alt_split,
+                               snpeff_split = split$snpeff_split)
+
+  expected_impacts <-  c(rep("MODIFIER", 8), "LOW", "MODERATE", "LOW", "HIGH")
+  # Tests
+  expect_true(sum(parse_output$pred_impact != expected_impacts) == 0)
+})
