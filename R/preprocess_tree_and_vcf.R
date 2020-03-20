@@ -44,7 +44,6 @@ build_tree <- function(mat){
   if (is_this_class(distmat, "character")) {
     stop(error_msg)
   }
-  # distmat <- phangorn::dist.ml(phydat)
   nj_tree <- phangorn::NJ(distmat)
   fit <- phangorn::pml(nj_tree, phydat)
   print("Start building tree")

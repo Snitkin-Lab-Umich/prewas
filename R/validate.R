@@ -50,7 +50,7 @@ is_this_class <- function(obj, current_class){
                  "matrix",
                  "data.frame",
                  "factor",
-                 "vcfR" ,
+                 "vcfR",
                  "dist",
                  "list")
   if (!(current_class %in% r_classes)) {
@@ -181,7 +181,7 @@ load_vcf_file <- function(vcf) {
   check_is_this_class(vcf, "vcfR")
 
   vcf_geno_mat <- vcf@gt
-  vcf_geno_mat <- vcf_geno_mat[,colnames(vcf_geno_mat) != "FORMAT"]
+  vcf_geno_mat <- vcf_geno_mat[, colnames(vcf_geno_mat) != "FORMAT"]
 
   row.names(vcf_geno_mat) <- vcf@fix[, colnames(vcf@fix) == "POS", drop = TRUE]
   vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
@@ -199,7 +199,9 @@ load_vcf_file <- function(vcf) {
 
     for (j in 1:num_alt_alleles) {
       # Simplify indel encoding from bcftools/snpeff
-      vcf_geno_mat[i, grepl(pattern = paste0("^", j, "[/]", j), x = vcf_geno_mat[i, ])] <- j
+      vcf_geno_mat[i,
+                   grepl(pattern = paste0("^", j, "[/]", j),
+                         x = vcf_geno_mat[i, ])] <- j
 
       # Recode numbers to allele characters
       vcf_geno_mat[i, vcf_geno_mat[i, ] == j] <- alt_alleles[[1]][j]
@@ -207,12 +209,12 @@ load_vcf_file <- function(vcf) {
   }
 
   # Get SNPeff annotations, if they exist
-  if (length(grep('SnpEff', vcf@meta)) > 0) {
+  if (length(grep("SnpEff", vcf@meta)) > 0) {
     # Extract annotations
-    snpeff_pred <- vcfR::extract_info_tidy(vcf, info_fields = 'ANN')
+    snpeff_pred <- vcfR::extract_info_tidy(vcf, info_fields = "ANN")
     # Get unique annotations
     snpeff_pred <- sapply(snpeff_pred$ANN,
-                          function(s){unique(unlist((strsplit(s, ','))))})
+                          function(s){unique(unlist((strsplit(s, ","))))})
     snpeff_pred <- unname(snpeff_pred)
   } else {
     snpeff_pred <- NULL
@@ -269,21 +271,21 @@ check_snpeff_user_input <- function(snpeff_grouping){
 }
 
 #' Check that the number of annotations match the number of genes at a position
+#'
 #' @description Doesn't return anything. Stops prewas() from running if the
 #'   user provided inputs are invalid.
 #' @param predicted_impact Character vector of snpeff predicted impact. Pipe
 #' delimited when overlapping genes.
 #' @param gene Character vector of genes/locus tag. Pipe
 #' delimited when overlapping genes.
-#' #' @noRd
-
+#' @noRd
 check_num_overlap_genes_match_num_impact <- function(predicted_impact, gene) {
   num_annots <- sapply(predicted_impact, function(p) {
-    length(unlist(strsplit(p, '[|]')))
+    length(unlist(strsplit(p, "[|]")))
   })
   num_genes <- sapply(gene, function(g) {
-    length(unlist(strsplit(g, '[|]')))  })
+    length(unlist(strsplit(g, "[|]")))  })
   if (sum(unname(num_annots) != unname(num_genes)) != 0) {
-    stop('Number of annotations do not match the number of genes at at least 1 position')
+    stop("Number of annotations do not match the number of genes at at least 1 position")
   }
 }

@@ -15,12 +15,13 @@ get_gene_names <- function(bin_mat){
 #'
 #' @param bin_mat Matrix.
 #'
-#' @return allele_names: Character. Vector of characters. Length = nrow(bin_mat).
+#' @return allele_names: Character. Vector of characters. Length =
+#'   nrow(bin_mat).
 #' @noRd
 get_allele_names <- function(bin_mat){
   check_if_binary_matrix(bin_mat)
   variant_names <- row.names(bin_mat)
-  allele_names <- gsub('\\|.*|\\..*','', variant_names)
+  allele_names <- gsub("\\|.*|\\..*", "", variant_names)
   return(allele_names)
 }
 
@@ -92,26 +93,30 @@ get_gene_mat_by_impact <- function(num_unique_genes,
   gene_mat <- matrix(NA, nrow = num_unique_genes, ncol = ncol(bin_mat))
 
   if (length(impact) > 1) {
-    row.names(gene_mat) <- paste(unique_gene_names, paste(impact,collapse = '-'), sep = '|')
+    row.names(gene_mat) <- paste(unique_gene_names,
+                                 paste(impact, collapse = "-"),
+                                 sep = "|")
   }else {
-    row.names(gene_mat) <- paste(unique_gene_names, impact, sep = '|')
+    row.names(gene_mat) <- paste(unique_gene_names, impact, sep = "|")
     }
   colnames(gene_mat) <- colnames(bin_mat)
 
   if (length(impact) == 1) {
-    if (impact == 'ALL') {
-      impact <- c('MODERATE', 'MODIFIER', 'HIGH', 'LOW')
+    if (impact == "ALL") {
+      impact <- c("MODERATE", "MODIFIER", "HIGH", "LOW")
     }
   }
 
   for (i in 1:num_unique_genes) {
     current_gene <- unique_gene_names[i]
-    temp_snp_mat <- bin_mat[gene_vec == current_gene & pred_impact %in% impact, , drop = FALSE]
+    temp_snp_mat <-
+      bin_mat[
+        gene_vec == current_gene & pred_impact %in% impact, , drop = FALSE]
     gene_mat[i, ] <- colSums(temp_snp_mat)
     gene_mat[i, ] <-  as.numeric(as.logical(gene_mat[i, ]))
   }
 
-  gene_mat = gene_mat[rowSums(gene_mat) > 0, ,drop = FALSE]
+  gene_mat <- gene_mat[rowSums(gene_mat) > 0, , drop = FALSE]
   return(gene_mat)
 }
 
@@ -120,7 +125,8 @@ get_gene_mat_by_impact <- function(num_unique_genes,
 #' @param bin_mat Matrix.
 #' @param gene_vec Character. Vector of gene names.
 #' @param predicted_impact Character. Vector of predicted functional impacts.
-#' @param snpeff_grouping Character. Vector or single string of impacts of interest.
+#' @param snpeff_grouping Character. Vector or single string of impacts of
+#'  interest.
 #' @return a list of gene_mats, collapsed by gene and snpeff impact
 #' @noRd
 collapse_snps_into_genes_by_impact <- function(bin_mat,
@@ -143,28 +149,28 @@ collapse_snps_into_genes_by_impact <- function(bin_mat,
                                               unique_gene_names,
                                               gene_vec, bin_mat,
                                               predicted_impact,
-                                              'MODIFIER')
+                                              "MODIFIER")
   gene_mat_high <- get_gene_mat_by_impact(num_unique_genes,
                                           unique_gene_names,
                                           gene_vec, bin_mat,
                                           predicted_impact,
-                                          'HIGH')
+                                          "HIGH")
   gene_mat_moderate <- get_gene_mat_by_impact(num_unique_genes,
                                               unique_gene_names,
                                               gene_vec, bin_mat,
                                               predicted_impact,
-                                              'MODERATE')
+                                              "MODERATE")
   gene_mat_low <- get_gene_mat_by_impact(num_unique_genes,
                                          unique_gene_names,
                                          gene_vec, bin_mat,
                                          predicted_impact,
-                                         'LOW')
+                                         "LOW")
 
   gene_mat_all <- get_gene_mat_by_impact(num_unique_genes,
                                          unique_gene_names,
                                          gene_vec, bin_mat,
                                          predicted_impact,
-                                        'ALL')
+                                        "ALL")
   if (!is.null(snpeff_grouping[1])) {
     gene_mat_custom <- get_gene_mat_by_impact(num_unique_genes,
                                               unique_gene_names,
@@ -183,5 +189,3 @@ collapse_snps_into_genes_by_impact <- function(bin_mat,
               gene_mat_custom = gene_mat_custom))
 
 }
-
-

@@ -52,7 +52,7 @@ test_that("collapse_snps_into_genes() give error when given invalid matrix", {
   expect_error(collapse_snps_into_genes(temp_bin_mat, gene_names))
 })
 
-test_that("collapse_snps_into_genes() behaves as expected when given valid allele grouping",{
+test_that("collapse_snps_into_genes() behaves as expected when given valid allele grouping", {
   # When multiallelic sites
   temp_bin_mat <- matrix(c(0, 0, 1), nrow = 10, ncol = 3)
   row.names(temp_bin_mat) <-
@@ -84,7 +84,7 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
     colnames(temp_bin_mat) <- c("t1", "t2", "t3")
     gene_names <- get_gene_names(temp_bin_mat)
     set.seed(5)
-    temp_predicted_impact <- sample(c('MODIFIER', 'MODERATE', 'HIGH', 'LOW'),
+    temp_predicted_impact <- sample(c("MODIFIER", "MODERATE", "HIGH", "LOW"),
                                     length(gene_names),
                                     replace = TRUE)
     snpeff_grouping <- NULL
@@ -93,41 +93,64 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
                                                         temp_predicted_impact,
                                                         snpeff_grouping)
     expect_true(length(temp_gene_mat_list) == 6)
-    expect_true(length(unique(gene_names)) == nrow(temp_gene_mat_list$gene_mat_all))
-    expect_true(sum(temp_predicted_impact == 'HIGH') == sum(temp_gene_mat_list$gene_mat_high))
-    expect_true(sum(temp_predicted_impact == 'MODERATE') == sum(temp_gene_mat_list$gene_mat_moderate))
-    expect_true(sum(temp_predicted_impact == 'LOW') == sum(temp_gene_mat_list$gene_mat_low))
-    expect_true(sum(temp_predicted_impact == 'MODIFIER') == sum(temp_gene_mat_list$gene_mat_modifier))
+    expect_true(length(unique(gene_names)) ==
+                  nrow(temp_gene_mat_list$gene_mat_all))
+    expect_true(sum(temp_predicted_impact == "HIGH") ==
+                  sum(temp_gene_mat_list$gene_mat_high))
+    expect_true(sum(temp_predicted_impact == "MODERATE") ==
+                  sum(temp_gene_mat_list$gene_mat_moderate))
+    expect_true(sum(temp_predicted_impact == "LOW") ==
+                  sum(temp_gene_mat_list$gene_mat_low))
+    expect_true(sum(temp_predicted_impact == "MODIFIER") ==
+                  sum(temp_gene_mat_list$gene_mat_modifier))
     expect_true(sum(temp_gene_mat_list$gene_mat_custom) == 0)
 
-    expect_equal(unname(temp_gene_mat_list$gene_mat_all[1, ,drop = TRUE]), c(1, 1, 1))
-    expect_equal(unname(temp_gene_mat_list$gene_mat_all[2, , drop = TRUE]), c(1, 1, 1))
+    expect_equal(
+      unname(temp_gene_mat_list$gene_mat_all[1, , drop = TRUE]), c(1, 1, 1))
+    expect_equal(
+      unname(temp_gene_mat_list$gene_mat_all[2, , drop = TRUE]), c(1, 1, 1))
 
-    expect_equal(unname(temp_gene_mat_list$gene_mat_moderate[1, ,drop = TRUE]), c(0, 0, 1))
-    expect_equal(unname(temp_gene_mat_list$gene_mat_moderate[2, ,drop = TRUE]), c(1, 0, 0))
-    expect_equal(unname(temp_gene_mat_list$gene_mat_high[2, ,drop = TRUE]), c(0, 1, 1))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_moderate[1, , drop = TRUE]), c(0, 0, 1))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_moderate[2, , drop = TRUE]), c(1, 0, 0))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_high[2, , drop = TRUE]), c(0, 1, 1))
 
     # if snpeff_grouping is not NULL
-    snpeff_grouping <- c('HIGH', 'MODERATE')
-    temp_gene_mat_list <- collapse_snps_into_genes_by_impact(temp_bin_mat,
-                                                             gene_names,
-                                                             temp_predicted_impact,
-                                                             snpeff_grouping)
+    snpeff_grouping <- c("HIGH", "MODERATE")
+    temp_gene_mat_list <-
+      collapse_snps_into_genes_by_impact(temp_bin_mat,
+                                         gene_names,
+                                         temp_predicted_impact,
+                                         snpeff_grouping)
 
     expect_true(length(temp_gene_mat_list) == 6)
-    expect_true(length(unique(gene_names)) == nrow(temp_gene_mat_list$gene_mat_all))
-    expect_true(sum(temp_predicted_impact == 'HIGH') == sum(temp_gene_mat_list$gene_mat_high))
-    expect_true(sum(temp_predicted_impact == 'MODERATE') == sum(temp_gene_mat_list$gene_mat_moderate))
-    expect_true(sum(temp_predicted_impact == 'LOW') == sum(temp_gene_mat_list$gene_mat_low))
-    expect_true(sum(temp_predicted_impact == 'MODIFIER') == sum(temp_gene_mat_list$gene_mat_modifier))
-    expect_true(sum(temp_gene_mat_list$gene_mat_custom) == (sum(temp_gene_mat_list$gene_mat_moderate)+sum(temp_gene_mat_list$gene_mat_high)))
+    expect_true(length(unique(gene_names)) ==
+                  nrow(temp_gene_mat_list$gene_mat_all))
+    expect_true(sum(temp_predicted_impact == "HIGH") ==
+                  sum(temp_gene_mat_list$gene_mat_high))
+    expect_true(sum(temp_predicted_impact == "MODERATE") ==
+                  sum(temp_gene_mat_list$gene_mat_moderate))
+    expect_true(sum(temp_predicted_impact == "LOW") ==
+                  sum(temp_gene_mat_list$gene_mat_low))
+    expect_true(sum(temp_predicted_impact == "MODIFIER") ==
+                  sum(temp_gene_mat_list$gene_mat_modifier))
+    expect_true(sum(temp_gene_mat_list$gene_mat_custom) ==
+                  (sum(temp_gene_mat_list$gene_mat_moderate) +
+                     sum(temp_gene_mat_list$gene_mat_high)))
 
-    expect_equal(unname(temp_gene_mat_list$gene_mat_moderate[1, ,drop = TRUE]), c(0, 0, 1))
-    expect_equal(unname(temp_gene_mat_list$gene_mat_moderate[2, ,drop = TRUE]), c(1, 0, 0))
-    expect_equal(unname(temp_gene_mat_list$gene_mat_high[2, ,drop = TRUE]), c(0, 1, 1))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_moderate[1, ,drop = TRUE]), c(0, 0, 1))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_moderate[2, ,drop = TRUE]), c(1, 0, 0))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_high[2, ,drop = TRUE]), c(0, 1, 1))
 
-    expect_equal(unname(temp_gene_mat_list$gene_mat_custom[1, ,drop = TRUE]), c(0, 1, 1))
-    expect_equal(unname(temp_gene_mat_list$gene_mat_custom[3, ,drop = TRUE]), c(1, 0, 1))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_custom[1, ,drop = TRUE]), c(0, 1, 1))
+    expect_equal(unname(
+      temp_gene_mat_list$gene_mat_custom[3, ,drop = TRUE]), c(1, 0, 1))
 
 
     # When there is no collapsing possible
@@ -154,11 +177,15 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
     temp_bin_mat[temp_bin_mat == 1] <- 2
 
     set.seed(5)
-    temp_predicted_impact <- sample(c('MODIFIER', 'MODERATE', 'HIGH', 'LOW'),
+    temp_predicted_impact <- sample(c("MODIFIER", "MODERATE", "HIGH", "LOW"),
                                     length(gene_names),
                                     replace = TRUE)
     snpeff_grouping <- NULL
-    expect_error(collapse_snps_into_genes_by_impact(temp_bin_mat, gene_names,temp_predicted_impact,snpeff_grouping))
+    expect_error(
+      collapse_snps_into_genes_by_impact(temp_bin_mat,
+                                         gene_names,
+                                         temp_predicted_impact,
+                                         snpeff_grouping))
   })
 
   test_that("collapse_snps_into_genes_by_impact() behaves as expected when given valid allele grouping",{
@@ -172,13 +199,18 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
     allele_names <- get_allele_names(temp_bin_mat)
 
     set.seed(5)
-    temp_predicted_impact <- sample(c('MODIFIER', 'MODERATE', 'HIGH', 'LOW'),
+    temp_predicted_impact <- sample(c("MODIFIER", "MODERATE", "HIGH", "LOW"),
                                     length(allele_names),
                                     replace = TRUE)
     snpeff_grouping <- NULL
 
-    temp_new_bin_mat_list <- collapse_snps_into_genes_by_impact(temp_bin_mat, allele_names, temp_predicted_impact,snpeff_grouping)
-    expect_equal(unname(temp_new_bin_mat_list$gene_mat_all[9, , drop = TRUE]), c(1, 0, 1))
+    temp_new_bin_mat_list <-
+      collapse_snps_into_genes_by_impact(temp_bin_mat,
+                                         allele_names,
+                                         temp_predicted_impact,
+                                         snpeff_grouping)
+    expect_equal(
+      unname(temp_new_bin_mat_list$gene_mat_all[9, , drop = TRUE]), c(1, 0, 1))
 
     # When there is no collapsing possible
     temp_bin_mat <- matrix(c(0, 0, 1), nrow = 10, ncol = 3)
@@ -187,7 +219,11 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
     colnames(temp_bin_mat) <- c("t1", "t2", "t3")
     allele_names <- get_allele_names(temp_bin_mat)
 
-    temp_new_bin_mat_list <- collapse_snps_into_genes_by_impact(temp_bin_mat, allele_names, temp_predicted_impact,snpeff_grouping)
+    temp_new_bin_mat_list <-
+      collapse_snps_into_genes_by_impact(temp_bin_mat,
+                                         allele_names,
+                                         temp_predicted_impact,
+                                         snpeff_grouping)
     expect_equal(dim(temp_new_bin_mat_list$gene_mat_all), dim(temp_bin_mat))
   })
 
@@ -204,7 +240,7 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
     num_unique_genes <- length(unique_gene_names)
 
     set.seed(5)
-    temp_predicted_impact <- sample(c('MODIFIER', 'MODERATE', 'HIGH', 'LOW'),
+    temp_predicted_impact <- sample(c("MODIFIER", "MODERATE", "HIGH", "LOW"),
                                     length(gene_names),
                                     replace = TRUE)
 
@@ -213,7 +249,7 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
                          gene_names,
                          temp_bin_mat,
                          temp_predicted_impact,
-                         'ALL')
+                         "ALL")
 
     expect_equal(unname(gene_mat[1, , drop = TRUE]), c(1,1,1))
 
@@ -222,8 +258,7 @@ test_that("collapse_snps_into_genes() behaves as expected when given valid allel
                                        gene_names,
                                        temp_bin_mat,
                                        temp_predicted_impact,
-                                       'MODERATE')
+                                       "MODERATE")
 
     expect_equal(unname(gene_mat[2, , drop = TRUE]), c(1,0,0))
-
   })

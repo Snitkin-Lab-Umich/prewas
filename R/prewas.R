@@ -209,7 +209,7 @@ prewas <- function(dna,
 
   if (!is.null(snpeff_split)) {
     if (!is.null(gff_mat)) {
-      warning('GFF is not being used; annotations are coming from vcf file')
+      warning("GFF is not being used; annotations are coming from vcf file")
     }
 
     snpeff_parsed <- parse_snpeff(o_alt_split, snpeff_split)

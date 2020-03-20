@@ -78,6 +78,14 @@ test_that("split_multi_to_biallelic_snps() gives expected output when input with
 
 test_that("split_multi_to_biallelic_snps() gives error given invalid inputs", {
   expect_error(split_multi_to_biallelic_snps("foo", "bar", "foo", "bar", "foo"))
-  expect_error(split_multi_to_biallelic_snps(as.data.frame(matrix(0, 1, 1)), "bar", "foo", "bar", "foo"))
-  expect_error(split_multi_to_biallelic_snps(matrix(0, 1, 1), "bar", "foo", "bar", "foo"))
+  expect_error(split_multi_to_biallelic_snps(as.data.frame(matrix(0, 1, 1)),
+                                             "bar",
+                                             "foo",
+                                             "bar",
+                                             "foo"))
+  expect_error(split_multi_to_biallelic_snps(matrix(0, 1, 1),
+                                             "bar",
+                                             "foo",
+                                             "bar",
+                                             "foo"))
 })

@@ -55,7 +55,9 @@ test_that("identify_variant_sites() returns correct rows when given valid input"
 })
 
 test_that("identify_variant_sites() gives error when given invalid input", {
-  allele_mat <- as.data.frame(matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3))
+  allele_mat <- as.data.frame(matrix(c("A", "A", "A", "A", "C", "A"),
+                                     nrow = 4,
+                                     ncol = 3))
   expect_error(identify_variant_sites(allele_mat))
 
   expect_error(identify_variant_sites("foo"))
@@ -97,13 +99,16 @@ test_that("remove_invariant_sites() gives errors when given invalide inputs", {
   expect_error(remove_invariant_sites(allele_mat, matrix(1:10, nrow = 2)))
 
   # Matrix too small
-  expect_error(remove_invariant_sites(allele_mat[1, , drop = FALSE], rows_to_keep_log))
+  expect_error(remove_invariant_sites(allele_mat[1, , drop = FALSE],
+                                      rows_to_keep_log))
 
   # Logical vector too long
-  expect_error(remove_invariant_sites(allele_mat, c(rows_to_keep_log, rows_to_keep_log)))
+  expect_error(remove_invariant_sites(allele_mat, c(rows_to_keep_log,
+                                                    rows_to_keep_log)))
 
   # Dataframe instead of matrix
-  expect_error(remove_invariant_sites(as.data.frame(allele_mat), rows_to_keep_log))
+  expect_error(remove_invariant_sites(as.data.frame(allele_mat),
+                                      rows_to_keep_log))
 
 })
 

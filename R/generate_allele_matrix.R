@@ -97,10 +97,10 @@ remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
   o_alt <- o_alt[rows_to_keep]
   snpeff <- snpeff[rows_to_keep]
 
-  return(list('mat' = mat,
-              'o_ref' = o_ref,
-              'o_alt' = o_alt,
-              'snpeff' = snpeff))
+  return(list("mat" = mat,
+              "o_ref" = o_ref,
+              "o_alt" = o_alt,
+              "snpeff" = snpeff))
 }
 
 #' Keep genotype information for variant sites
@@ -147,14 +147,18 @@ keep_only_variant_sites <- function(dna_mat, o_ref, o_alt, snpeff){
 
   dna_mat <- replace_non_ATGC_with_N(dna_mat)
   variant_site_log <- identify_variant_sites(dna_mat)
-  invariant_sites_removed <- remove_invariant_sites(dna_mat, o_ref, o_alt, snpeff, variant_site_log)
+  invariant_sites_removed <- remove_invariant_sites(dna_mat,
+                                                    o_ref,
+                                                    o_alt,
+                                                    snpeff,
+                                                    variant_site_log)
   variant_only_dna_mat <- invariant_sites_removed$mat
   o_ref_var_pos <- invariant_sites_removed$o_ref
   o_alt_var_pos <- invariant_sites_removed$o_alt
   snpeff_var_pos <- invariant_sites_removed$snpeff
 
-  return(list('variant_only_dna_mat' = variant_only_dna_mat,
-              'o_ref_var_pos' = o_ref_var_pos,
-              'o_alt_var_pos' = o_alt_var_pos,
-              'snpeff_var_pos' = snpeff_var_pos))
+  return(list("variant_only_dna_mat" = variant_only_dna_mat,
+              "o_ref_var_pos" = o_ref_var_pos,
+              "o_alt_var_pos" = o_alt_var_pos,
+              "snpeff_var_pos" = snpeff_var_pos))
 }
