@@ -170,16 +170,17 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #'
 #' @param allele_mat Matrix. Allele matrix (split by multi-allelic site). Rows
 #'   are variants. Columns are samples.
-#' @param n_ref
+#' @param n_ref TODO: fill in description of nref
 #' @param o_ref Character vector. Original reference alleles. Length = Number of
 #'   genotypes.
 #' @param o_alt Character vector. Original alternative alleles. Length = Number
 #'   of genotypes.
-#' TODO: fill in description of nref
 #'
-#' @return List of two elements
-#' bin_mat. Matrix. Binary matrix of variant presence/absence.
-#' n_alt. TODO: write description
+#' @return list of two elements:
+#'   \describe{
+#'     \item{bin_mat.}{Matrix. Binary matrix of variant presence/absence.}
+#'     \item{n_alt.}{TODO write description}
+#'   }
 #' @noRd
 make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
   # TODO add a check for n_ref class and size
