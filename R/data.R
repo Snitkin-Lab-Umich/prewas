@@ -14,6 +14,25 @@
 #'  }
 "vcf"
 
+#' Nucleotide variants in example genome samples with snpeff annotations.
+#'
+#' An example dataset containing 14 variants from 49 genome samples that has
+#' been annotated using snpeff.
+#'
+#' @format vcfR class object with three sections:
+#' \describe{
+#'   \item{meta}{The metadata for the VCF file including the file format version
+#'   number}
+#'   \item{fix}{A character matrix with 14 rows and 8 columns. Contains
+#'   information on chromosome (CHROM), genome position (POS), reference genome
+#'   allele (REF), and alternative allele (ALT). Information column (INFO)
+#'   contains a field called "ANN" which provides the snpeff annotation including
+#'   predicted functional impact of the variant on the protein function.}
+#'   \item{gt}{A character matrix with 14 rows and 49 columns. Presence/absence
+#'   for each variant defined in fix. Colnames are sample IDs.}
+#'  }
+"snpeff_vcf"
+
 #' Phylogenetic tree of example genomes
 #'
 #' Example unrooted phylogenetic tree.
