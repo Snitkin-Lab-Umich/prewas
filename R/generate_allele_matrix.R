@@ -51,6 +51,7 @@ identify_variant_sites <- function(mat){
 #'
 #' @return mat: Matrix.
 #' @noRd
+#' TODO add descriptions of o_ref, o_alt, snpeff to BOTH params and return
 remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
   check_is_this_class(mat, "matrix")
   check_is_this_class(rows_to_keep, "logical")
@@ -80,6 +81,8 @@ remove_invariant_sites <- function(mat, o_ref, o_alt, snpeff, rows_to_keep){
 #'
 #' @return variant_only_dna_mat: Matrix.
 #' @noRd
+#' TODO add descriptions of o_ref, o_alt, snpeff to params
+#' TODO add descriptions of o_ref_var_pos, o_alt_var_pos, snpeff_var_pos to return
 keep_only_variant_sites <- function(dna_mat, o_ref, o_alt, snpeff){
   check_is_this_class(dna_mat, "matrix")
   if (length(o_ref) != length(o_alt)) {
