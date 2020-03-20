@@ -152,7 +152,6 @@ prewas <- function(dna,
     snpeff <- remove_unknown_anc_results$snpeff
   }
 
-  print(o_alt)
   # split multiallelic snps ----------------------------------------------------
   split <- split_multi_to_biallelic_snps(mat = allele_mat_only_var,
                                          o_ref = o_ref,
@@ -174,9 +173,7 @@ prewas <- function(dna,
     n_ref <- allele_results_split$major_allele
     names(n_ref) <- rownames(allele_results_split)
   }
-  print(o_ref_split)
-  print(n_ref)
-  print(o_alt_split)
+
   # reference to reference allele ----------------------------------------------
   bin_mat_results <- make_binary_matrix(allele_mat_split, o_ref_split, n_ref, o_alt_split)
   bin_mat <- bin_mat_results[[1]]
@@ -186,8 +183,6 @@ prewas <- function(dna,
   snpeff_parsed <- parse_snpeff(o_alt_split, snpeff_split)
   predicted_impact <- snpeff_parsed$pred_impact
   gene <- snpeff_parsed$gene
-  print(predicted_impact)
-  print(gene)
 
   if (!is.null(snpeff_split)) {
     if (!is.null(gff_mat)) {
@@ -196,7 +191,6 @@ prewas <- function(dna,
 
     output <- dup_snps_in_overlapping_genes_snpeff(bin_mat, predicted_impact, gene)
     bin_mat <- output$bin_mat_dup
-    print(row.names(bin_mat))
     predicted_impact_split <- output$predicted_impact_split
 
     # collapse snps by gene and impact -----------------------------------------
