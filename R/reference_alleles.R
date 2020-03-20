@@ -104,8 +104,14 @@ get_ancestral_alleles <- function(tree, mat){
 #' @param alleles Factor. Vector of reference alleles (ancestral alleles or
 #'   major alleles)
 #' @param ar_results Data.frame. Results from ancestral reconstruction
-#'
-#' @return A list of three objects:
+#' @param o_ref Character vector. Original reference alleles. Length = Number of
+#'   genotypes.
+#' @param o_alt Character vector. Original alternative alleles. Length = Number
+#'   of genotypes.
+#' @param snpeff NULL or list of character vectors. If list, then length(list) =
+#'   Number of genotypes. Each list entry can have one or more SnpEff
+#'   annotations.
+#' @return A list of six objects:
 #'   \describe{
 #'     \item{allele_mat}{Matrix. Rows are variants. Columns are samples.}
 #'     \item{ar_results}{Data.frame. Variants with unknown ancestral states
@@ -113,10 +119,15 @@ get_ancestral_alleles <- function(tree, mat){
 #'     first column in ancestral allele & second column is probability. If no
 #'     ancestral reconstruction performed: the only column is the major allele.}
 #'     \item{removed}{Character. Vector with names of removed samples.}
+#'     \item{o_ref}{Character vector. Original reference alleles. Length =
+#'     Number of genotypes with unknown alleles.}
+#'     \item{o_alt}{Character vector. Original alternative alleles. Length =
+#'      Number of genotype after remove genotypes with unknown alleles.}
+#'     \item{snpeff}{NULL or list of character vectors. If list, then
+#'     length(list) = Number of genotypes with unknown alleles. Each list
+#'     entry can have one or more SnpEff annotations.}
 #'   }
 #' @noRd
-#' TODO add  o_ref, o_alt, snpeff to params and return list
-#' TODO add to function description how it handles snpeff stuff
 remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(allele_mat, "matrix")
   check_is_this_class(alleles, "factor")
@@ -159,10 +170,12 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #'
 #' @param allele_mat Matrix. Allele matrix (split by multi-allelic site). Rows
 #'   are variants. Columns are samples.
-#' @param o_ref
 #' @param n_ref
-#' @param o_alt
-#' TODO: fill in descriptions of the parameters above
+#' @param o_ref Character vector. Original reference alleles. Length = Number of
+#'   genotypes.
+#' @param o_alt Character vector. Original alternative alleles. Length = Number
+#'   of genotypes.
+#' TODO: fill in description of nref
 #'
 #' @return List of two elements
 #' bin_mat. Matrix. Binary matrix of variant presence/absence.
@@ -211,19 +224,23 @@ make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
   # make binary matrix numeric
   class(bin_mat) <- "numeric"
   return(list(bin_mat, n_alt))
-  # TODO: should n_alt be returned?
 }
 
-#' Title TODO update title
-#' TODO write description
+#' Get SnpEff annotation for each alternative allele.
 #'
 #' @param alt_allele Character vector of alternative allele that matches the
-#' snpeff annotation (original allele, not re-referenced alternative allele)
-#' @param snpeff_split Character vector of snpeff annotations extracted from vcf
+#'   snpeff annotation (original allele, not re-referenced alternative allele).
+#'   Length = number of genotypes.
+#' @param snpeff_split List of character vectors. Each character vector contains
+#'   snpeff annotations extracted from vcf. Length(list) = number of genotypes.
+#'   Length(individual vector) = number of alternative alleles at that site.
 #'
-#' @return list of predicted functional impact and gene names
-#' (locus tag or symbols in the snpeff annotation)
-#' TODO better description of items returned
+#' @return A list of two objects:
+#'   \describe{
+#'     \item{pred_impact}{Character vector. Predicted functional impact.
+#'     Length = number of alleles.}
+#'     \item{gene}{Character vector. Gene names (locus tag or symbols from
+#'     SnpEff annotation). Length = number of alleles.}
 #' @noRd
 parse_snpeff <- function(alt_allele, snpeff_split){
   check_is_this_class(alt_allele, "character")
