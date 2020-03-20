@@ -8,8 +8,9 @@
 #'   binary variant matrix, prewas can perform 3 pre-processing steps including:
 #'   dealing with  multiallelic SNPs, (optional) dealing with SNPs in
 #'   overlapping genes, and choosing a reference allele. prewas can output
-#'   matrices for use with both SNP-based bGWAS and gene-based bGWAS.
-#'   TODO add a one sentence description of SNPEFF.
+#'   matrices for use with both SNP-based bGWAS and gene-based bGWAS. prewas can
+#'   also provide gene matrices for variants with specific SnpEff annotations
+#'   (Cingolani et al. 2012).
 #'
 #' @param dna `Character` or `vcfR`. Required input. Path to VCF4.1 file or
 #'   `vcfR` object.
@@ -28,8 +29,8 @@
 #'   reconstruction. When `FALSE` prewas calculates the major allele. Defaults
 #'   to `TRUE`.
 #' @param snpeff_grouping `NULL`, `character`. Optional input. Only used when a
-#'   snpeff annotated multivcf is inputted. Use when you want to group SNPs by
-#'   gene and snpeff impact. If `NULL` no custom-grouped gene matrix will be
+#'   SnpEff annotated multivcf is inputted. Use when you want to group SNPs by
+#'   gene and SnpEff impact. If `NULL` no custom-grouped gene matrix will be
 #'   generated. Options for input are a vector combination of 'HIGH',
 #'   'MODERATE', LOW', 'MODIFER'. Must write the impact combinations in all caps
 #'   (e.g. c('HIGH', 'MODERATE')). Defaults to `NULL`.
@@ -61,10 +62,17 @@
 #'     the row was replicated `x` times, where `x` is the number of alternative
 #'     alleles. Note: the multiple indices indicates multiallelic site splits,
 #'     not overlapping genes splits.}
-#'     \item{gene_mat}{`NULL` or `matrix`. `NULL` if no gene information
-#'     provided (`gff = NULL`). If gene information is provided, a gene matrix
-#'     is generated where each row is a gene and each column is a sample.}
-#'     TODO update gene_mat description for possible snpeff output
+#'     \item{gene_mat}{`NULL` or `matrix` or `list`. `NULL` if no gene
+#'     information provided (`gff = NULL` and no SnpEff annotation provided in
+#'     VCF). If gene information is provided by a gff then a gene matrix is
+#'     generated where each row is a gene and each column is a sample. If gene
+#'     information is provided by a SnpEff annotated vcf then a list of up to
+#'     six gene matrices are returned. The first matrix, `gene_mat_all` is a
+#'     gene matrix for all variants.`gene_mat_modifier` is a gene matrix for
+#'     only variants annoted as MODIFIER by SnpEff. Similarly there is a
+#'     `gene_mat_low`, `gene_mat_moderate`, and `gene_mat_high.` If the user
+#'     asks for a combination SnpEff annotations the final `gene_mat_custom`
+#'     will contain that matrix.}
 #'     \item{tree}{`NULL` or `phylo`. If `anc = FALSE` no tree is use or
 #'     generated and the function returns `NULL`. If `anc = TRUE` and the user
 #'     provides a tree but no outgroup: the function returns the tree after
