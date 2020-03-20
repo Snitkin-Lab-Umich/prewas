@@ -73,6 +73,22 @@ get_gene_mat_by_impact <- function(num_unique_genes,
                                    bin_mat,
                                    pred_impact,
                                    impact) {
+  check_is_number(num_unique_genes)
+  check_is_this_class(unique_gene_names, "character")
+  check_is_this_class(gene_vec, "character")
+  check_is_this_class(bin_mat, "matrix")
+  check_is_this_class(pred_impact, "character")
+  check_is_this_class(impact, "character")
+
+  if (sum(!(impact %in% c("HIGH", "MODERATE", "LOW", "MODIFIER", "ALL"))) > 0) {
+    stop("User must indicate HIGH, MODERATE, LOW, MODIFIER, or ALL")
+  }
+
+  if (length(gene_vec) != length(pred_impact) |
+      nrow(bin_mat) != length(gene_vec)) {
+    stop("Genotype-based inputs must be the same size")
+  }
+
   gene_mat <- matrix(NA, nrow = num_unique_genes, ncol = ncol(bin_mat))
 
   if (length(impact) > 1) {
@@ -87,7 +103,6 @@ get_gene_mat_by_impact <- function(num_unique_genes,
       impact <- c('MODERATE', 'MODIFIER', 'HIGH', 'LOW')
     }
   }
-
 
   for (i in 1:num_unique_genes) {
     current_gene <- unique_gene_names[i]
@@ -108,9 +123,14 @@ get_gene_mat_by_impact <- function(num_unique_genes,
 #' @param snpeff_grouping Character. Vector or single string of impacts of interest.
 #' @return a list of gene_mats, collapsed by gene and snpeff impact
 #' @noRd
-collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impact, snpeff_grouping){
+collapse_snps_into_genes_by_impact <- function(bin_mat,
+                                               gene_vec,
+                                               predicted_impact,
+                                               snpeff_grouping){
   check_is_this_class(gene_vec, "character")
   check_if_binary_matrix(bin_mat)
+  check_is_this_class(predicted_impact, "character")
+  check_snpeff_user_input(snpeff_grouping)
 
   if (length(gene_vec) != nrow(bin_mat)) {
     stop("gene_vec should have same length as rows of bin_mat")
@@ -119,25 +139,38 @@ collapse_snps_into_genes_by_impact <- function(bin_mat, gene_vec, predicted_impa
   unique_gene_names <- unique(gene_vec)
   num_unique_genes <- length(unique_gene_names)
 
-  gene_mat_modifier <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
-                                              gene_vec, bin_mat, predicted_impact,
+  gene_mat_modifier <- get_gene_mat_by_impact(num_unique_genes,
+                                              unique_gene_names,
+                                              gene_vec, bin_mat,
+                                              predicted_impact,
                                               'MODIFIER')
-  gene_mat_high <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
-                                          gene_vec, bin_mat, predicted_impact,
+  gene_mat_high <- get_gene_mat_by_impact(num_unique_genes,
+                                          unique_gene_names,
+                                          gene_vec, bin_mat,
+                                          predicted_impact,
                                           'HIGH')
-  gene_mat_moderate <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
-                                              gene_vec, bin_mat, predicted_impact,
+  gene_mat_moderate <- get_gene_mat_by_impact(num_unique_genes,
+                                              unique_gene_names,
+                                              gene_vec, bin_mat,
+                                              predicted_impact,
                                               'MODERATE')
-  gene_mat_low <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
-                                         gene_vec, bin_mat, predicted_impact, 'LOW')
+  gene_mat_low <- get_gene_mat_by_impact(num_unique_genes,
+                                         unique_gene_names,
+                                         gene_vec, bin_mat,
+                                         predicted_impact,
+                                         'LOW')
 
-  gene_mat_all <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
-                                         gene_vec, bin_mat, predicted_impact,
+  gene_mat_all <- get_gene_mat_by_impact(num_unique_genes,
+                                         unique_gene_names,
+                                         gene_vec, bin_mat,
+                                         predicted_impact,
                                         'ALL')
-  if (!is.null(snpeff_grouping)) {
-    gene_mat_custom <- get_gene_mat_by_impact(num_unique_genes, unique_gene_names,
-                                         gene_vec, bin_mat, predicted_impact,
-                                         snpeff_grouping)
+  if (!is.null(snpeff_grouping[1])) {
+    gene_mat_custom <- get_gene_mat_by_impact(num_unique_genes,
+                                              unique_gene_names,
+                                              gene_vec, bin_mat,
+                                              predicted_impact,
+                                              snpeff_grouping)
   }else{
     gene_mat_custom <- NULL
   }

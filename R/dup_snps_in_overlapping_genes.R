@@ -47,11 +47,17 @@ dup_snps_in_overlapping_genes <- function(bin_mat, gff_mat){
 #' overlapping gene
 #' @param gene vector of genes, separated by pipes if pos in overlapping gene
 #' @noRd
-#' @return bin_mat_dup and predicted_impact_split
+#' @return
+#'   bin_mat_dup. Matrix.
+#'   predicted_impact_split. Character vector.
 #'
-dup_snps_in_overlapping_genes_snpeff <- function(bin_mat, predicted_impact, gene) {
+dup_snps_in_overlapping_genes_snpeff <- function(bin_mat,
+                                                 predicted_impact,
+                                                 gene) {
   check_is_this_class(bin_mat, "matrix")
   check_if_binary_matrix(bin_mat)
+  check_is_this_class(gene, "character")
+  check_is_this_class(predicted_impact, "character")
   check_num_overlap_genes_match_num_impact(predicted_impact, gene)
 
   # number of genes per position
