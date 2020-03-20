@@ -34,6 +34,7 @@ make_all_tree_edges_positive <- function(tree){
 #'   position. Names are the genomic loci. Values are the nucleotides.
 #' @noRd
 get_major_alleles <- function(allele_mat){
+  check_is_this_class(allele_mat, "matrix")
   major_allele <- apply(allele_mat, 1, function(x) {
     names(which.max(table(x)))
   })
@@ -120,6 +121,17 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
   check_is_this_class(allele_mat, "matrix")
   check_is_this_class(alleles, "factor")
   check_is_this_class(ar_results, "data.frame")
+  if (length(o_ref) != length(o_alt)) {
+    stop("o_ref and o_alt need to have same length")
+  }
+  if (length(o_ref) != nrow(allele_mat)) {
+    stop("o_ref & o_alt need to have an entry for every allele_mat row")
+  }
+  if (!is.null(snpeff)) {
+    check_is_this_class(snpeff, "list")
+    check_is_this_class(snpeff[[1]], "character")
+  }
+
 
   unknown <- alleles %in% c("-", "N")
   removed <- rownames(allele_mat)[unknown]
@@ -154,8 +166,15 @@ remove_unknown_alleles <- function(allele_mat, alleles, ar_results, o_ref, o_alt
 #' n_alt. TODO: write description
 #' @noRd
 make_binary_matrix <- function(allele_mat, o_ref, n_ref, o_alt){
+  # TODO add a check for n_ref class and size
   #check_is_this_class(reference_allele, "factor")
   check_is_this_class(allele_mat, "matrix")
+  if (length(o_ref) != length(o_alt)) {
+    stop("o_ref and o_alt need to have same length")
+  }
+  if (length(o_ref) != nrow(allele_mat)) {
+    stop("o_ref & o_alt need to have an entry for every allele_mat row")
+  }
 
   # make matrix of reference allele that's the same size as the allele matrix
   ref_allele_mat <- replicate(ncol(allele_mat), n_ref)
