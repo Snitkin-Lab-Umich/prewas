@@ -25,6 +25,12 @@
 split_multi_to_biallelic_snps <- function(mat, ar_results, o_ref, o_alt, snpeff){
   check_is_this_class(mat, "matrix")
   check_is_this_class(ar_results, "data.frame")
+  if (length(o_ref) != length(o_alt)) {
+    stop("o_ref and o_alt need to have same length")
+  }
+  if (length(o_ref) != nrow(mat)) {
+    stop("o_ref & o_alt need to have an entry for every mat row")
+  }
 
   # GET NUMBER OF UNIQUE ALLELES AT A POSITION
   num_alleles <- apply(mat, 1, function(row) {
