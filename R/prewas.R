@@ -233,7 +233,8 @@ prewas <- function(dna,
     allele_names <- get_allele_names(bin_mat)
     bin_mat <- collapse_snps_into_genes_by_impact(bin_mat,
                                                   allele_names,
-                                                  predicted_impact_split)
+                                                  predicted_impact_split,
+                                                  snpeff_grouping)
   } else if (grp_nonref) {
     # collapse variants by position --------------------------------------------
     allele_names <- get_allele_names(bin_mat)
