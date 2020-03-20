@@ -148,7 +148,7 @@ prewas <- function(dna,
                              allele_results,
                              o_ref_only_var,
                              o_alt_only_var,
-                             snpeff)
+                             snpeff_only_var)
     allele_mat_only_var <- remove_unknown_anc_results$allele_mat
     allele_results <- remove_unknown_anc_results$ar_results
     o_ref <- remove_unknown_anc_results$o_ref
@@ -166,7 +166,7 @@ prewas <- function(dna,
                              allele_results,
                              o_ref_only_var,
                              o_alt_only_var,
-                             snpeff)
+                             snpeff_only_var)
     allele_mat_only_var <- remove_unknown_anc_results$allele_mat
     allele_results <- remove_unknown_anc_results$ar_results
     o_ref <- remove_unknown_anc_results$o_ref
