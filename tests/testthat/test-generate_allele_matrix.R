@@ -70,9 +70,18 @@ test_that("identify_variant_sites() gives error if there are no variant sites", 
 test_that("remove_invariant_sites() removes the correct rows when given valid input", {
   allele_mat <- matrix(c("A", "A", "A", "A", "C", "A"), nrow = 4, ncol = 3)
   rows_to_keep_log <- identify_variant_sites(allele_mat)
-  only_variant_mat <- remove_invariant_sites(allele_mat, rows_to_keep_log)
+  ref <- c("A", "T", "A", "T")
+  alt <- c("C", "T", "C", "T")
+  only_variant_mat <- remove_invariant_sites(mat = allele_mat,
+                                             rows_to_keep = rows_to_keep_log,
+                                             o_ref = ref,
+                                             o_alt = alt,
+                                             snpeff = NULL)
   expected_results <- matrix(c("A", "A", "C", "A", "A", "C"), nrow = 2)
-  expect_equal(expected_results, only_variant_mat)
+  expect_equal(expected_results, only_variant_mat$mat)
+  expect_equal(only_variant_mat$o_alt, c("C", "C"))
+  expect_equal(only_variant_mat$o_ref, c("A", "A"))
+  expect_null(only_variant_mat$snpeff)
 })
 
 test_that("remove_invariant_sites() gives errors when given invalide inputs", {

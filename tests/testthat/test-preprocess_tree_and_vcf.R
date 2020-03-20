@@ -14,7 +14,7 @@ test_that("read_in_tree() gives error for invalid inputs", {
 # build_tree ------------------------------------------------------------------#
 test_that("build_tree() works on valid vcf input", {
   test_dna <- load_vcf_file(prewas::vcf)
-  test_tree <- build_tree(test_dna)
+  test_tree <- build_tree(test_dna$vcf_geno_mat)
   expect_true(methods::is(test_tree, "phylo"))
   expect_equal(ape::Ntip(test_tree), 14)
 })
