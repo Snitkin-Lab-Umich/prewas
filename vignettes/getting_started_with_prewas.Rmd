@@ -204,17 +204,10 @@ results_no_tree = prewas(dna = vcf,
 results_no_tree$tree
 ```
 
-### Want to group by minor allele?
-
-If you want to group by minor allele to increase power by grouping rarer alleles. 
-
-```{r results_ma, warning = FALSE}
-results_ma = prewas(dna = vcf, grp_nonref = TRUE, anc = FALSE)
-```
 
 ### Want to filter variants by predicted functional impact prior to your gene-based analysis?
 
-To filter variants by predicted functional impact prior to a gene-based analysis, you can provide prewas with a multivcf with [SnpEff](http://snpeff.sourceforge.net/) annotations. To merge individual SnpEff vcf files into a single multivcf, you can use bcftools merge. 
+To filter variants by predicted functional impact prior to a gene-based analysis, you can provide prewas with a multivcf with [SnpEff](http://snpeff.sourceforge.net/SnpEff_manual.html) annotations. To merge individual SnpEff vcf files into a single multivcf, you can use bcftools merge. 
 
 ```{}
 # from the command line
@@ -233,6 +226,17 @@ results_snpeff_custom = prewas(dna = snpeff_vcf, snpeff_grouping = c('MODERATE',
 names(results_snpeff_custom$gene_mat)
 head(results_snpeff_custom$gene_mat$gene_mat_custom)
 ```
+
+### Want to group by minor allele?
+
+If you want to group by minor allele to increase power by grouping rarer alleles together. This feature re-collapses multiallelic sites for each locus. This feature is analagous to grouping by gene, but now by site instead.
+
+If you are additionally using SnpEff annotations, you can appropriately group variants with the indicated annotation by site.
+
+```{r results_ma, warning = FALSE}
+results_ma = prewas(dna = vcf, grp_nonref = TRUE, anc = FALSE)
+```
+
 
 ## Detailed prewas workflow
 
