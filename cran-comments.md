@@ -7,8 +7,8 @@ In this package version I have:
 * Updated documentation.
 
 I tested the package on: 
-* local OS X install, R 3.6.2 & devel
-* win, R 3.5.3, 3.6.2 & devel
+* local OS X install, R 3.6.2
+* win, R 3.6.3
 
 ## Check results for OS X:
 No errors, warnings, or notes.
@@ -21,16 +21,6 @@ NOTE:
 Possibly mis-spelled words in DESCRIPTION:
   Cingolani (29:61)
   SnpEff (29:41)
-  Pre (3:13)
-  Saund (27:71)
-  al (28:5)
-  bGWAS (20:59, 23:23, 27:15, 27:36)
-  et (27:77)
-  multiallelic (25:5)
-  pre (19:30, 24:26)
-  prewas (20:67, 24:5, 26:34)
-
 ```
 
-The NOTE is spurious because these words are all correctly spelled technical 
-terms, names, or Latin.
+The NOTE is spurious because these words are all correctly spelled technical terms and names.
