@@ -187,6 +187,7 @@ load_vcf_file <- function(vcf) {
   vcf_ref_allele <- vcf@fix[, colnames(vcf@fix) == "REF", drop = TRUE]
   vcf_alt_allele <- vcf@fix[, colnames(vcf@fix) == "ALT", drop = TRUE]
 
+  geno_to_remove <- NULL
   for (i in 1:nrow(vcf_geno_mat)) {
     alt_alleles <- strsplit(vcf_alt_allele[i], split = ",")
     num_alt_alleles <- length(alt_alleles[[1]])
@@ -206,6 +207,21 @@ load_vcf_file <- function(vcf) {
       # Recode numbers to allele characters
       vcf_geno_mat[i, vcf_geno_mat[i, ] == j] <- alt_alleles[[1]][j]
     }
+
+    if (sum(
+      vcf_geno_mat[i, grepl(pattern = "[/]", x = vcf_geno_mat[i, ])] > 0)) {
+      geno_to_remove <- c(geno_to_remove, i)
+    }
+  }
+
+  if (!is.null(geno_to_remove)) {
+    warning(
+      paste0("Removing ",
+             length(geno_to_remove),
+             " rows with heterozygous calls"))
+    vcf_geno_mat <- vcf_geno_mat[-geno_to_remove, , drop = FALSE]
+    vcf_alt_allele <- vcf_alt_allele[-geno_to_remove]
+    vcf_ref_allele <- vcf_ref_allele[-geno_to_remove]
   }
 
   # Get SNPeff annotations, if they exist
@@ -216,6 +232,10 @@ load_vcf_file <- function(vcf) {
     snpeff_pred <- sapply(snpeff_pred$ANN,
                           function(s){unique(unlist((strsplit(s, ","))))})
     snpeff_pred <- unname(snpeff_pred)
+
+    if (!is.null(geno_to_remove)) {
+      snpeff_pred <- snpeff_pred[-geno_to_remove]
+    }
   } else {
     snpeff_pred <- NULL
   }
