@@ -1,5 +1,8 @@
 # [prewas: data pre-processing for more informative bacterial GWAS](https://www.biorxiv.org/content/10.1101/2019.12.20.873158v1)
 
+
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/prewas)](https://cran.r-project.org/package=prewas)
+
 ## Introduction
 The prewas R package allows users to create a binary SNP matrix from a whole genome alignment. The SNP matrix includes the following features: (1) multiple line representation of multiallelic sites, (2) multiple line representation for SNPs present in overlapping genes, and (3) choice over the reference allele. Additionally, users can collapse SNPs into genes so the output is a binary gene matrix. Output from the prewas package should be used as the input to bacterial GWAS tools such as [hogwash](https://github.com/katiesaund/hogwash).
   
