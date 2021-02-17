@@ -4,7 +4,9 @@
 \name{outgroup}
 \alias{outgroup}
 \title{Name of outgroup in the phylogenetic tree.}
-\format{Character string.}
+\format{
+Character string.
+}
 \usage{
 outgroup
 }

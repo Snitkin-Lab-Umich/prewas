@@ -31,7 +31,7 @@ get_allele_names <- function(bin_mat){
 #' @param gene_vec Character. Vector of gene names.
 #'
 #' @return gene_mat: Matrix.
-#' @noRd
+#' @export
 collapse_snps_into_genes <- function(bin_mat, gene_vec){
   check_is_this_class(gene_vec, "character")
   check_if_binary_matrix(bin_mat)
@@ -128,7 +128,7 @@ get_gene_mat_by_impact <- function(num_unique_genes,
 #' @param snpeff_grouping Character. Vector or single string of impacts of
 #'  interest.
 #' @return a list of gene_mats, collapsed by gene and snpeff impact
-#' @noRd
+#' @export
 collapse_snps_into_genes_by_impact <- function(bin_mat,
                                                gene_vec,
                                                predicted_impact,

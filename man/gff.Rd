@@ -4,7 +4,8 @@
 \name{gff}
 \alias{gff}
 \title{GFF3 file for example genomes}
-\format{A character matrix with 110 rows and 9 columns:
+\format{
+A character matrix with 110 rows and 9 columns:
 \describe{
   \item{Column 1}{Chromosome}
   \item{Column 2}{Data source}
@@ -15,7 +16,8 @@
   \item{Column 7}{Strand}
   \item{Column 8}{Phase}
   \item{Column 9}{Locus ID}
- }}
+ }
+}
 \usage{
 gff
 }

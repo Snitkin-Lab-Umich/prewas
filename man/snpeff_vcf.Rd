@@ -4,7 +4,8 @@
 \name{snpeff_vcf}
 \alias{snpeff_vcf}
 \title{Nucleotide variants in example genome samples with snpeff annotations.}
-\format{vcfR class object with three sections:
+\format{
+vcfR class object with three sections:
 \describe{
   \item{meta}{The metadata for the VCF file including the file format version
   number}
@@ -16,7 +17,8 @@
   function.}
   \item{gt}{A character matrix with 14 rows and 49 columns. Presence/absence
   for each variant defined in fix. Colnames are sample IDs.}
- }}
+ }
+}
 \usage{
 snpeff_vcf
 }

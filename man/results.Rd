@@ -4,7 +4,8 @@
 \name{results}
 \alias{results}
 \title{Results from running prewas() on the example data.}
-\format{List of 5 objects.
+\format{
+List of 5 objects.
 \describe{
   \item{allele_mat}{Matrix. Character matrix of nucleotides (alleles).
   Multiallelic sites represented on multiple lines in the matrix. Dim: 360 x
@@ -29,7 +30,8 @@
   \item{gene_mat}{Matrix. Gene-based matrix. Genes with any SNP stored as 1,
   genes without SNPs stored as 0. Rows are genes. Columns are samples. Dim:
   96 x 13.}
- }}
+ }
+}
 \usage{
 results
 }

@@ -4,7 +4,9 @@
 \name{tree}
 \alias{tree}
 \title{Phylogenetic tree of example genomes}
-\format{An ape phylo object with 14 tips.}
+\format{
+An ape phylo object with 14 tips.
+}
 \usage{
 tree
 }
