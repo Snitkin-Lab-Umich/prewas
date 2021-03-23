@@ -1,7 +1,7 @@
 Package: prewas
 Type: Package
 Title: Data Pre-Processing for Bacterial Genome-Wide Association Studies
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person("Katie", "Saund", 
            email = "katiephd@umich.edu", 
@@ -24,11 +24,11 @@ Description: Standardize the pre-processing of genomic variants before
     multiallelic SNPs, (optional) dealing with SNPs in overlapping genes, and 
     choosing a reference allele. prewas can output matrices for use with both 
     SNP-based bGWAS and gene-based bGWAS. This method is described in Saund et 
-    al. (2020) <https://doi.org/10.1099/mgen.0.000368>. prewas can also provide 
+    al. (2020) <doi:10.1099/mgen.0.000368>. prewas can also provide 
     gene matrices for variants with specific SnpEff annotations (Cingolani et 
     al. 2012).
-URL: http://github.com/Snitkin-Lab-Umich/prewas
-BugReports: http://github.com/Snitkin-Lab-Umich/prewas/issues
+URL: https://github.com/Snitkin-Lab-Umich/prewas
+BugReports: https://github.com/Snitkin-Lab-Umich/prewas/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
