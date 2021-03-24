@@ -1,6 +1,6 @@
 ## Resubmission
 
-* Updated URLs to start with https instead of http in DESCRIPTION
+* Updated URLs to start with https instead of http in DESCRIPTION and README.md
 * Fixed DOI format in DESCRIPTION
 * Updated package version number in DESCRIPTION
 
@@ -10,7 +10,7 @@ Prewas was archived from CRAN on 2020-07-05 because a dependency, vcfR, was arch
 I tested the package on: 
 * mac, R 3.6.2
 * mac, R 4.0.2
-* win, R 4.1.0
+* win, R dev
 
 ## Check results for mac:
 No errors, warnings, or notes.
