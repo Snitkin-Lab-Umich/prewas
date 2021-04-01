@@ -1,8 +1,8 @@
 ## Resubmission
 
-* Updated URLs to start with https instead of http in DESCRIPTION and README.md
-* Fixed DOI format in DESCRIPTION
-* Updated package version number in DESCRIPTION
+* Placed package names and software names in single quotes in DESCRIPTION
+* Updated CITATION with current journal article information
+* Explained that the word 'SnpEff' in the descriptoin text is not an acronym, but the name of a piece of software
 
 ## Package update
 Prewas was archived from CRAN on 2020-07-05 because a dependency, vcfR, was archived on CRAN. Since then vcfR has been updated on CRAN and so prewas will now be able to install successfully. 
@@ -21,7 +21,7 @@ No errors, warnings, or notes.
 NOTE: 
 ```
 Possibly mis-spelled words in DESCRIPTION:
-  Cingolani (29:66)
+    Cingolani (29:66)
     Pre (3:13)
     Saund (27:71)
     SnpEff (29:46)
@@ -33,4 +33,4 @@ Possibly mis-spelled words in DESCRIPTION:
     prewas (20:67, 24:5, 26:34, 28:57)
 ```
 
-The NOTE is spurious because these words are all correctly spelled technical terms, Latin, or last names.
+The NOTE is spurious because these words are all correctly spelled technical terms (bGWAS, multiallelic), Latin (et al), software (SnpEff, prewas), or last names (Cingolani, Saund).
