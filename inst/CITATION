@@ -2,14 +2,16 @@ citHeader("To cite prewas in publications use:")
 
 citEntry(
   entry    = "article",
-  title    = "prewas:Data pre-processing for more informative bacterial GWAS",
+  title    = "prewas: data pre-processing for more informative bacterial GWAS",
   author   = as.person("Katie Saund* [aut], Zena Lapp* [aut], Stephanie N. Thiede* [aut], Ali Pirani [aut], and Evan S. Snitkin [aut]"),
-  journal  = "bioRxiv",
-  year     = "2019",
+  journal  = "Microbial Genomics",
+  year     = "2020",
+  volume   = "6",
+  number   = "5",
   textVersion = paste(
-  "prewas: Data pre-processing for more informative bacterial GWAS",
+  "prewas: data pre-processing for more informative bacterial GWAS",
   "Katie Saund*, Zena Lapp*, Stephanie N. Thiede*, Ali Pirani, Evan S Snitkin",
-  "bioRxiv 2019.12.20.873158; doi: https://doi.org/10.1101/2019.12.20.873158"
+  "Microbial Genomics 2020 doi:10.1099/mgen.0.000368"
   )
 )
 

@@ -18,9 +18,9 @@ library(prewas)
 Note: this package depends on R (>= 3.5.0).
 
 ## Documentation
-prewas is described in the preprint: ["prewas: Data pre-processing for more informative bacterial GWAS"](https://www.biorxiv.org/content/10.1101/2019.12.20.873158v1). The Rscripts and data for the paper's figures and analyses can be found [in the manuscript analysis repository](https://github.com/Snitkin-Lab-Umich/prewas_manuscript_analysis).
+prewas is described in the paper: ["prewas: data pre-processing for more informative bacterial GWAS"](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000368). The Rscripts and data for the paper's figures and analyses can be found [in the manuscript analysis repository](https://github.com/Snitkin-Lab-Umich/prewas_manuscript_analysis).
 
-A tutorial explaining how to use the package can be found in the  [vignette](http://github.com/Snitkin-Lab-Umich/prewas/blob/master/vignettes/getting_started_with_prewas.Rmd). 
+A tutorial explaining how to use the package can be found in the  [vignette](https://github.com/Snitkin-Lab-Umich/prewas/blob/master/vignettes/getting_started_with_prewas.Rmd). 
 
 ## Contributors
 [Katie Saund](https://github.com/katiesaund), [Stephanie Thiede](https://github.com/sthiede), and [Zena Lapp](https://github.com/zenalapp) contributed to this code.
