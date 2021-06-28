@@ -67,8 +67,6 @@ get_ancestral_alleles <- function(tree, mat){
   check_setequal_tree_mat(tree$tip.label, colnames(mat))
   check_tree_is_rooted(tree)
 
-  #future::plan(future::multiprocess)
-
   # ORDER MATRIX TO MATCH TREE TIP LABELS
   mat <- mat[, tree$tip.label, drop = FALSE]
 
