@@ -27,4 +27,4 @@ A tutorial explaining how to use the package can be found in the  [vignette](htt
 
 ## Questions
 
-Please open an issue or contact Evan Snitkin (esnitkin@umich.edu) with any questions. 
+Please open an [issue](https://github.com/Snitkin-Lab-Umich/prewas/issues) or contact Evan Snitkin (esnitkin@umich.edu) with any questions. 
