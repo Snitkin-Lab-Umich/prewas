@@ -24,3 +24,7 @@ A tutorial explaining how to use the package can be found in the  [vignette](htt
 
 ## Contributors
 [Katie Saund](https://github.com/katiesaund), [Stephanie Thiede](https://github.com/sthiede), and [Zena Lapp](https://github.com/zenalapp) contributed to this code.
+
+## Questions
+
+Please open an issue or contact Evan Snitkin (esnitkin@umich.edu) with any questions. 
