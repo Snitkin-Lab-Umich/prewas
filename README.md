@@ -17,7 +17,7 @@ library(prewas)
 
 Note: this package depends on R (>= 3.5.0).
 
-For the most up-to-date package, it is recommended to instal using dev.tools:
+For the most up-to-date package, it is recommended to install using dev.tools:
 
 ```
 install.packages("devtools")
