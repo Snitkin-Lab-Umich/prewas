@@ -17,6 +17,14 @@ library(prewas)
 
 Note: this package depends on R (>= 3.5.0).
 
+For the most up-to-date package, it is recommended to instal using dev.tools:
+
+```
+install.packages("devtools")
+devtools::install_github("Snitkin-Lab-Umich/prewas")
+library(prewas)
+```
+
 ## Documentation
 prewas is described in the paper: ["prewas: data pre-processing for more informative bacterial GWAS"](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000368). The Rscripts and data for the paper's figures and analyses can be found [in the manuscript analysis repository](https://github.com/Snitkin-Lab-Umich/prewas_manuscript_analysis).
 
