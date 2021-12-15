@@ -236,6 +236,8 @@ load_vcf_file <- function(vcf) {
     if (!is.null(geno_to_remove)) {
       snpeff_pred <- snpeff_pred[-geno_to_remove]
     }
+  check_snpeff_warnings(snpeff_pred)
+  check_snpeff_errors(snpeff_pred)  
   } else {
     snpeff_pred <- NULL
   }
@@ -307,5 +309,75 @@ check_num_overlap_genes_match_num_impact <- function(predicted_impact, gene) {
     length(unlist(strsplit(g, "[|]")))  })
   if (sum(unname(num_annots) != unname(num_genes)) != 0) {
     stop("Number of annotations do not match the number of genes at at least 1 position")
+  }
+}
+
+#' Check the warning content of snpeff annotations
+#'
+#' @description returns an overall count of warning messages and a table of the warning types,
+#' if there are no warnings will not return anything
+#' @param snpeff_pred Character vector of snpeff annotations
+#' @noRd
+check_snpeff_warnings <- function(snpeff_pred){
+  warnings_bool <- lapply(snpeff_pred, pattern = "WARNING", grepl)
+  find_warnings <- unlist(lapply(warnings_bool, any))
+  
+  if(any(find_warnings)){
+    print(paste0("Of the ",
+                 length(find_warnings),
+                 " genes, there are one or more annotations with an WARNING message for ",
+                 sum(find_warnings),
+                 " genes"))
+    warning_table <- c()
+    for(i in 1:length(o_alt)){
+      if(find_warnings[i]){
+        for(j in 1:length(snpeff_pred[i])){
+          warnings <- sapply(snpeff_pred[[i]][j], function(a) {
+            unlist(strsplit(a, "[|]"))[16]
+          })
+          warning_table <- rbind(warning_table,
+                                 warnings)
+        }
+      }
+    }
+    print("Breakdown of WARNING alerts")
+    table(warning_table)
+  }
+}
+
+#' Check the error content of snpeff annotations
+#'
+#' @description returns an overall count of error messages and a table of the error types,
+#' will stop prewas if there are errors, if there are no errors will not return anything
+#' @param snpeff_pred Character vector of snpeff annotations from vcf file
+#' @noRd
+check_snpeff_errors <- function(snpeff_pred){
+  
+  errors_bool <- lapply(snpeff_pred, pattern = "ERROR", grepl)
+  find_errors <- unlist(lapply(errors_bool, any))
+  
+  if(any(find_errors)){
+    print(paste0("Of the ",
+                 length(find_errors),
+                 " genes, there are one or more annotations with an ERROR message for ",
+                 sum(find_errors),
+                 " genes"))
+    
+    error_table <- c()
+    
+    for(i in 1:length(o_alt)){
+      if(find_errors[i]){
+        for(j in 1:length(snpeff_pred[i])){
+          errors <- sapply(snpeff_pred[[i]][j], function(a) {
+            unlist(strsplit(a, "[|]"))[16]
+          })
+          error_table <- rbind(error_table,
+                               errors)
+        }
+      }
+    }
+    print("Breakdown of ERROR alerts")
+    table(error_table)
+    stop("Errors in snpeff_pred annotation, check that the correct reference is being used, if the correct reference is being used, clean vcf of Error annotations prior to prewas")
   }
 }
