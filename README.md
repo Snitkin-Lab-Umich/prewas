@@ -1,4 +1,4 @@
-# [prewas: data pre-processing for more informative bacterial GWAS](https://www.biorxiv.org/content/10.1101/2019.12.20.873158v1)
+# [prewas: data pre-processing for more informative bacterial GWAS](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000368)
 
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/prewas)](https://cran.r-project.org/package=prewas)
