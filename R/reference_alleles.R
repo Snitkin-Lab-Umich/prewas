@@ -73,7 +73,8 @@ get_ancestral_alleles <- function(tree, mat){
   tree <- make_all_tree_edges_positive(tree)
 
   # Get ancestral state of root
-  ar_all <- t(future.apply::future_apply(mat, 1, function(tip_states) {
+  # Removing support for future_apply; Future package is deprecated
+  ar_all <- t(apply(mat, 1, function(tip_states) {
     tip_state <- unique(tip_states)
     if (length(tip_state) > 1) {
       ar <- ape::ace(x = tip_states, phy = tree, type = "discrete")
@@ -87,7 +88,7 @@ get_ancestral_alleles <- function(tree, mat){
   }))
   ar_all <- data.frame(ar_all)
   colnames(ar_all) <- c("ancestral_allele", "probability")
- ar_all$ancestral_allele <- as.factor(ar_all$ancestral_allele)
+  ar_all$ancestral_allele <- as.factor(ar_all$ancestral_allele)
 
   return(list(ar_results = ar_all, tree = tree))
 }
