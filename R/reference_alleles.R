@@ -88,7 +88,7 @@ get_ancestral_alleles <- function(tree, mat){
       {
       c(tip_states, 1)
     }
-  }))
+  })
   ar_all <- data.frame(ar_all)
   colnames(ar_all) <- c("ancestral_allele", "probability")
   ar_all$ancestral_allele <- as.factor(ar_all$ancestral_allele)
