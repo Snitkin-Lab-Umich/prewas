@@ -73,7 +73,7 @@ get_ancestral_alleles <- function(tree, mat){
   tree <- make_all_tree_edges_positive(tree)
 
   # Get ancestral state of root
-  # Get ancestral state of root
+  # Removing support for future_apply; Future package is deprecated
   ar_all <- t(apply(mat, 1, function(tip_states) {
     tip_state <- unique(tip_states)
     if (length(tip_state) > 1) {
