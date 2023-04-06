@@ -73,22 +73,19 @@ get_ancestral_alleles <- function(tree, mat){
   tree <- make_all_tree_edges_positive(tree)
 
   # Get ancestral state of root
-  ar_all <- t(function(tip_states, mat)
-    {
+  # Get ancestral state of root
+  ar_all <- t((mat, 1, function(tip_states) {
     tip_state <- unique(tip_states)
-    if (length(tip_state) > 1)
-      {
+    if (length(tip_state) > 1) {
       ar <- ape::ace(x = tip_states, phy = tree, type = "discrete")
       states <- ar$lik.anc[1, ]
       tip_state <- names(states)[which.max(states)]
       prob <- states[which.max(states)]
       c(tip_state, prob)
-    }
-    else
-      {
+    } else {
       c(tip_states, 1)
     }
-  })
+  }))
   ar_all <- data.frame(ar_all)
   colnames(ar_all) <- c("ancestral_allele", "probability")
   ar_all$ancestral_allele <- as.factor(ar_all$ancestral_allele)
